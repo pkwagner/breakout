@@ -1,0 +1,22 @@
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+tmp/
+
+# IntelliJ Idea
+.idea/
+*.iml
+
+# Netbeans
+nbproject/
+build/
+dist/
+nb-configuration.xml
+
+# Maven
+target/
+
+# Ignore backup merge conflict files created by git
+*.orig
