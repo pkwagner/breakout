@@ -7,6 +7,8 @@ import de.tudarmstadt.informatik.fop.breakout.states.MainMenuState;
 
 import eea.engine.entity.StateBasedEntityManager;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -14,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Breakout extends StateBasedGame implements GameParameters {
 
+	private static final Logger logger = LogManager.getLogger();
     // Remember if the game runs in debug mode
     private static boolean debug = false;
 
@@ -44,7 +47,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
                     System.getProperty("user.dir") + "/native/"
                             + System.getProperty("os.name").toLowerCase());
         }
-
+        logger.info("lösch mich bitte <3");
         // Add this StateBasedGame to an AppGameContainer
         AppGameContainer app = new AppGameContainer(new Breakout(false));
 
