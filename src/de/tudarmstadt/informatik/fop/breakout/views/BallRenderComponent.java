@@ -1,29 +1,15 @@
 package de.tudarmstadt.informatik.fop.breakout.views;
 
-import eea.engine.component.RenderComponent;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.state.StateBasedGame;
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 
-public class BallRenderComponent extends RenderComponent {
+import eea.engine.component.render.ImageRenderComponent;
 
-    public BallRenderComponent(String id) {
-        super(id);
-    }
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
-    @Override
-    public Vector2f getSize() {
-        return null;
-    }
+public class BallRenderComponent extends ImageRenderComponent {
 
-    @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-
-    }
-
-    @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
-
+    public BallRenderComponent() throws SlickException {
+        super(new Image(GameParameters.BALL_IMAGE));
     }
 }

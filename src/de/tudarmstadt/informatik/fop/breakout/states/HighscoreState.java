@@ -15,11 +15,6 @@ public class HighscoreState extends BasicGameState {
     }
 
     @Override
-    public int getID() {
-        return id;
-    }
-
-    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
     }
@@ -32,5 +27,10 @@ public class HighscoreState extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
 
+    }
+
+    @Override
+    public int getID() {
+        return id;
     }
 }

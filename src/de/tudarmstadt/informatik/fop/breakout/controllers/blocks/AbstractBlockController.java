@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers.blocks;
 
+import de.tudarmstadt.informatik.fop.breakout.interfaces.IHitable;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 
 import eea.engine.component.Component;
@@ -7,7 +8,7 @@ import eea.engine.component.Component;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class AbstractBlockController extends Component {
+public abstract class AbstractBlockController extends Component implements IHitable {
 
     public AbstractBlockController(String componentID) {
         super(componentID);

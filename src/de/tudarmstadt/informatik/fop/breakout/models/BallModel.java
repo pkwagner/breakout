@@ -2,7 +2,7 @@ package de.tudarmstadt.informatik.fop.breakout.models;
 
 import eea.engine.entity.Entity;
 
-import org.lwjgl.util.vector.Vector2f;
+import org.newdawn.slick.geom.Vector2f;
 
 public class BallModel extends Entity {
 

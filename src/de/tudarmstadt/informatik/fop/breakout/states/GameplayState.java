@@ -1,19 +1,18 @@
 package de.tudarmstadt.informatik.fop.breakout.states;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.BallController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
+import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.views.BallRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
-
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -28,22 +27,30 @@ public class GameplayState extends BasicGameState {
     }
 
     @Override
-    public int getID() {
-        return stateId;
-    }
-
-    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         StickModel stickModel = new StickModel("stickModel");
-        stickModel.addComponent(new StickController("stick_controller"));
-        stickModel.addComponent(new StickRenderComponent("stick_view"));
+        StickController stickController = new StickController("stickController");
+        stickModel.addComponent(stickController);
+        stickModel.addComponent(new StickRenderComponent());
 
         BallModel ballModel = new BallModel("ball");
-        ballModel.addComponent(new BallController("ball_controller"));
-        ballModel.addComponent(new BallRenderComponent("ball_view"));
+        BallController ballController = new BallController("ball_controller");
+        ballModel.addComponent(ballController);
+        ballModel.addComponent(new BallRenderComponent());
+
+        //borders
+        Entity leftBorder = new BorderFactory(GameParameters.BorderType.LEFT).createEntity();
+        Entity rightBorder = new BorderFactory(GameParameters.BorderType.RIGHT).createEntity();
+        Entity topBorder = new BorderFactory(GameParameters.BorderType.TOP).createEntity();
+
+        ballController.init(stateBasedGame);
+        stickController.init(stateBasedGame);
 
         addEntity(stickModel);
         addEntity(ballModel);
+        addEntity(leftBorder);
+        addEntity(rightBorder);
+        addEntity(topBorder);
 
         MapController mapController = new MapController(this);
         mapController.loadMap();
@@ -63,5 +70,10 @@ public class GameplayState extends BasicGameState {
 
     public void addEntity(Entity entity) {
         entityManager.addEntity(stateId, entity);
+    }
+
+    @Override
+    public int getID() {
+        return stateId;
     }
 }

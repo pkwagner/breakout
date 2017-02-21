@@ -45,7 +45,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
             System.setProperty("org.lwjgl.librarypath",
                     System.getProperty("user.dir") + "/native/macosx");
         } else {
-        	logger.info("Using linux");
+        	logger.info("Using linux/bsd");
             System.setProperty("org.lwjgl.librarypath",
                     System.getProperty("user.dir") + "/native/"
                             + System.getProperty("os.name").toLowerCase());

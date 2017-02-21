@@ -1,5 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.states;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -15,13 +17,8 @@ public class MainMenuState extends BasicGameState {
     }
 
     @Override
-    public int getID() {
-        return id;
-    }
-
-    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
+        stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE);
     }
 
     @Override
@@ -32,5 +29,10 @@ public class MainMenuState extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
 
+    }
+
+    @Override
+    public int getID() {
+        return id;
     }
 }
