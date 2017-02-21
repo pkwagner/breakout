@@ -52,7 +52,7 @@ public class GameplayState extends BasicGameState {
         addEntity(rightBorder);
         addEntity(topBorder);
 
-        MapController mapController = new MapController(this);
+        MapController mapController = new MapController(gameContainer, this);
         mapController.loadMap();
     }
 

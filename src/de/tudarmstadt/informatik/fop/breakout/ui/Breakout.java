@@ -52,7 +52,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
         }
         // Add this StateBasedGame to an AppGameContainer
         AppGameContainer app = new AppGameContainer(new Breakout(false));
-
+        
         // Set the display mode and frame rate
         app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
         app.setTargetFrameRate(FRAME_RATE);

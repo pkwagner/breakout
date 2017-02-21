@@ -34,6 +34,7 @@ public interface GameParameters {
 	public static final String RIGHT_BORDER_ID = "rightBorder";
 
 	// Blocks
+	public static final String BLOCK_ID = "block";
 	public static final String MAP_FILE = "maps/level1.map";
 	public static final String BLOCK_1_IMAGE = "/images/block_1.png";
 	public static final String BLOCK_2_IMAGE = "/images/block_2.png";
@@ -69,4 +70,8 @@ public interface GameParameters {
 
 	// Highscore
 	public static final String HIGHSCORE_FILE = "highscores/highscore.hsc";
+	
+	// MapParameters
+	public static final int MAP_COLUMNS = 16;
+	public static final int MAP_ROWS	= 10;
 }
