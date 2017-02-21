@@ -28,12 +28,12 @@ public class GameplayState extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        StickModel stickModel = new StickModel("stickModel");
+        StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController("stickController");
         stickModel.addComponent(stickController);
         stickModel.addComponent(new StickRenderComponent());
 
-        BallModel ballModel = new BallModel("ball");
+        BallModel ballModel = new BallModel(GameParameters.BALL_ID);
         BallController ballController = new BallController("ball_controller");
         ballModel.addComponent(ballController);
         ballModel.addComponent(new BallRenderComponent());

@@ -44,7 +44,7 @@ public interface GameParameters {
 
 	// Ball
 	public static final String BALL_ID = "ball";
-	public static final float INITIAL_BALL_SPEED = 0.3f;
+	public static final float INITIAL_BALL_SPEED = 3f; //default 0.3
 	public static final float SPEEDUP_VALUE = 0.0001f;
 	public static final String BALL_IMAGE = "/images/ball.png";
 
