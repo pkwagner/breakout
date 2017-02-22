@@ -10,8 +10,10 @@ import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.BallRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
+
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
