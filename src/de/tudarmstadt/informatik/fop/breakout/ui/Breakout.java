@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.ui;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.states.HighscoreState;
 import de.tudarmstadt.informatik.fop.breakout.states.MainMenuState;
@@ -20,6 +21,12 @@ public class Breakout extends StateBasedGame implements GameParameters {
     // Remember if the game runs in debug mode
     private static boolean debug = false;
 
+    public static boolean getDebug() {
+        return debug;
+    }
+
+    private final HighScoreController highScoreController = new HighScoreController();
+
     /**
      * Creates a new Breakout instance
      *
@@ -28,10 +35,6 @@ public class Breakout extends StateBasedGame implements GameParameters {
     public Breakout(boolean debug) {
         super("Breakout");
         Breakout.debug = debug;
-    }
-
-    public static boolean getDebug() {
-        return debug;
     }
 
     public static void main(String[] args) throws SlickException {
@@ -51,6 +54,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
 	                    System.getProperty("user.dir") + "/native/"
 	                            + System.getProperty("os.name").toLowerCase());
 	        }
+
 	        // Add this StateBasedGame to an AppGameContainer
 	        AppGameContainer app = new AppGameContainer(new Breakout(false));
 	        
@@ -77,5 +81,14 @@ public class Breakout extends StateBasedGame implements GameParameters {
         StateBasedEntityManager.getInstance().addState(MAINMENU_STATE);
         StateBasedEntityManager.getInstance().addState(GAMEPLAY_STATE);
         StateBasedEntityManager.getInstance().addState(HIGHSCORE_STATE);
+    }
+
+    /**
+     * Get the shared instance of handling the highscores.
+     *
+     * @return highscore controller
+     */
+    public HighScoreController getHighScoreController() {
+        return highScoreController;
     }
 }

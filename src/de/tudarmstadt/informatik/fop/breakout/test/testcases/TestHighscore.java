@@ -1,11 +1,11 @@
 package de.tudarmstadt.informatik.fop.breakout.test.testcases;
 
-import static org.junit.Assert.*;
-
+import de.tudarmstadt.informatik.fop.breakout.test.adapter.AdapterExtended;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.tudarmstadt.informatik.fop.breakout.test.adapter.AdapterExtended;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 
 public class TestHighscore {
@@ -107,7 +107,7 @@ public class TestHighscore {
 		
 		
 		assertEquals("Highscore count should be 4", 4, adapter.getHighscoreCount());
-		
+
 		assertEquals("Player1", adapter.getNameAtHighscorePosition(0));
 		assertEquals(1337, adapter.getTimeElapsedAtHighscorePosition(0));
 		assertEquals("Player2", adapter.getNameAtHighscorePosition(1));
@@ -141,7 +141,5 @@ public class TestHighscore {
 		assertEquals("PlayerOne", adapter.getNameAtHighscorePosition(0));
 		assertEquals(2, adapter.getNumberOfDesBlocksAtHighscorePosition(0));
 		assertEquals(3, adapter.getTimeElapsedAtHighscorePosition(0));
-		
 	}
-	
 }
