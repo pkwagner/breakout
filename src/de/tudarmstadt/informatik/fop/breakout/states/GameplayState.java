@@ -7,6 +7,7 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
+import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.BallRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
 import eea.engine.entity.Entity;
@@ -28,6 +29,10 @@ public class GameplayState extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        if (Breakout.getDebug()) {
+            return;
+        }
+
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController("stickController");
         stickModel.addComponent(stickController);
