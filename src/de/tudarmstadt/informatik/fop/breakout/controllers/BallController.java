@@ -44,7 +44,7 @@ public class BallController extends Component {
         BallModel ball = getOwnerEntity();
 
         Vector2f oldPosition = ball.getPosition();
-        Vector2f newPosition = oldPosition.add(ball.getVelocity().copy().scale(delta / 17F));
+        Vector2f newPosition = oldPosition.add(ball.getVelocity().copy().scale(delta));
         ball.setPosition(newPosition);
     }
 }
