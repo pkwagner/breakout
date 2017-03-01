@@ -2,8 +2,8 @@ package de.tudarmstadt.informatik.fop.breakout.models.blocks;
 
 public class SimpleBlock extends AbstractBlockModel {
 
-    public SimpleBlock(String entityID) {
-        super(entityID);
+    public SimpleBlock(String entityID, float x, float y) {
+        super(entityID, x, y);
     }
 
     @Override

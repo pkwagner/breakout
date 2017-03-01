@@ -7,13 +7,17 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
+import de.tudarmstadt.informatik.fop.breakout.models.blocks.BlockType;
+import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
 import de.tudarmstadt.informatik.fop.breakout.views.BallRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.BlockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -52,7 +56,7 @@ public class GameplayState extends BasicGameState {
         addEntity(rightBorder);
         addEntity(topBorder);
 
-        MapController mapController = new MapController(this);
+        MapController mapController = new MapController(this, gameContainer);
         mapController.loadMap();
     }
 
@@ -70,6 +74,10 @@ public class GameplayState extends BasicGameState {
 
     public void addEntity(Entity entity) {
         entityManager.addEntity(stateId, entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        entityManager.removeEntity(stateId, entity);
     }
 
     @Override
