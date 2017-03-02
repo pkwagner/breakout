@@ -14,6 +14,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class StickController extends Component {
 
+    private Vector2f initialPos;
+
     public StickController(String componentID) {
         super(componentID);
     }
@@ -43,13 +45,18 @@ public class StickController extends Component {
         GameContainer container = game.getContainer();
 
         Vector2f stickSize = stick.getSize();
-        Vector2f initialPos = new Vector2f(container.getWidth() / 2
-                , container.getHeight() - stickSize.getY() / 2);
-        stick.setPosition(initialPos);
+        initialPos = new Vector2f(container.getWidth() / 2, container.getHeight() - stickSize.getY() / 2);
+
+        reset();
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
 
+    }
+
+    public void reset() {
+        StickModel stick = getOwnerEntity();
+        stick.setPosition(initialPos);
     }
 }

@@ -116,7 +116,7 @@ public class GameplayState extends BasicGameState {
     }
 
     private void addStartGameEntity(GameContainer gameContainer) {
-        Entity startGameEntity = new Entity("start_game");
+        Entity startGameEntity = new Entity(GameParameters.GAMESTART_ENTITY_ID);
         //center text
         startGameEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
         startGameEntity.setSize(new Vector2f(100, 100));

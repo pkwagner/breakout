@@ -79,6 +79,9 @@ public interface GameParameters {
 	public static final String PAUSE_ID = "pause";
 	public static final String PAUSE_IMAGE = "/images/pause.png";
 
+	// Game start
+	public static final String GAMESTART_ENTITY_ID = "start_game";
+
 	// Win
 	public static final String WIN_ID = "win";
 

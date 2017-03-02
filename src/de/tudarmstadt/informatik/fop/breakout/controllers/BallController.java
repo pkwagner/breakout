@@ -1,17 +1,21 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers;
 
 import de.tudarmstadt.informatik.fop.breakout.actions.BallCollideAction;
+import de.tudarmstadt.informatik.fop.breakout.actions.BallLeaveScreenAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 
 import eea.engine.component.Component;
 
 import eea.engine.event.basicevents.CollisionEvent;
+import eea.engine.event.basicevents.LeavingScreenEvent;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class BallController extends Component {
+
+    private int gameHeight, gameWidth;
 
     public BallController(String componentID) {
         super(componentID);
@@ -25,18 +29,23 @@ public class BallController extends Component {
     public void init(StateBasedGame game) {
         BallModel ball = getOwnerEntity();
 
+        // Get current width & height
         GameContainer container = game.getContainer();
-        int gameHeight = container.getHeight();
-        int gameWidth = container.getWidth();
+        gameHeight = container.getHeight();
+        gameWidth = container.getWidth();
 
-        ball.setPosition(new Vector2f(gameWidth / 2, gameHeight / 2));
-
-        ball.setVelocity(new Vector2f(1, -1).scale(GameParameters.INITIAL_BALL_SPEED));
+        // Reset position & velocity
+        reset();
 
         CollisionEvent collisionEvent = new CollisionEvent();
         collisionEvent.addAction(new BallCollideAction(ball));
 
+        // Add leave screen event
+        LeavingScreenEvent leavingScreenEvent = new LeavingScreenEvent();
+        leavingScreenEvent.addAction(new BallLeaveScreenAction(this));
+
         ball.addComponent(collisionEvent);
+        ball.addComponent(leavingScreenEvent);
     }
 
     @Override
@@ -46,5 +55,11 @@ public class BallController extends Component {
         Vector2f oldPosition = ball.getPosition();
         Vector2f newPosition = oldPosition.add(ball.getVelocity().copy().scale(delta));
         ball.setPosition(newPosition);
+    }
+
+    public void reset() {
+        BallModel ball = getOwnerEntity();
+        ball.setPosition(new Vector2f(gameWidth / 2, gameHeight / 2));
+        ball.setVelocity(new Vector2f(1, -1).scale(GameParameters.INITIAL_BALL_SPEED));
     }
 }
