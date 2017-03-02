@@ -57,7 +57,7 @@ public class MapController {
                 Vector2f blockSize = calculateBlockSize(mapWidth, mapHeight, gameContainer.getWidth(), gameContainer.getHeight());
                 block.setSize(blockSize);
                 block.setPosition(calculateBlockPosition(block.getX(), block.getY(), blockSize));
-                block.addComponent(new BlockRenderComponent(block.getType()));
+                block.addComponent(new BlockRenderComponent(block.getType(), blockSize));
                 block.addComponent(new BlockController(block.getID() + "_controller", block.getType()));
 
                 gameplayState.addEntity(block);
