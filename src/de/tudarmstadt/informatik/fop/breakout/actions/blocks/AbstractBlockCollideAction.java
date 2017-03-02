@@ -30,14 +30,17 @@ public abstract class AbstractBlockCollideAction {
     }
 
     public Vector2f calculateCollisionVelocity(Vector2f previousVelocity) {
-        // TODO Calculate correct angle!!!
-        /*float blockY = blockModel.getPosition().getY();
-        float blockBottomY = blockY + blockModel.getSize().getY() / 2;
-        float blockTopY = blockY - blockModel.getSize().getY() / 2;
+        // Calculate ball to block distance
+        // NOTE: If the ball bumps against the left/right border of the block, the Y-distance must be equal or lower than the X-distance.
+        //       Otherwise it's the same case with the top/bottom border. It's magic.
+        float ballToBlockDistanceX = Math.abs(ballModel.getPosition().getX() - blockModel.getPosition().getX());
+        float ballToBlockDistanceY = Math.abs(ballModel.getPosition().getY() - blockModel.getPosition().getY());
 
-        if (blockY <= blockTopY || blockY >= blockBottomY)
-            return new Vector2f(previousVelocity.getX(), -previousVelocity.getY());*/
+        // Check against left/right border bump
+        if (ballToBlockDistanceX > ballToBlockDistanceY)
+            return new Vector2f(-previousVelocity.getX(), previousVelocity.getY());
 
+        // Seemed to be a bump against the top/bottom block border
         return new Vector2f(previousVelocity.getX(), -previousVelocity.getY());
     }
 }
