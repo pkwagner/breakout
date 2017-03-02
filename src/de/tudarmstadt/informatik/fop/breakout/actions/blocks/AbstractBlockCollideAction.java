@@ -17,16 +17,15 @@ public abstract class AbstractBlockCollideAction {
         this.gameplayState = gameplayState;
     }
 
-    public void onCollide() {
-        onHit();
-    }
-
-    protected void onHit() {
-        if (blockModel.decreaseRemainingHits(ballModel.getHitPoints()) == 0)
+    public void onCollision() {
+        // Decrease remaining block hits by the balls hit points, afterwards check for remaining hit points
+        blockModel.decreaseRemainingHits(ballModel.getHitPoints());
+        if (!blockModel.hasHitsLeft())
             destroy();
     }
 
     private void destroy() {
+        // Call the state to remove this block
         gameplayState.removeEntity(blockModel);
     }
 

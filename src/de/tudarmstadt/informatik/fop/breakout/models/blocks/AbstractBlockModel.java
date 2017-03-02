@@ -1,8 +1,9 @@
 package de.tudarmstadt.informatik.fop.breakout.models.blocks;
 
+import de.tudarmstadt.informatik.fop.breakout.interfaces.IHitable;
 import eea.engine.entity.Entity;
 
-public abstract class AbstractBlockModel extends Entity {
+public abstract class AbstractBlockModel extends Entity implements IHitable {
 
     private int initialHits = 1;
     private int remainingHits = initialHits;
@@ -20,8 +21,24 @@ public abstract class AbstractBlockModel extends Entity {
         return initialHits;
     }
 
-    public int getRemainingHits() {
+    @Override
+    public void setHitsLeft(int hitsLeft) {
+        remainingHits = hitsLeft;
+    }
+
+    @Override
+    public int getHitsLeft() {
         return remainingHits;
+    }
+
+    @Override
+    public void addHitsLeft(int additionalHitsLeft) {
+        remainingHits += additionalHitsLeft;
+    }
+
+    @Override
+    public boolean hasHitsLeft() {
+        return (remainingHits > 0);
     }
 
     public float getX() {
@@ -32,9 +49,8 @@ public abstract class AbstractBlockModel extends Entity {
         return y;
     }
 
-    public int decreaseRemainingHits(int hits) {
+    public void decreaseRemainingHits(int hits) {
         remainingHits -= (remainingHits > hits) ? hits : remainingHits;
-        return remainingHits;
     }
 
 

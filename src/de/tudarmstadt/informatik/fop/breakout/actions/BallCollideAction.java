@@ -43,15 +43,18 @@ public class BallCollideAction implements Action {
                 ballModel.setVelocity(new Vector2f(- velocity.getX(), velocity.getY()));
                 break;
             default:
+                // Check if the collided entity is really a block
                 if (collidedEntity instanceof AbstractBlockModel) {
                     AbstractBlockModel block = (AbstractBlockModel) collidedEntity;
 
+                    // TODO Try to replace this by a switch/case construction
+                    // Decide by block type which blockCollideAction to choose
                     AbstractBlockCollideAction collideAction = null;
                     if (block.getType() == BlockType.SIMPLE)
                         collideAction = new SimpleBlockCollideAction(block, ballModel, (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE));
 
                     if (collideAction != null) {
-                        collideAction.onCollide();
+                        collideAction.onCollision();
                         ballModel.setVelocity(collideAction.calculateCollisionVelocity(velocity));
                     } else {
                         // TODO Throw error concerning undefined block type
