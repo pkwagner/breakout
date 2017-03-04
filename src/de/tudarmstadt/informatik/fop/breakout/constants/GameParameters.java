@@ -69,4 +69,9 @@ public interface GameParameters {
 
 	// Highscore
 	public static final String HIGHSCORE_FILE = "highscores/highscore.hsc";
+
+	// Menu
+	public static final String ENTRY_IMAGE = "/images/entry.png";
+	public static final String ENTRY_DOWN_IMAGE = "/images/entry_down.png";
+	public static final String MENU_BACKGROUND_IMAGE = "images/menu.png";
 }

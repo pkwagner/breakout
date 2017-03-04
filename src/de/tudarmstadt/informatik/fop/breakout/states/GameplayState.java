@@ -16,6 +16,7 @@ import eea.engine.entity.StateBasedEntityManager;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -24,6 +25,7 @@ public class GameplayState extends BasicGameState {
 
     private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
     private final int stateId;
+    private Image background;
 
     public GameplayState(int id) {
         this.stateId = id;
@@ -34,6 +36,8 @@ public class GameplayState extends BasicGameState {
         if (Breakout.getDebug()) {
             return;
         }
+
+        background = new Image(GameParameters.BACKGROUND_IMAGE);
 
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController("stickController");
@@ -72,6 +76,7 @@ public class GameplayState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
             throws SlickException {
+        graphics.drawImage(background,0,0);
         entityManager.renderEntities(gameContainer, stateBasedGame, graphics);
     }
 
