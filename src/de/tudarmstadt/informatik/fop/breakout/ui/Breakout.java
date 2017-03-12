@@ -35,30 +35,34 @@ public class Breakout extends StateBasedGame implements GameParameters {
     }
 
     public static void main(String[] args) throws SlickException {
-        // Set the library path depending on the operating system
-        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-            logger.info("Using windows");
-        	System.setProperty("org.lwjgl.librarypath",
-        			 System.getProperty("user.dir") + "/native/windows");
-        } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-        	logger.info("Using mac");
-            System.setProperty("org.lwjgl.librarypath",
-                    System.getProperty("user.dir") + "/native/macosx");
-        } else {
-        	logger.info("Using linux/bsd");
-            System.setProperty("org.lwjgl.librarypath",
-                    System.getProperty("user.dir") + "/native/"
-                            + System.getProperty("os.name").toLowerCase());
-        }
-        // Add this StateBasedGame to an AppGameContainer
-        AppGameContainer app = new AppGameContainer(new Breakout(false));
-        
-        // Set the display mode and frame rate
-        app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
-        app.setTargetFrameRate(FRAME_RATE);
-
-        // now start the game!
-        app.start();
+    	try{
+	        // Set the library path depending on the operating system
+	        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+	            logger.info("Using windows");
+	        	System.setProperty("org.lwjgl.librarypath",
+	        			 System.getProperty("user.dir") + "/native/windows");
+	        } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+	        	logger.info("Using mac");
+	            System.setProperty("org.lwjgl.librarypath",
+	                    System.getProperty("user.dir") + "/native/macosx");
+	        } else {
+	        	logger.info("Using linux/bsd");
+	            System.setProperty("org.lwjgl.librarypath",
+	                    System.getProperty("user.dir") + "/native/"
+	                            + System.getProperty("os.name").toLowerCase());
+	        }
+	        // Add this StateBasedGame to an AppGameContainer
+	        AppGameContainer app = new AppGameContainer(new Breakout(false));
+	        
+	        // Set the display mode and frame rate
+	        app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
+	        app.setTargetFrameRate(FRAME_RATE);
+	
+	        // now start the game!
+	        app.start();
+    	}catch(Exception e){
+    		logger.error(e);
+    	}
     }
 
     @Override

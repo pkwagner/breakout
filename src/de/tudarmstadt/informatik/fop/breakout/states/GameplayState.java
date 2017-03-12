@@ -2,12 +2,15 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.BallController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.ClockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
+import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.views.BallRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.ClockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
@@ -38,6 +41,12 @@ public class GameplayState extends BasicGameState {
         ballModel.addComponent(ballController);
         ballModel.addComponent(new BallRenderComponent());
 
+        ClockModel clockModel = new ClockModel(GameParameters.STOP_WATCH_ID);
+        ClockController clockController = new ClockController("clock_controller");
+        clockModel.addComponent(clockController);
+        ClockRenderComponent clockView = new ClockRenderComponent("clock_view");
+        clockModel.addComponent(clockView);
+        
         //borders
         Entity leftBorder = new BorderFactory(GameParameters.BorderType.LEFT).createEntity();
         Entity rightBorder = new BorderFactory(GameParameters.BorderType.RIGHT).createEntity();
@@ -45,6 +54,8 @@ public class GameplayState extends BasicGameState {
 
         ballController.init(stateBasedGame);
         stickController.init(stateBasedGame);
+        clockController.init(stateBasedGame);
+        clockView.init();
 
         addEntity(stickModel);
         addEntity(ballModel);
@@ -54,6 +65,8 @@ public class GameplayState extends BasicGameState {
 
         MapController mapController = new MapController(gameContainer, this);
         mapController.loadMap();
+        
+        addEntity(clockModel);
     }
 
     @Override

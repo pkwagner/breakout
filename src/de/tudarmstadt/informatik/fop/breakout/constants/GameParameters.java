@@ -41,7 +41,9 @@ public interface GameParameters {
 	public static final String BLOCK_3_IMAGE = "/images/block_3.png";
 
 	// Timer
-	public static final String STOP_WATCH_ID = "stopWatch";
+	public static final String 	STOP_WATCH_ID		= "stopWatch";
+	public static final int		STOP_WATCH_WIDTH	= 40;
+	public static final int		STOP_WATCH_HEIGHT	= 50;
 
 	// Ball
 	public static final String BALL_ID = "ball";

@@ -2,8 +2,11 @@ package de.tudarmstadt.informatik.fop.breakout.models.blocks;
 
 public class SimpleBlock extends AbstractBlockModel {
 
-    public SimpleBlock(String entityID) {
+	private int dingens;
+	
+    public SimpleBlock(String entityID, int dingens) {
         super(entityID);
+        this.setDingens(dingens);
     }
 
     @Override
@@ -15,4 +18,12 @@ public class SimpleBlock extends AbstractBlockModel {
     public BlockType transformToBlockType() {
         return null;
     }
+
+	public int getDingens() {
+		return dingens;
+	}
+
+	public void setDingens(int dingens) {
+		this.dingens = dingens;
+	}
 }
