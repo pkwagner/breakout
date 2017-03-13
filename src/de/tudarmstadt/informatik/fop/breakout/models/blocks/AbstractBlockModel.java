@@ -8,13 +8,8 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
     private int initialHits = 1;
     private int remainingHits = initialHits;
 
-    private float x, y;
-
-    public AbstractBlockModel(String entityID, float x, float y) {
+    public AbstractBlockModel(String entityID) {
         super(entityID);
-
-        this.x = x;
-        this.y = y;
     }
 
     public int getInitialHits() {
@@ -39,14 +34,6 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
     @Override
     public boolean hasHitsLeft() {
         return (remainingHits > 0);
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
     }
 
     public void decreaseRemainingHits(int hits) {
