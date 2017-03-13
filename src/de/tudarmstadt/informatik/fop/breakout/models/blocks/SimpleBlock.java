@@ -2,11 +2,11 @@ package de.tudarmstadt.informatik.fop.breakout.models.blocks;
 
 public class SimpleBlock extends AbstractBlockModel {
 
-	private int dingens;
+	private int maxHits;
 	
-    public SimpleBlock(String entityID, int dingens) {
+    public SimpleBlock(String entityID, int maxHits) {
         super(entityID);
-        this.setDingens(dingens);
+        this.setMaxHits(maxHits);
     }
 
     @Override
@@ -19,11 +19,11 @@ public class SimpleBlock extends AbstractBlockModel {
         return null;
     }
 
-	public int getDingens() {
-		return dingens;
+	public int getMaxHits() {
+		return maxHits;
 	}
 
-	public void setDingens(int dingens) {
-		this.dingens = dingens;
+	public void setMaxHits(int maxHits) {
+		this.maxHits = maxHits;
 	}
 }

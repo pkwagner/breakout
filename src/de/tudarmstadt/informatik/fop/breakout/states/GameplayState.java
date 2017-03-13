@@ -9,11 +9,14 @@ import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
+import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.BallRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.ClockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
+
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -31,6 +34,10 @@ public class GameplayState extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        if (Breakout.getDebug()) {
+            return;
+        }
+
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController("stickController");
         stickModel.addComponent(stickController);
@@ -83,6 +90,10 @@ public class GameplayState extends BasicGameState {
 
     public void addEntity(Entity entity) {
         entityManager.addEntity(stateId, entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        entityManager.removeEntity(stateId, entity);
     }
 
     @Override

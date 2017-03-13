@@ -6,6 +6,8 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.SimpleBlockCont
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
+import de.tudarmstadt.informatik.fop.breakout.views.blocks.AbstractBlockRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.blocks.SimpleBlockRenderComponent;
 import eea.engine.component.render.ImageRenderComponent;
 import exceptions.InvalidMapFileException;
 
@@ -67,19 +69,13 @@ public class MapController {
         createModels(rawMap);
 
         //assign views to blocks
-        map.stream().forEach(block -> { //Kids das is hier nur so gay weil ich den richtigen code zur Erstellung von den views noch nicht machen kann
-			try {
-				block.addComponent(createView(block));
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
-		});
+        map.stream().forEach(block -> block.addComponent(createView(block)));
 
         //assign controller to blocks
         map.stream().forEach(block -> block.addComponent(createController(block)));
 
-        //add block to game
-        map.stream().forEach(gameplayState::addEntity);
+		//add block to game
+		map.stream().forEach(gameplayState::addEntity);
     }
     
     
@@ -154,7 +150,7 @@ public class MapController {
     		if(blockRep.equals("0")){
     			
     		}else if(isInteger(blockRep)){
-    			map.add(new SimpleBlock(GameParameters.BLOCK_ID + index,Integer.parseInt(blockRep))); //TODO: oder wie auch immer paul das dann implementiert
+    			map.add(new SimpleBlock(GameParameters.BLOCK_ID + index,Integer.parseInt(blockRep)));
     			
     			int row		= (positioningIndex - (positioningIndex % GameParameters.MAP_COLUMNS)) / GameParameters.MAP_COLUMNS;
     			int column 	= positioningIndex - row * GameParameters.MAP_COLUMNS;
@@ -200,16 +196,19 @@ public class MapController {
      * @return
      * @throws SlickException
      */
-    private ImageRenderComponent createView(AbstractBlockModel b) throws SlickException{ //TODO: an dieser Stelle warte ich auf den lieben paul, das hier is alles provisorisch
-    	SimpleBlock block = (SimpleBlock) b;
-    	
-    	switch(block.getDingens()){
-    		case 1:	return new ImageRenderComponent(new Image(GameParameters.BLOCK_1_IMAGE)); 
-    		case 2:	return new ImageRenderComponent(new Image(GameParameters.BLOCK_2_IMAGE)); 
-    		case 3:	return new ImageRenderComponent(new Image(GameParameters.BLOCK_3_IMAGE)); 
-    		default: 		logger.error("Some error occured during the creation of the view for block: " + block.getID());
+    private AbstractBlockRenderComponent createView(AbstractBlockModel block) { //TODO: an dieser Stelle warte ich auf den lieben paul, das hier is alles provisorisch
+		try {
+			switch (block.getType()) {
+				case SIMPLE:
+					return new SimpleBlockRenderComponent(((SimpleBlock) block).getMaxHits());
+				default:
+					logger.error("Some error occured during the creation of the view of the block: " + block.getID());
+					return new SimpleBlockRenderComponent(1);
+			}
+		} catch (SlickException e) {
+			logger.error("The following error occured during the creation of block " + block.getID() + ": " + e);
 			return null;
-    	}
+		}
     } 
     
     /**
@@ -230,5 +229,4 @@ public class MapController {
     	  }  
     	  return true;  
     }
-    
 }
