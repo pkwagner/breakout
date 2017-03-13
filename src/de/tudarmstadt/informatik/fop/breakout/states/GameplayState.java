@@ -33,6 +33,7 @@ public class GameplayState extends BasicGameState {
 
     private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
     private final int stateId;
+    private Image background;
 
     public GameplayState(int id) {
         this.stateId = id;
@@ -87,6 +88,7 @@ public class GameplayState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
             throws SlickException {
+        graphics.drawImage(background,0,0);
         entityManager.renderEntities(gameContainer, stateBasedGame, graphics);
     }
 

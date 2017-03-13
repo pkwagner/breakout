@@ -76,4 +76,9 @@ public interface GameParameters {
 	// MapParameters
 	public static final int MAP_COLUMNS = 16;
 	public static final int MAP_ROWS	= 10;
+
+	// Menu
+	public static final String ENTRY_IMAGE = "/images/entry.png";
+	public static final String ENTRY_DOWN_IMAGE = "/images/entry_down.png";
+	public static final String MENU_BACKGROUND_IMAGE = "images/menu.png";
 }
