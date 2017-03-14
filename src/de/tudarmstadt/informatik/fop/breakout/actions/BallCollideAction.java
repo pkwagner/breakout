@@ -4,7 +4,6 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
-import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
@@ -47,15 +46,6 @@ public class BallCollideAction implements Action {
                 // Check if the collided entity is really a block
                 if (collidedEntity instanceof AbstractBlockModel) {
                     AbstractBlockModel blockModel = (AbstractBlockModel) collidedEntity;
-
-                    //todo: move this logic to a extra action
-                    // Decrease remaining blockModel hits by the balls hit points, afterwards check for remaining hit points
-                    blockModel.decreaseRemainingHits(ballModel.getHitPoints());
-                    if (!blockModel.hasHitsLeft()) {
-                        // Call the state to remove this block
-                        GameplayState gameplayState = (GameplayState) stateBasedGame.getCurrentState();
-                        gameplayState.removeEntity(blockModel);
-                    }
 
                     // NOTE: If the ball bumps against the left/right border of the block, the Y-distance must be equal or lower than the X-distance.
                     //       Otherwise it's the same case with the top/bottom border. It's magic.
