@@ -5,6 +5,7 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.BallController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.ClockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.RamBlockMovementController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
@@ -34,7 +35,8 @@ public class GameplayState extends BasicGameState {
     private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
     private final int stateId;
     private Image background;
-
+    private RamBlockMovementController ramBlockMovementController;
+    
     public GameplayState(int id) {
         this.stateId = id;
     }
@@ -74,8 +76,9 @@ public class GameplayState extends BasicGameState {
         addBorders(gameContainer);
         addPauseEntity(gameContainer);
         
-        MapController mapController = new MapController(gameContainer, this);
-
+        ramBlockMovementController = new RamBlockMovementController();
+        MapController mapController = new MapController(stateBasedGame, this);
+        
         mapController.loadMap();
         
         addEntity(clockModel);
@@ -85,6 +88,7 @@ public class GameplayState extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta)
             throws SlickException {
         entityManager.updateEntities(gameContainer, stateBasedGame, delta);
+        ramBlockMovementController.update(delta);
     }
 
     @Override
@@ -144,5 +148,9 @@ public class GameplayState extends BasicGameState {
         pauseEntity.addComponent(escapeKeyEvent);
 
         addEntity(pauseEntity);
+    }
+    
+    public RamBlockMovementController getRBMC(){
+    	return ramBlockMovementController;
     }
 }

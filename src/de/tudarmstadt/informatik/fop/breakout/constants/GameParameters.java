@@ -39,7 +39,12 @@ public interface GameParameters {
 	public static final String BLOCK_1_IMAGE = "/images/block_1.png";
 	public static final String BLOCK_2_IMAGE = "/images/block_2.png";
 	public static final String BLOCK_3_IMAGE = "/images/block_3.png";
-
+	public static final int		BLOCK_WIDTH = 50;
+	public static final int		BLOCK_HEIGHT = 30;
+	public static final float	RAM_BLOCK_ACCELERATION = 0.0001F;
+	public static final int		RAM_BLOCK_REST_TIME = 1500;
+	public static final float	RAM_BLOCK_REBOUND_VELOCITY = 0.01F;
+	
 	// Timer
 	public static final String 	STOP_WATCH_ID		= "stopWatch";
 	public static final int		STOP_WATCH_WIDTH	= 40;

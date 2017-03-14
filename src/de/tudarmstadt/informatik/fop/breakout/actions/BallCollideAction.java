@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.actions;
 
 import de.tudarmstadt.informatik.fop.breakout.actions.blocks.AbstractBlockCollideAction;
+import de.tudarmstadt.informatik.fop.breakout.actions.blocks.RamBlockCollideAction;
 import de.tudarmstadt.informatik.fop.breakout.actions.blocks.SimpleBlockCollideAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
@@ -50,8 +51,13 @@ public class BallCollideAction implements Action {
                     // TODO Try to replace this by a switch/case construction
                     // Decide by block type which blockCollideAction to choose
                     AbstractBlockCollideAction collideAction = null;
-                    if (block.getType() == BlockType.SIMPLE)
-                        collideAction = new SimpleBlockCollideAction(block, ballModel, (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE));
+                    
+                    switch(block.getType()){
+                    case SIMPLE:	collideAction = new SimpleBlockCollideAction(block, ballModel, (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE));
+                    	break;
+                    case RAM:		collideAction = new RamBlockCollideAction(block, ballModel, (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE));
+                    }
+                       
 
                     if (collideAction != null) {
                         collideAction.onCollision();
