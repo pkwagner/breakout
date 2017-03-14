@@ -21,11 +21,14 @@ import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 import eea.engine.event.basicevents.KeyPressedEvent;
 
+import org.apache.logging.log4j.Logger;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -34,6 +37,8 @@ public class GameplayState extends BasicGameState {
 
     private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
     private final int stateId;
+    private SpriteSheet backgroundSpriteSheet;
+    private Animation backgroundAnimation;
     private Image background;
     private RamBlockMovementController ramBlockMovementController;
     
@@ -47,8 +52,9 @@ public class GameplayState extends BasicGameState {
             return;
         }
 
-        background = new Image(GameParameters.BACKGROUND_IMAGE);
-
+        backgroundSpriteSheet = new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
+        backgroundAnimation = new Animation(backgroundSpriteSheet,70);
+        
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController("stickController");
         stickModel.addComponent(stickController);
@@ -94,7 +100,7 @@ public class GameplayState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
             throws SlickException {
-        graphics.drawImage(background,0,0);
+        backgroundAnimation.draw(0,0);
         entityManager.renderEntities(gameContainer, stateBasedGame, graphics);
     }
 

@@ -22,6 +22,7 @@ public interface GameParameters {
 	// Background
 	public static final String BACKGROUND_ID = "background";
 	public static final String BACKGROUND_IMAGE = "/images/background.png";
+	public static final String BACKGROUND_SPRITESHEET = "/images/background_spritesheet.png";
 
 	// Borders
 	public enum BorderType {
