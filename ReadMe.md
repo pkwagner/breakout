@@ -27,3 +27,4 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 | Gameplay | Left Arrow | Moves the stick left |
 | Gameplay | Right Arrow | Moves the stick right |
 | Gameplay | Escape | Pauses the game |
+| Gameplay | Space | Starts the game on a new game

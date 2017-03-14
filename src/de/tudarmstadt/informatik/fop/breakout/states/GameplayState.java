@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.actions.PauseToggleAction;
+import de.tudarmstadt.informatik.fop.breakout.actions.StartGameAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.BallController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.ClockController;
@@ -14,6 +15,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.BallRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.ClockRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.StartGameRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
 
 import eea.engine.component.render.ImageRenderComponent;
@@ -80,6 +82,7 @@ public class GameplayState extends BasicGameState {
 
         addBorders(gameContainer);
         addPauseEntity(gameContainer);
+        addStartGameEntity(gameContainer);
         
         ramBlockMovementController = new RamBlockMovementController();
         MapController mapController = new MapController(stateBasedGame, this);
@@ -103,6 +106,7 @@ public class GameplayState extends BasicGameState {
         entityManager.renderEntities(gameContainer, stateBasedGame, graphics);
     }
 
+
     public void addEntity(Entity entity) {
         entityManager.addEntity(stateId, entity);
     }
@@ -114,6 +118,20 @@ public class GameplayState extends BasicGameState {
     @Override
     public int getID() {
         return stateId;
+    }
+
+    private void addStartGameEntity(GameContainer gameContainer) {
+        Entity startGameEntity = new Entity("start_game");
+        //center text
+        startGameEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
+        startGameEntity.setSize(new Vector2f(100, 100));
+        startGameEntity.addComponent(new StartGameRenderComponent());
+
+        KeyPressedEvent startGameEvent = new KeyPressedEvent(Input.KEY_SPACE);
+        startGameEvent.addAction(new StartGameAction());
+        startGameEntity.addComponent(startGameEvent);
+
+        addEntity(startGameEntity);
     }
 
     private void addBorders(GameContainer gameContainer) {

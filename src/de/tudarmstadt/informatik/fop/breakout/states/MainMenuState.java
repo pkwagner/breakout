@@ -31,7 +31,10 @@ public class MainMenuState extends BasicGameState {
 
         buttonStart = new Button(gameContainer,buttonTex,40,150,"Start Game");
         buttonStart.setMouseOverImage(buttonDownTex);
-        buttonStart.addListener(source -> stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE));
+        buttonStart.addListener(source -> {
+            stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE);
+            gameContainer.setPaused(true);
+        });
 
         buttonHighscore = new Button(gameContainer,buttonTex,40,300,"Highscores");
         buttonHighscore.setMouseOverImage(buttonDownTex);
