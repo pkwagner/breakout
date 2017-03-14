@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
+import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 import eea.engine.component.RenderComponent;
 
 public class ClockRenderComponent extends RenderComponent {
@@ -38,7 +39,7 @@ public class ClockRenderComponent extends RenderComponent {
 
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) {
-		g.drawString(Float.toString(round(clock.getSeconds(),2)), clock.getPosition().getX(),clock.getPosition().getY());
+		g.drawString(Float.toString(Utility.round(clock.getSeconds(),2)), clock.getPosition().getX(),clock.getPosition().getY());
 		
 	}
 
@@ -48,10 +49,4 @@ public class ClockRenderComponent extends RenderComponent {
 		
 	}
 	
-	private static float round(float d, int decimalPlace) {
-        BigDecimal bd = new BigDecimal(Float.toString(d));
-        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);       
-        return bd.floatValue();
-    }
-
 }

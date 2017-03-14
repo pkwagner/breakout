@@ -7,6 +7,7 @@ import de.tudarmstadt.informatik.fop.breakout.exceptions.InvalidMapFileException
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
+import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.AbstractBlockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.SimpleBlockRenderComponent;
 import eea.engine.component.render.ImageRenderComponent;
@@ -149,7 +150,7 @@ public class MapController {
     	for(String blockRep : rawMap){	//blockRep stands for the String representation of a Block
     		if(blockRep.equals("0")){
     			
-    		}else if(isInteger(blockRep)){
+    		}else if(Utility.isInteger(blockRep)){
     			map.add(new SimpleBlock(GameParameters.BLOCK_ID + index,Integer.parseInt(blockRep)));
     			
     			int row		= (positioningIndex - (positioningIndex % GameParameters.MAP_COLUMNS)) / GameParameters.MAP_COLUMNS;
@@ -211,22 +212,4 @@ public class MapController {
 		}
     } 
     
-    /**
-     * Checks whether a given String can be cast to an integer
-     *
-     * @param str the string to be checked
-     * @return
-     */
-    private static boolean isInteger(String str){    	
-    	  try  
-    	  {  
-    	   	@SuppressWarnings("unused")
-			int i = Integer.parseInt(str);  
-    	  }  
-    	  catch(NumberFormatException nfe)  
-    	  {  
-    	    return false;  
-    	  }  
-    	  return true;  
-    }
 }
