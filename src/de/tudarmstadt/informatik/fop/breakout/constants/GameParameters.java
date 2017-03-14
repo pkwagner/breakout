@@ -85,10 +85,21 @@ public interface GameParameters {
 
 	// Highscore
 	public static final String HIGHSCORE_FILE = "highscores/highscore.hsc";
+	public static final int HIGHSCORE_MAX_ENTRIES = 10;
+	//example format: "name:12345:123.0" or "name:1234:123.135"
+	public static final String HIGHSCORE_FILE_ENTRY_SCHEME = "[\\w]+:[\\d]{1,9}:[\\d]{1,9}\\.\\d{1,3}";
+
+	public static final int HIGHSCORE_TITLE_START_Y = 50;
+	public static final int HIGHSCORE_ENTRY_START_Y = 110;
+	public static final int HIGHSCORE_ENTRY_GAP = 4;
+	public static final String HIGHSCORE_TITLE_TEXT = "Highscores";
 
 	// MapParameters
 	public static final int MAP_COLUMNS = 16;
 	public static final int MAP_ROWS	= 10;
+	public static final String MAP_FILE_PATH	= System.getProperty("user.dir") + "/maps/";
+	public static final String MAP_FILE_PREFIX = "level";
+	public static final String MAP_FILE_EXT 	= ".map";
 
 	// Menu
 	public static final String ENTRY_IMAGE = "/images/entry.png";
@@ -135,5 +146,19 @@ public interface GameParameters {
 		public Class getActionHandler() {
 			return actionHandler;
 		}
+	}
+
+	// Direction enum
+	public static enum Direction {
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
+	}
+
+	// BlockType enum
+	public static enum BlockType {
+		SIMPLE,
+		RAM
 	}
 }

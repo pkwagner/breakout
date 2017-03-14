@@ -1,7 +1,6 @@
 package de.tudarmstadt.informatik.fop.breakout.actions;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 
 import eea.engine.action.Action;
@@ -15,10 +14,10 @@ public class StickMoveAction implements Action {
 
     private static final Vector2f STICK_SPEED = new Vector2f(GameParameters.STICK_SPEED, 0);
 
-    private final Direction moveDirection;
+    private final GameParameters.Direction moveDirection;
     private final StickModel stickModel;
 
-    public StickMoveAction(Direction moveDirection, StickModel stickModel) {
+    public StickMoveAction(GameParameters.Direction moveDirection, StickModel stickModel) {
         this.moveDirection = moveDirection;
         this.stickModel = stickModel;
     }
@@ -26,7 +25,7 @@ public class StickMoveAction implements Action {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
         Vector2f frameVelocity = STICK_SPEED.copy().scale(delta);
-        if (moveDirection == Direction.LEFT) {
+        if (moveDirection == GameParameters.Direction.LEFT) {
             frameVelocity.scale(-1);
         }
 

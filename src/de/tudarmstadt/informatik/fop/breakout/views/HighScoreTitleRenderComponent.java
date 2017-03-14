@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.fop.breakout.views;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import eea.engine.component.RenderComponent;
 
 import java.awt.Font;
@@ -16,12 +17,10 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class HighScoreTitleRenderComponent extends RenderComponent {
 
-    private static final String TITLE_TEXT = "Highscores";
-
     private final TrueTypeFont titleFont = new TrueTypeFont(new Font("Verdana", Font.BOLD, 40), true);
 
-    private final int textWidth = titleFont.getWidth(TITLE_TEXT);
-    private final int textHeight = titleFont.getHeight(TITLE_TEXT);
+    private final int textWidth = titleFont.getWidth(GameParameters.HIGHSCORE_TITLE_TEXT);
+    private final int textHeight = titleFont.getHeight(GameParameters.HIGHSCORE_TITLE_TEXT);
 
     public HighScoreTitleRenderComponent(String id) {
         super(id);
@@ -38,7 +37,7 @@ public class HighScoreTitleRenderComponent extends RenderComponent {
 
         //start painting from the top left point of the in order to draw the components only inside it
         Shape ownerShape = getOwnerEntity().getShape();
-        graphics.drawString(TITLE_TEXT, ownerShape.getMinX(), ownerShape.getMinY());
+        graphics.drawString(GameParameters.HIGHSCORE_TITLE_TEXT, ownerShape.getMinX(), ownerShape.getMinY());
 
         //restore the previous font otherwise it would paint that font for other entities as well
         graphics.resetFont();

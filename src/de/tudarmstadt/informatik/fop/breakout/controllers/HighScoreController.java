@@ -25,14 +25,9 @@ import org.apache.logging.log4j.Logger;
  */
 public class HighScoreController {
 
-    private static final int MAX_ENTRIES = 10;
-
-    //example format: "name:12345:123.0" or "name:1234:123.135"
-    private static final String LINE_REGEX = "[\\w]+:[\\d]{1,9}:[\\d]{1,9}\\.\\d{1,3}";
-
     private final Logger logger = LogManager.getLogger();
-    private final Pattern linePattern = Pattern.compile(LINE_REGEX);
-    private List<IHighscoreEntry> entries = new ArrayList<>(MAX_ENTRIES);
+    private final Pattern linePattern = Pattern.compile(GameParameters.HIGHSCORE_FILE_ENTRY_SCHEME);
+    private List<IHighscoreEntry> entries = new ArrayList<>(GameParameters.HIGHSCORE_MAX_ENTRIES);
 
     /**
      * Loads the highscore file from disk into an internal representation in memory.
@@ -107,7 +102,7 @@ public class HighScoreController {
 
         entries = entries.stream()
                 .sorted()
-                .limit(MAX_ENTRIES)
+                .limit(GameParameters.HIGHSCORE_MAX_ENTRIES)
                 .collect(Collectors.toList());
 
         logger.info("Added highscore entry - new state: {}", entries);

@@ -47,7 +47,7 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
     }
 
 
-    public abstract BlockType getType();
+    public abstract GameParameters.BlockType getType();
 
-    public abstract BlockType transformToBlockType();
+    public abstract GameParameters.BlockType transformToBlockType();
 }

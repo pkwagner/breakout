@@ -1,7 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers;
 
 import de.tudarmstadt.informatik.fop.breakout.actions.StickMoveAction;
-import de.tudarmstadt.informatik.fop.breakout.models.Direction;
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 
 import eea.engine.component.Component;
@@ -29,10 +29,10 @@ public class StickController extends Component {
 
     public void init(StateBasedGame game) {
         KeyDownEvent leftEvent = new KeyDownEvent(Input.KEY_LEFT);
-        leftEvent.addAction(new StickMoveAction(Direction.LEFT, getOwnerEntity()));
+        leftEvent.addAction(new StickMoveAction(GameParameters.Direction.LEFT, getOwnerEntity()));
 
         KeyDownEvent rightEvent = new KeyDownEvent(Input.KEY_RIGHT);
-        rightEvent.addAction(new StickMoveAction(Direction.RIGHT, getOwnerEntity()));
+        rightEvent.addAction(new StickMoveAction(GameParameters.Direction.RIGHT, getOwnerEntity()));
 
         getOwnerEntity().addComponent(leftEvent);
         getOwnerEntity().addComponent(rightEvent);

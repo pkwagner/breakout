@@ -5,7 +5,6 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.AbstractBlockCo
 import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.RamBlockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.SimpleBlockController;
 import de.tudarmstadt.informatik.fop.breakout.exceptions.InvalidMapFileException;
-import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.RamBlock;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
@@ -37,10 +36,6 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MapController {
 
 	private static final Logger logger = LogManager.getLogger();
-	
-	private static final String FILE_PATH	= System.getProperty("user.dir") + "/maps/";
-    private static final String FILE_PREFIX = "level";
-    private static final String FILE_EXT 	= ".map";
 
     private final List<AbstractBlockModel> map = new ArrayList<>();
 
@@ -63,7 +58,7 @@ public class MapController {
     	ArrayList<String> rawMap;
     	
     	try{
-    		rawMap = loadMapFromFile(FILE_PATH + FILE_PREFIX + mapId + FILE_EXT);
+    		rawMap = loadMapFromFile(GameParameters.MAP_FILE_PATH + GameParameters.MAP_FILE_PREFIX + mapId + GameParameters.MAP_FILE_EXT);
     		logger.info("Map with Id " + mapId +" succesfully loaded");
     	}catch(InvalidMapFileException e){
     		rawMap = new ArrayList<String>();
@@ -175,17 +170,17 @@ public class MapController {
     			index++;
     		}else if(isRamBlock(blockRep)){
     			
-    			Direction d;
+    			GameParameters.Direction d;
     			switch(blockRep.charAt(0)){
-	    			case 'u': d = Direction.UP;
+	    			case 'u': d = GameParameters.Direction.UP;
 	    				break;
-	    			case 'd': d = Direction.DOWN;
+	    			case 'd': d = GameParameters.Direction.DOWN;
 						break;
-	    			case 'l': d = Direction.LEFT;
+	    			case 'l': d = GameParameters.Direction.LEFT;
 						break;
-	    			case 'r': d = Direction.RIGHT;
+	    			case 'r': d = GameParameters.Direction.RIGHT;
 						break;
-					default: d = Direction.RIGHT;
+					default: d = GameParameters.Direction.RIGHT;
 						logger.error("Something went wrong during creation of RamBlock " + blockRep + " at row " + row + " and column " + column);
     			}
     			map.add(new RamBlock(GameParameters.BLOCK_ID + index ,d, Integer.parseInt(blockRep.substring(1)), gameplayState.getRBMC()));

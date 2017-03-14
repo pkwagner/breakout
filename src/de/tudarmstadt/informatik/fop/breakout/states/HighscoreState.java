@@ -30,11 +30,6 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class HighscoreState extends BasicGameState {
 
-    private static final int TITLE_START_Y = 50;
-
-    private static final int ENTRY_START_Y = 110;
-    private static final int ENTRY_GAP = 4;
-
     private final Logger logger = LogManager.getLogger();
     private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
     private final int stateId;
@@ -101,9 +96,9 @@ public class HighscoreState extends BasicGameState {
         entryEntity.addComponent(renderComponent);
 
         int imageHeight = (int) renderComponent.getSize().getY();
-        int posY = ENTRY_START_Y
+        int posY = GameParameters.HIGHSCORE_ENTRY_START_Y
                 //the gap before and after the entry
-                + ENTRY_GAP * (index + 1)
+                + GameParameters.HIGHSCORE_ENTRY_GAP * (index + 1)
                 //all previous entries
                 + imageHeight * index
                 //the position is always the center - so divide the to-draw-content
@@ -125,7 +120,7 @@ public class HighscoreState extends BasicGameState {
     private void addTitle(GameContainer gameContainer) {
         Entity titleEntity = new Entity("title");
 
-        titleEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, TITLE_START_Y));
+        titleEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, GameParameters.HIGHSCORE_TITLE_START_Y));
         titleEntity.addComponent(new HighScoreTitleRenderComponent("title_view"));
 
         entityManager.addEntity(stateId, titleEntity);
