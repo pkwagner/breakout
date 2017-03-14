@@ -3,13 +3,13 @@ package de.tudarmstadt.informatik.fop.breakout.controllers;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.AbstractBlockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.SimpleBlockController;
+import de.tudarmstadt.informatik.fop.breakout.exceptions.InvalidMapFileException;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.AbstractBlockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.SimpleBlockRenderComponent;
 import eea.engine.component.render.ImageRenderComponent;
-import exceptions.InvalidMapFileException;
 
 import java.io.IOException;
 import java.io.StringReader;

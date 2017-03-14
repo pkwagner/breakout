@@ -1,4 +1,4 @@
-package exceptions;
+package de.tudarmstadt.informatik.fop.breakout.exceptions;
 
 public class InvalidMapFileException extends Exception {
 
