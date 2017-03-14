@@ -3,27 +3,24 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
 import de.tudarmstadt.informatik.fop.breakout.interfaces.IHighscoreEntry;
+import de.tudarmstadt.informatik.fop.breakout.models.BackButton;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.HighScoreEntryRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.HighScoreTitleRenderComponent;
-
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
-import eea.engine.event.basicevents.KeyPressedEvent;
-
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.util.List;
 
 /**
  * State showing the top ten high scores
@@ -58,7 +55,7 @@ public class HighscoreState extends BasicGameState {
             addScoreEntries(gameContainer, index, entry);
         }
 
-        addBackEvent(stateBasedGame);
+        entityManager.addEntity(stateId, new BackButton());
     }
 
     @Override
@@ -75,16 +72,6 @@ public class HighscoreState extends BasicGameState {
     @Override
     public int getID() {
         return stateId;
-    }
-
-    private void addBackEvent(StateBasedGame stateBasedGame) {
-        Entity backEntity = new Entity("back");
-
-        KeyPressedEvent escapeEvent = new KeyPressedEvent(Input.KEY_ESCAPE);
-        escapeEvent.addAction((cont, game, delta, comp) -> stateBasedGame.enterState(GameParameters.MAINMENU_STATE));
-        backEntity.addComponent(escapeEvent);
-
-        entityManager.addEntity(stateId, backEntity);
     }
 
     private void addScoreEntries(GameContainer gameContainer, int index, IHighscoreEntry entry) throws SlickException {

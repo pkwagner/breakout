@@ -28,3 +28,9 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 | Gameplay | Right Arrow | Moves the stick right |
 | Gameplay | Escape | Pauses the game |
 | Gameplay | Space | Starts the game on a new game
+
+## Credits
+
+### Images
+
+* [Back-Button](https://pixabay.com/en/arrows-blue-left-previous-glossy-147754/)

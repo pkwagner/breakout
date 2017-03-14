@@ -9,6 +9,7 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.RamBlockMovementController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
+import de.tudarmstadt.informatik.fop.breakout.models.BackButton;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
@@ -23,13 +24,7 @@ import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 import eea.engine.event.basicevents.KeyPressedEvent;
 
-import org.apache.logging.log4j.Logger;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
@@ -80,16 +75,16 @@ public class GameplayState extends BasicGameState {
         addEntity(stickModel);
         addEntity(ballModel);
 
-        addBorders(gameContainer);
-        addPauseEntity(gameContainer);
         addStartGameEntity(gameContainer);
-        
         ramBlockMovementController = new RamBlockMovementController();
         MapController mapController = new MapController(stateBasedGame, this);
         
         mapController.loadMap();
-        
+
+        //add these entities at the end in order to overdraw the other components if visible
+        addBorders(gameContainer);
         addEntity(clockModel);
+        addPauseEntities(gameContainer);
     }
 
     @Override
@@ -152,25 +147,32 @@ public class GameplayState extends BasicGameState {
      * @param gameContainer game instance container
      * @throws SlickException if the pause cannot be found
      */
-    private void addPauseEntity(GameContainer gameContainer) throws SlickException {
-        Entity pauseEntity = new Entity(GameParameters.PAUSE_ID);
+    private void addPauseEntities(GameContainer gameContainer) throws SlickException {
+        //show the back to main menu too on pausing the game
+        BackButton backButton = new BackButton();
+        backButton.setVisible(false);
+
+        Entity pauseImage = new Entity("pause_image");
 
         //default hides the entity and make it passable so it won't effect the gameplay
-        pauseEntity.setVisible(false);
-        pauseEntity.setPassable(true);
+        pauseImage.setVisible(false);
+        pauseImage.setPassable(true);
 
         //center the entity
-        pauseEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
+        pauseImage.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
 
         //view component
-        pauseEntity.addComponent(new ImageRenderComponent(new Image(GameParameters.PAUSE_IMAGE)));
+        pauseImage.addComponent(new ImageRenderComponent(new Image(GameParameters.PAUSE_IMAGE)));
 
         //key listener
+        Entity pauseEntity = new Entity(GameParameters.PAUSE_ID);
         KeyPressedEvent escapeKeyEvent = new KeyPressedEvent(Input.KEY_ESCAPE);
-        escapeKeyEvent.addAction(new PauseToggleAction());
+        escapeKeyEvent.addAction(new PauseToggleAction(backButton, pauseImage));
         pauseEntity.addComponent(escapeKeyEvent);
 
         addEntity(pauseEntity);
+        addEntity(pauseImage);
+        addEntity(backButton);
     }
     
     public RamBlockMovementController getRBMC(){
