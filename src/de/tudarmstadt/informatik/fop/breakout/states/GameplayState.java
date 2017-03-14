@@ -45,6 +45,8 @@ public class GameplayState extends BasicGameState {
             return;
         }
 
+        background = new Image(GameParameters.BACKGROUND_IMAGE);
+
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController("stickController");
         stickModel.addComponent(stickController);
