@@ -29,7 +29,7 @@ public class BallController extends Component {
         int gameHeight = container.getHeight();
         int gameWidth = container.getWidth();
 
-        ball.setPosition(new Vector2f(gameWidth / 2, gameHeight / 2));
+        ball.setPosition(new Vector2f(gameWidth / 2, gameHeight / 2 + 20));
 
         ball.setVelocity(new Vector2f(1, -1).scale(GameParameters.INITIAL_BALL_SPEED));
 

@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 public class BallModel extends Entity {
 
     private Vector2f velocity;
-    private int radius = 1;
+    private int radius = 25;
     private int hitPoints = 1;
 
     public BallModel(String entityID) {

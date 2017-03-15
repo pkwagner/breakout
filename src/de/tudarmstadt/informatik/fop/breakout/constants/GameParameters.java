@@ -3,9 +3,9 @@ package de.tudarmstadt.informatik.fop.breakout.constants;
 /**
  * Class for holding the game parameters and constants e.g. entity IDs or image
  * paths
- * 
+ *
  * @author Tobias Otterbein, Benedikt Wartusch
- * 
+ *
  */
 public interface GameParameters {
 
@@ -72,7 +72,7 @@ public interface GameParameters {
 
 	// Highscore
 	public static final String HIGHSCORE_FILE = "highscores/highscore.hsc";
-	
+
 	// MapParameters
 	public static final int MAP_COLUMNS = 16;
 	public static final int MAP_ROWS	= 10;

@@ -11,12 +11,13 @@ import eea.engine.entity.Entity;
 import eea.engine.event.basicevents.CollisionEvent;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * Todo write this
+ * Handles ball collision with another entity
  */
 public class BallCollideAction implements Action {
 
@@ -52,24 +53,50 @@ public class BallCollideAction implements Action {
                 if (collidedEntity instanceof AbstractBlockModel) {
                     AbstractBlockModel blockModel = (AbstractBlockModel) collidedEntity;
 
-                    // NOTE: If the ball bumps against the left/right border of the block, the Y-distance must be equal or lower than the X-distance.
-                    //       Otherwise it's the same case with the top/bottom border. It's magic.
-                    float ballToBlockDistanceX = ballModel.getPosition().getX() - blockModel.getPosition().getX();
-                    float ballToBlockDistanceY = ballModel.getPosition().getY() - blockModel.getPosition().getY();
+                    Vector2f ballPos = ballModel.getPosition();
+                    Circle ballShape = new Circle(ballPos.getX(), ballPos.getY(), ballModel.getRadius());
 
-                    if (Math.abs(ballToBlockDistanceX) > Math.abs(ballToBlockDistanceY)) {
-                        // Check against left/right border bump
-                        if (ballToBlockDistanceX > 0) {
+                    Shape blockShape = blockModel.getShape();
+                    if (!ballShape.intersects(blockShape)) {
+                        return;
+                    }
+
+                    float blockLeftBorder = ballShape.getMaxX() - blockShape.getMinX();
+                    float blockTopBorder = ballShape.getMaxY() - blockShape.getMinY();
+
+                    float blockRightBorder = blockShape.getMaxX() - ballShape.getMinX();
+                    float blockBottomBorder = blockShape.getMaxY() - ballShape.getMinY();
+
+                    float horizontalDiff = ballModel.getVelocity().getY() > 0 ? blockTopBorder : blockBottomBorder;
+                    float verticalMax = ballModel.getVelocity().getX() > 0 ? blockLeftBorder : blockRightBorder;
+
+                    System.out.println("===============================");
+                    System.out.println("BALL " + "X:" + ballShape.getMaxX() + " " + ballShape.getMinX() + "Y:" + ballShape.getMaxY() + " " + ballShape.getMinY());
+                    System.out.println("BLOCK: " + "X:" + blockShape.getMaxX() + " " + blockShape.getMinX() + "Y:" + blockShape.getMaxY() + " " + blockShape.getMinY());
+                    System.out.println("===============================");
+                    System.out.println("LEFT:BORDER: " + blockLeftBorder);
+                    System.out.println("TOP:BORDER: " + blockTopBorder);
+                    System.out.println("RIGHT:BORDER: " + blockRightBorder);
+                    System.out.println("BOTTOM:BORDER: " + blockBottomBorder);
+                    System.out.println("================================");
+                    System.out.println(horizontalDiff + " ::: " + verticalMax);
+                    if (horizontalDiff > verticalMax) {
+                        if (ballModel.getVelocity().getX() < 0) {
+                            //moves left
+                            System.out.println("RIGHT BLOCK BORDER");
                             onCollide(collidedEntity.getShape(), Direction.LEFT);
                         } else {
+                            //moves right
+                            System.out.println("LEFT BLOCK BORDER");
                             onCollide(collidedEntity.getShape(), Direction.RIGHT);
                         }
                     } else {
-                        // Seemed to be a bump against the top/bottom block border
-                        if (ballToBlockDistanceY > 0) {
-                            onCollide(collidedEntity.getShape(), Direction.UP);
-                        } else {
+                        if (ballModel.getVelocity().getY() > 0) {
+                            System.out.println("TOP BLOCK BORDER");
                             onCollide(collidedEntity.getShape(), Direction.DOWN);
+                        } else {
+                            System.out.println("BOTTOM BLOCK BORDER");
+                            onCollide(collidedEntity.getShape(), Direction.UP);
                         }
                     }
                 }
