@@ -1,5 +1,9 @@
 package de.tudarmstadt.informatik.fop.breakout.models.blocks;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+
+import java.util.Arrays;
+
 public class SimpleBlock extends AbstractBlockModel {
 
 	private int maxHits;
@@ -7,6 +11,9 @@ public class SimpleBlock extends AbstractBlockModel {
     public SimpleBlock(String entityID, int maxHits) {
         super(entityID);
         this.setMaxHits(maxHits);
+
+        // Set all items as default
+        droppableItems = Arrays.copyOf(GameParameters.ItemType.values(), GameParameters.ItemType.values().length);
     }
 
     @Override

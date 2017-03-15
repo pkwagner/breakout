@@ -16,10 +16,11 @@ public class BlockRenderComponent extends ImageRenderComponent {
     }
 
     private static String getBlockImage(BlockType blockType) {
-        // TODO Try to replace by switch/case construction
-        if (blockType == BlockType.SIMPLE)
-            return GameParameters.BLOCK_1_IMAGE;
-
-        return "";
+        switch (blockType) {
+            case SIMPLE:
+                return GameParameters.BLOCK_1_IMAGE;
+            default:
+                return "";
+        }
     }
 }
