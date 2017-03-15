@@ -4,15 +4,20 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
+
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
 import eea.engine.event.basicevents.CollisionEvent;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Todo write this
+ */
 public class BallCollideAction implements Action {
 
     private final BallModel ballModel;

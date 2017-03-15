@@ -1,11 +1,12 @@
 package de.tudarmstadt.informatik.fop.breakout.actions;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
-
 import eea.engine.action.Action;
 import eea.engine.component.Component;
-
+import eea.engine.entity.Entity;
+import eea.engine.event.basicevents.CollisionEvent;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -18,6 +19,13 @@ public class BlockCollideAction implements Action {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
         AbstractBlockModel blockModel = (AbstractBlockModel) component.getOwnerEntity();
+
+        CollisionEvent collisionEvent = (CollisionEvent) component;
+        Entity collidedEntity = collisionEvent.getCollidedEntity();
+        if (!GameParameters.BALL_ID.equals(collidedEntity.getID())) {
+            //only a ball can destroy a block
+            return;
+        }
 
         // Decrease remaining blockModel hits, afterwards check for remaining hit points
         blockModel.decreaseRemainingHits(1);

@@ -59,30 +59,30 @@ public class MapController {
     		rawMap = loadMapFromFile(FILE_PATH + FILE_PREFIX + mapId + FILE_EXT);
     		logger.info("Map with Id " + mapId +" succesfully loaded");
     	}catch(InvalidMapFileException e){
-    		rawMap = new ArrayList<String>();
+    		rawMap = new ArrayList<>();
     		logger.error("Map with Id " + mapId + " is invalid. The following error occured: " + e);
     	} catch (IOException e) {
-    		rawMap = new ArrayList<String>();
+    		rawMap = new ArrayList<>();
     		logger.error("Map with Id " + mapId + " failed to load. The following error occured: " + e);
 		}
         
         createModels(rawMap);
 
         //assign views to blocks
-        map.stream().forEach(block -> block.addComponent(createView(block)));
+        map.forEach(block -> block.addComponent(createView(block)));
 
         //assign controller to blocks
-        map.stream().forEach(block -> block.addComponent(createController(block)));
+        map.forEach(block -> block.addComponent(createController(block)));
 
 		//assign collision events
-		map.stream().forEach(block -> {
+		map.forEach(block -> {
 			CollisionEvent collisionEvent = new CollisionEvent();
 			collisionEvent.addAction(new BlockCollideAction());
 			block.addComponent(collisionEvent);
 		});
 
 		//add block to game
-		map.stream().forEach(gameplayState::addEntity);
+		map.forEach(gameplayState::addEntity);
     }
     
     
