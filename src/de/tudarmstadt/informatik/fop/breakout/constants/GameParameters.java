@@ -52,7 +52,7 @@ public interface GameParameters {
 	public static final float	RAM_BLOCK_ACCELERATION = 0.0001F;
 	public static final int		RAM_BLOCK_REST_TIME = 1500;
 	public static final float	RAM_BLOCK_REBOUND_VELOCITY = 0.01F;
-	
+
 	// Timer
 	public static final String 	STOP_WATCH_ID		= "stopWatch";
 	public static final int		STOP_WATCH_WIDTH	= 40;
@@ -107,7 +107,7 @@ public interface GameParameters {
 	public static final String ENTRY_IMAGE = "/images/entry.png";
 	public static final String ENTRY_DOWN_IMAGE = "/images/entry_down.png";
 	public static final String MENU_BACKGROUND_IMAGE = "images/menu.png";
-	
+
 	// Items
 	public static final float ITEM_FALL_SPEED = 0.2f;
 	public static final float ITEM_FASTER_SPEEDUP_VALUE = 1.1f;

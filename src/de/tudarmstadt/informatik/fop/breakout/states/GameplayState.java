@@ -3,16 +3,9 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 import de.tudarmstadt.informatik.fop.breakout.actions.PauseToggleAction;
 import de.tudarmstadt.informatik.fop.breakout.actions.StartGameAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.controllers.BallController;
-import de.tudarmstadt.informatik.fop.breakout.controllers.ClockController;
-import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
-import de.tudarmstadt.informatik.fop.breakout.controllers.RamBlockMovementController;
-import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.*;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
-import de.tudarmstadt.informatik.fop.breakout.models.BackButton;
-import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
-import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
-import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
+import de.tudarmstadt.informatik.fop.breakout.models.*;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.BallRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.ClockRenderComponent;
@@ -37,7 +30,9 @@ public class GameplayState extends BasicGameState {
     private SpriteSheet backgroundSpriteSheet;
     private Animation backgroundAnimation;
     private RamBlockMovementController ramBlockMovementController;
-    
+
+    private final SoundController soundController = new SoundController();
+
     public GameplayState(int id) {
         this.stateId = id;
     }
@@ -48,9 +43,12 @@ public class GameplayState extends BasicGameState {
             return;
         }
 
+        //load sound effects
+        soundController.load(SoundType.BLOCK_HIT, SoundType.ITEM_PICKUP, SoundType.STICK_HIT);
+
         backgroundSpriteSheet = new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
         backgroundAnimation = new Animation(backgroundSpriteSheet,70);
-        
+
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController(GameParameters.STICK_ID + "_controller");
         stickModel.addComponent(stickController);
@@ -68,7 +66,7 @@ public class GameplayState extends BasicGameState {
         clockModel.addComponent(clockController);
         ClockRenderComponent clockView = new ClockRenderComponent(GameParameters.STOP_WATCH_ID + "_view");
         clockModel.addComponent(clockView);
-        
+
         ballController.init(stateBasedGame);
         stickController.init(stateBasedGame);
         clockController.init(stateBasedGame);
@@ -80,7 +78,7 @@ public class GameplayState extends BasicGameState {
         addStartGameEntity(gameContainer);
         ramBlockMovementController = new RamBlockMovementController();
         MapController mapController = new MapController(stateBasedGame, this);
-        
+
         mapController.loadMap();
 
         //add these entities at the end in order to overdraw the other components if visible
@@ -176,8 +174,12 @@ public class GameplayState extends BasicGameState {
         addEntity(pauseImage);
         addEntity(backButton);
     }
-    
+
     public RamBlockMovementController getRBMC(){
     	return ramBlockMovementController;
+    }
+
+    public SoundController getSoundController() {
+        return soundController;
     }
 }

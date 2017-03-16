@@ -3,7 +3,6 @@ package de.tudarmstadt.informatik.fop.breakout.actions;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;

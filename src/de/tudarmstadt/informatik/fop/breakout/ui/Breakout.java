@@ -6,14 +6,13 @@ import de.tudarmstadt.informatik.fop.breakout.states.CreditsState;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.states.HighscoreState;
 import de.tudarmstadt.informatik.fop.breakout.states.MainMenuState;
-
 import eea.engine.entity.StateBasedEntityManager;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Breakout extends StateBasedGame implements GameParameters {
@@ -58,11 +57,13 @@ public class Breakout extends StateBasedGame implements GameParameters {
 
 	        // Add this StateBasedGame to an AppGameContainer
 	        AppGameContainer app = new AppGameContainer(new Breakout(false));
-	        
+
 	        // Set the display mode and frame rate
 	        app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
 	        app.setTargetFrameRate(FRAME_RATE);
-	
+
+            SoundStore.get().init();
+
 	        // now start the game!
 	        app.start();
     	}catch(Exception e){

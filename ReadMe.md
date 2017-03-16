@@ -12,6 +12,7 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 * Ball movement
 * Ball collides with other entities (i.e. Border and Stick)
 * Pause game on escape
+* Audio-Clips
 
 ## Setup
 

@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.items;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 
 import eea.engine.action.Action;
@@ -22,15 +23,19 @@ public abstract class AbstractItemAction implements Action {
 
         // Check if the ball collided with the stick block
         if (collisionEvent.getCollidedEntity().getID().equals(GameParameters.STICK_ID)) {
+            logger.info("Item pickup {}", component.getOwnerEntity().getID());
+
+            GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
+
             // Trigger onEnable listener
             onEnable();
 
-            logger.info("Item pickup {}", component.getOwnerEntity().getID());
+            gameplayState.getSoundController().playEffect(SoundType.ITEM_PICKUP);
 
             // TODO Implement disable [onDisable()] (optional)...
 
             // Remove item from state
-            ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).removeEntity(collisionEvent.getOwnerEntity());
+            gameplayState.removeEntity(collisionEvent.getOwnerEntity());
         }
     }
 
