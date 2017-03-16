@@ -34,17 +34,20 @@ public interface GameParameters {
 	public static final String RIGHT_BORDER_ID = "rightBorder";
 
 	// Blocks
+	public static final String BLOCK_ID = "block";
 	public static final String MAP_FILE = "maps/level1.map";
 	public static final String BLOCK_1_IMAGE = "/images/block_1.png";
 	public static final String BLOCK_2_IMAGE = "/images/block_2.png";
 	public static final String BLOCK_3_IMAGE = "/images/block_3.png";
 
 	// Timer
-	public static final String STOP_WATCH_ID = "stopWatch";
+	public static final String 	STOP_WATCH_ID		= "stopWatch";
+	public static final int		STOP_WATCH_WIDTH	= 40;
+	public static final int		STOP_WATCH_HEIGHT	= 50;
 
 	// Ball
 	public static final String BALL_ID = "ball";
-	public static final float INITIAL_BALL_SPEED = 3f; //default 0.3
+	public static final float INITIAL_BALL_SPEED = 0.3f;
 	public static final float SPEEDUP_VALUE = 0.0001f;
 	public static final String BALL_IMAGE = "/images/ball.png";
 
@@ -69,6 +72,10 @@ public interface GameParameters {
 
 	// Highscore
 	public static final String HIGHSCORE_FILE = "highscores/highscore.hsc";
+	
+	// MapParameters
+	public static final int MAP_COLUMNS = 16;
+	public static final int MAP_ROWS	= 10;
 
 	// Menu
 	public static final String ENTRY_IMAGE = "/images/entry.png";

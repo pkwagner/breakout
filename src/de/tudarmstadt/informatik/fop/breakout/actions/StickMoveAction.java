@@ -25,7 +25,7 @@ public class StickMoveAction implements Action {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
-        Vector2f frameVelocity = STICK_SPEED.copy().scale(delta / 17F);
+        Vector2f frameVelocity = STICK_SPEED.copy().scale(delta);
         if (moveDirection == Direction.LEFT) {
             frameVelocity.scale(-1);
         }
