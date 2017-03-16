@@ -1,6 +1,5 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers;
 
-import de.tudarmstadt.informatik.fop.breakout.actions.BlockCollideAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.AbstractBlockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.SimpleBlockController;
@@ -11,7 +10,6 @@ import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.AbstractBlockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.SimpleBlockRenderComponent;
-import eea.engine.event.basicevents.CollisionEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
@@ -73,13 +71,6 @@ public class MapController {
 
         //assign controller to blocks
         map.forEach(block -> block.addComponent(createController(block)));
-
-		//assign collision events
-		map.forEach(block -> {
-			CollisionEvent collisionEvent = new CollisionEvent();
-			collisionEvent.addAction(new BlockCollideAction());
-			block.addComponent(collisionEvent);
-		});
 
 		//add block to game
 		map.forEach(gameplayState::addEntity);
@@ -191,7 +182,7 @@ public class MapController {
 
     	switch(block.getType()){
     		case SIMPLE:	return new SimpleBlockController(block.getID() + "Controller"); //TODO: wolln wir das so machen?
-    		default: 		logger.error("Some error occured during the creation of the controller for block: " + block.getID());
+    		default: 		logger.error("Some error occurred during the creation of the controller for block: " + block.getID());
     						return null;
     	}
     }
