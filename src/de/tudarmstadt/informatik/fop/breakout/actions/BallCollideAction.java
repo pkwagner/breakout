@@ -46,9 +46,12 @@ public class BallCollideAction implements Action {
             onBlockCollide(stateBasedGame, (AbstractBlockModel) collidedEntity);
         }
 
+                
         Shape otherShape = collidedEntity.getShape();
         Shape ballShape = ballModel.getShape();
 
+        //boolean collisionValid = checkCollision()
+        
         float blockLeftBorder = ballShape.getMaxX() - otherShape.getMinX();
         float blockTopBorder = ballShape.getMaxY() - otherShape.getMinY();
 
@@ -110,6 +113,7 @@ public class BallCollideAction implements Action {
      * @param otherShape
      * @param collisionDirection
      */
+    
     private void onCollide(Shape otherShape, Direction collisionDirection) {
         Vector2f postion = ballModel.getPosition();
         Vector2f velocity = ballModel.getVelocity();
@@ -131,5 +135,9 @@ public class BallCollideAction implements Action {
                 postion.set(otherShape.getMinX() - ballModel.getSize().getX() / 2, postion.getY());
                 break;
         }
+    }
+ 
+    private boolean checkCollision(){
+    	
     }
 }

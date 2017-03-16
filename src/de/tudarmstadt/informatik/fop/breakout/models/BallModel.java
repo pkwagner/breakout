@@ -11,9 +11,19 @@ public class BallModel extends Entity {
     private Vector2f velocity;
     private float radius = 12.5F;
     private int hitPoints = 1;
-
+    private Vector2f[] outline;
+    private int numberOfVertices = 30;
+    
     public BallModel(String entityID) {
         super(entityID);
+        outline = new Vector2f[numberOfVertices];
+        
+        for(int i = 0; i < numberOfVertices; i++){
+        	double phase = i / numberOfVertices * Math.PI * 2;
+        	float x = (float) Math.sin(phase);
+        	float y = (float) Math.cos(phase);
+        	outline[i] = (new Vector2f(x,y)).normalise().scale(radius);
+        }
     }
 
     public float getRadius() {
@@ -39,5 +49,9 @@ public class BallModel extends Entity {
 
     public void setVelocity(Vector2f velocity) {
         this.velocity = velocity;
+    }
+    
+    public Vector2f[] getOutline(){
+    	return outline;
     }
 }
