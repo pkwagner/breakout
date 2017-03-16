@@ -39,7 +39,6 @@ public class GameplayState extends BasicGameState {
     private final int stateId;
     private SpriteSheet backgroundSpriteSheet;
     private Animation backgroundAnimation;
-    private Image background;
     private RamBlockMovementController ramBlockMovementController;
     
     public GameplayState(int id) {
