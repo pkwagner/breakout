@@ -7,18 +7,20 @@ import de.tudarmstadt.informatik.fop.breakout.interfaces.IHighscoreEntry;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.HighScoreEntryRenderComponent;
 
+import de.tudarmstadt.informatik.fop.breakout.views.gui.ButtonView;
 import eea.engine.entity.Entity;
+
+import java.io.IOException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * State showing the top ten high scores
@@ -26,6 +28,8 @@ import java.util.List;
 public class HighscoreState extends AbstractMenuState {
 
     private final Logger logger = LogManager.getLogger();
+
+    private ButtonView buttonResetHighscore;
 
     public HighscoreState(int id) throws SlickException {
         super(id, new Image(GameParameters.HIGHSCORE_BACKGROUND_PATH), GameParameters.HIGHSCORE_TITLE_TEXT);
@@ -54,6 +58,28 @@ public class HighscoreState extends AbstractMenuState {
             IHighscoreEntry entry = highscores.get(index);
             addScoreEntries(container.getWidth() / 2, index, entry);
         }
+
+        Image buttonImage = new Image(GameParameters.HIGHSCORE_RESET_IMAGE).getScaledCopy(GameParameters.HIGHSCORE_RESET_SIZE);
+        Image buttonOverImage = new Image(GameParameters.HIGHSCORE_RESET_OVER_IMAGE).getScaledCopy(GameParameters.HIGHSCORE_RESET_SIZE);
+
+        buttonResetHighscore = new ButtonView(container,buttonImage,40,520,"");
+        buttonResetHighscore.setMouseOverImage(buttonOverImage);
+        buttonResetHighscore.addListener(source -> {
+            // Reset highscore and save changes to disk
+            highScoreController.reset();
+            try {
+                highScoreController.saveToFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
+            throws SlickException {
+        super.render(gameContainer, stateBasedGame, graphics);
+        buttonResetHighscore.render(gameContainer, graphics);
     }
 
     /**

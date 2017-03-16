@@ -32,7 +32,6 @@ public interface GameParameters {
 	public static final String BACKGROUND_ID = "background";
 	public static final String BACKGROUND_IMAGE = "/images/background.png";
 	public static final String BACKGROUND_SPRITESHEET = "/images/background_spritesheet.png";
-
 	public static final String BLANK_BACKGROUND_IMAGE = "/images/menu_blank.png";
 
 	// Borders
@@ -138,6 +137,9 @@ public interface GameParameters {
 	public static final int HIGHSCORE_ENTRY_START_Y = 110;
 	public static final int HIGHSCORE_ENTRY_GAP = 4;
 	public static final String HIGHSCORE_TITLE_TEXT = "Highscores";
+	public static final String HIGHSCORE_RESET_IMAGE = "images/reset-button.png";
+	public static final String HIGHSCORE_RESET_OVER_IMAGE = "images/reset-button-over.png";
+	public static final float HIGHSCORE_RESET_SIZE = 0.7f;
 
 	// Game over
 	public static final String GAMEOVER_BACKGROUND_PATH = "images/menu_blank.png";
