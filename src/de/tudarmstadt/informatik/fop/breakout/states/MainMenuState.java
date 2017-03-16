@@ -15,7 +15,7 @@ public class MainMenuState extends BasicGameState {
 
     private final int id;
 
-    private Button buttonStart, buttonHighscore;
+    private Button buttonStart, buttonHighscore, buttonCredits;
     private Image background;
 
     public MainMenuState(int id) {
@@ -40,6 +40,9 @@ public class MainMenuState extends BasicGameState {
         buttonHighscore.setMouseOverImage(buttonDownTex);
         buttonHighscore.addListener(source -> stateBasedGame.enterState(GameParameters.HIGHSCORE_STATE));
 
+        buttonCredits = new Button(gameContainer,buttonTex,40,450,"Credits");
+        buttonCredits.setMouseOverImage(buttonDownTex);
+        buttonCredits.addListener(source -> stateBasedGame.enterState(GameParameters.CREDITS_STATE));
     }
 
     @Override
@@ -47,7 +50,7 @@ public class MainMenuState extends BasicGameState {
         graphics.drawImage(background,0,0);
         buttonStart.render(gameContainer,graphics);
         buttonHighscore.render(gameContainer,graphics);
-
+        buttonCredits.render(gameContainer,graphics);
     }
 
     @Override

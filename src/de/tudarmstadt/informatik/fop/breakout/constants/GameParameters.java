@@ -23,6 +23,7 @@ public interface GameParameters {
 	public static final int MAINMENU_STATE = 0;
 	public static final int GAMEPLAY_STATE = 1;
 	public static final int HIGHSCORE_STATE = 2;
+	public static final int CREDITS_STATE = 3;
 
 	// Background
 	public static final String BACKGROUND_ID = "background";
@@ -105,7 +106,7 @@ public interface GameParameters {
 	public static final String ENTRY_IMAGE = "/images/entry.png";
 	public static final String ENTRY_DOWN_IMAGE = "/images/entry_down.png";
 	public static final String MENU_BACKGROUND_IMAGE = "images/menu.png";
-
+	
 	// Items
 	public static final float ITEM_FALL_SPEED = 0.2f;
 	public static final float ITEM_FASTER_SPEEDUP_VALUE = 1.1f;
@@ -161,4 +162,15 @@ public interface GameParameters {
 		SIMPLE,
 		RAM
 	}
+
+	// Credits
+	public static final String CREDITS_TITLE_TEXT = "Credits";
+	public static final String CREDITS_DEV1_TEXT = "Leon Chemnitz";
+	public static final String CREDITS_DEV2_TEXT = "Martin Kerscher";
+	public static final String CREDITS_DEV3_TEXT = "Alexander Siegler";
+	public static final String CREDITS_DEV4_TEXT = "Paul Wagner";
+	public static final int CREDITS_TITLE_START_Y = 50;
+	public static final int CREDITS_DEVS_START_X = 115;
+	public static final int CREDITS_DEVS_START_Y = 150;
+	public static final int CREDITS_DEVS_SPACE_Y = 110;
 }
