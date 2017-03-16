@@ -5,6 +5,7 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.BallController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.ClockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.RamBlockMovementController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
@@ -20,11 +21,14 @@ import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 import eea.engine.event.basicevents.KeyPressedEvent;
 
+import org.apache.logging.log4j.Logger;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -33,8 +37,10 @@ public class GameplayState extends BasicGameState {
 
     private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
     private final int stateId;
-    private Image background;
-
+    private SpriteSheet backgroundSpriteSheet;
+    private Animation backgroundAnimation;
+    private RamBlockMovementController ramBlockMovementController;
+    
     public GameplayState(int id) {
         this.stateId = id;
     }
@@ -45,6 +51,9 @@ public class GameplayState extends BasicGameState {
             return;
         }
 
+        backgroundSpriteSheet = new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
+        backgroundAnimation = new Animation(backgroundSpriteSheet,70);
+        
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController("stickController");
         stickModel.addComponent(stickController);
@@ -72,8 +81,9 @@ public class GameplayState extends BasicGameState {
         addBorders(gameContainer);
         addPauseEntity(gameContainer);
         
-        MapController mapController = new MapController(gameContainer, this);
-
+        ramBlockMovementController = new RamBlockMovementController();
+        MapController mapController = new MapController(stateBasedGame, this);
+        
         mapController.loadMap();
         
         addEntity(clockModel);
@@ -83,11 +93,13 @@ public class GameplayState extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta)
             throws SlickException {
         entityManager.updateEntities(gameContainer, stateBasedGame, delta);
+        ramBlockMovementController.update(delta);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
             throws SlickException {
+        backgroundAnimation.draw(0,0);
         entityManager.renderEntities(gameContainer, stateBasedGame, graphics);
     }
 
@@ -141,5 +153,9 @@ public class GameplayState extends BasicGameState {
         pauseEntity.addComponent(escapeKeyEvent);
 
         addEntity(pauseEntity);
+    }
+    
+    public RamBlockMovementController getRBMC(){
+    	return ramBlockMovementController;
     }
 }
