@@ -2,6 +2,8 @@ package de.tudarmstadt.informatik.fop.breakout.actions.items;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
+import de.tudarmstadt.informatik.fop.breakout.controllers.ItemTimer;
+import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 
 import eea.engine.action.Action;
@@ -21,21 +23,29 @@ public abstract class AbstractItemAction implements Action {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
         CollisionEvent collisionEvent = (CollisionEvent) component;
 
+        ItemModel item = (ItemModel) collisionEvent.getOwnerEntity();
+
         // Check if the ball collided with the stick block
         if (collisionEvent.getCollidedEntity().getID().equals(GameParameters.STICK_ID)) {
             logger.info("Item pickup {}", component.getOwnerEntity().getID());
 
             GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
 
+            // Play sound
+            gameplayState.getSoundController().playEffect(SoundType.ITEM_PICKUP);
+
             // Trigger onEnable listener
             onEnable();
 
-            gameplayState.getSoundController().playEffect(SoundType.ITEM_PICKUP);
-
-            // TODO Implement disable [onDisable()] (optional)...
+            logger.info("Item pickup {}", item.getID());
 
             // Remove item from state
-            gameplayState.removeEntity(collisionEvent.getOwnerEntity());
+            ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).removeEntity(collisionEvent.getOwnerEntity());
+
+            // TODO Select another item as counter entity (?)
+            // If this is an temporary item, add an item timer to disable it later
+            if (item.getDuration() != 0)
+                collisionEvent.getCollidedEntity().addComponent(new ItemTimer(item.getID() + "_timer", item.getDuration(), this));
         }
     }
 
