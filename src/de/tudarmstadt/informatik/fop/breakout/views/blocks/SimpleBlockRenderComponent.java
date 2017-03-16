@@ -6,13 +6,13 @@ import org.newdawn.slick.SlickException;
 
 public class SimpleBlockRenderComponent extends AbstractBlockRenderComponent {
 
-    public SimpleBlockRenderComponent(int maxHits) throws SlickException {
-        super(new Image(getImagePath(maxHits)));
+    public SimpleBlockRenderComponent(int remainingHits) throws SlickException {
+        super(new Image(getImagePath(remainingHits)));
 
     }
 
-    private static String getImagePath(int maxHits) {
-        switch (maxHits) {
+    private static String getImagePath(int remainingHits) {
+        switch (remainingHits) {
             case 1:
                 return GameParameters.BLOCK_1_IMAGE;
             case 2:

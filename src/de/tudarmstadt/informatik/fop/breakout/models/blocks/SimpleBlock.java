@@ -5,12 +5,10 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import java.util.Arrays;
 
 public class SimpleBlock extends AbstractBlockModel {
-
-	private int maxHits;
 	
-    public SimpleBlock(String entityID, int maxHits) {
+    public SimpleBlock(String entityID, int initialHits) {
         super(entityID);
-        this.setMaxHits(maxHits);
+        this.setInitialHits(initialHits);
 
         // Set all items as default
         droppableItems = Arrays.copyOf(GameParameters.ItemType.values(), GameParameters.ItemType.values().length);
@@ -25,12 +23,4 @@ public class SimpleBlock extends AbstractBlockModel {
     public GameParameters.BlockType transformToBlockType() {
         return null;
     }
-
-	public int getMaxHits() {
-		return maxHits;
-	}
-
-	public void setMaxHits(int maxHits) {
-		this.maxHits = maxHits;
-	}
 }

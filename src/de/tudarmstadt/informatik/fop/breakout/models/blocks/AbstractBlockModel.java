@@ -18,6 +18,11 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
         return initialHits;
     }
 
+    void setInitialHits(int initialHits) {
+        this.initialHits = initialHits;
+        this.remainingHits = initialHits;
+    }
+
     public GameParameters.ItemType[] getDroppableItems() {
         return droppableItems;
     }

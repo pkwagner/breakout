@@ -72,7 +72,7 @@ public class MapController {
         createModels(rawMap);
 
         //assign views to blocks
-        map.stream().forEach(block -> block.addComponent(createView(block)));
+        map.stream().forEach(block -> block.addComponent(AbstractBlockController.createBlockView(block)));
 
         //assign controller to blocks
         map.stream().forEach(block -> {	AbstractBlockController c = createController(block);
@@ -210,29 +210,7 @@ public class MapController {
     		default: 		logger.error("Some error occured during the creation of the controller for block: " + block.getID());
     						return null;
     	}
-    } 
-    
-    /**
-     * Creates the view for a given block
-     * 
-     * @param block the block for which a view shall be created
-     * @return
-     * @throws SlickException
-     */
-    private AbstractBlockRenderComponent createView(AbstractBlockModel block) {
-		try {
-			switch (block.getType()) {
-				case SIMPLE:	return new SimpleBlockRenderComponent(((SimpleBlock) block).getMaxHits());
-				case RAM:		return new RamBlockRenderComponent();
-				default:
-					logger.error("Some error occured during the creation of the view of the block: " + block.getID());
-					return new SimpleBlockRenderComponent(1);
-			}
-		} catch (SlickException e) {
-			logger.error("The following error occured during the creation of block " + block.getID() + ": " + e);
-			return null;
-		}
-    } 
+    }
     
     /**
      * Checks whether a given string is the string-representation of a RamBlock
