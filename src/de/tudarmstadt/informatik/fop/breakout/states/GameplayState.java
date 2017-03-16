@@ -37,8 +37,6 @@ public class GameplayState extends BasicGameState {
             return;
         }
 
-        background = new Image(GameParameters.BACKGROUND_IMAGE);
-
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
         StickController stickController = new StickController("stickController");
         stickModel.addComponent(stickController);
@@ -76,7 +74,6 @@ public class GameplayState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
             throws SlickException {
-        graphics.drawImage(background,0,0);
         entityManager.renderEntities(gameContainer, stateBasedGame, graphics);
     }
 
