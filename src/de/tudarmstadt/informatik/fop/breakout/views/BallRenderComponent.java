@@ -34,6 +34,12 @@ public class BallRenderComponent extends ImageRenderComponent {
         	}else{
         		g.drawLine(outline[i].getX()+x,outline[i].getY()+y,outline[0].getX()+x,outline[0].getY()+y);
         	}
+        	
+        	/*
+        	g.setColor(new Color(255,0,0));
+        	g.drawRect(outline[i].getX()+x, outline[i].getY()+y, 1, 1);
+        	g.setColor(new Color(255,255,255));
+        	*/
         }
     }
 }

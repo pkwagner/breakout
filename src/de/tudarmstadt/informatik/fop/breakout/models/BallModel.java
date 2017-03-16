@@ -6,6 +6,8 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tudarmstadt.informatik.fop.breakout.util.Utility;
+
 public class BallModel extends Entity {
 
     private Vector2f velocity;
@@ -19,7 +21,7 @@ public class BallModel extends Entity {
         outline = new Vector2f[numberOfVertices];
         
         for(int i = 0; i < numberOfVertices; i++){
-        	double phase = i / numberOfVertices * Math.PI * 2;
+        	double phase =  Utility.map((float)i, 0.0F,(float) numberOfVertices, 0.0F,(float) Math.PI * 2);
         	float x = (float) Math.sin(phase);
         	float y = (float) Math.cos(phase);
         	outline[i] = (new Vector2f(x,y)).normalise().scale(radius);

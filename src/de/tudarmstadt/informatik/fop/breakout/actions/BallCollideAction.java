@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.fop.breakout.actions;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
@@ -13,6 +14,7 @@ import eea.engine.event.basicevents.CollisionEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -47,54 +49,21 @@ public class BallCollideAction implements Action {
         }
 
                 
-        Shape otherShape = collidedEntity.getShape();
+        Shape collidedShape = collidedEntity.getShape();
         Shape ballShape = ballModel.getShape();
 
-        //boolean collisionValid = checkCollision()
+        boolean collisionValid = checkCollision(collidedShape);
         
-        float blockLeftBorder = ballShape.getMaxX() - otherShape.getMinX();
-        float blockTopBorder = ballShape.getMaxY() - otherShape.getMinY();
-
-        float blockRightBorder = otherShape.getMaxX() - otherShape.getMinX();
-        float blockBottomBorder = otherShape.getMaxY() - otherShape.getMinY();
-
-        float horizontalDiff = ballModel.getVelocity().getY() > 0 ? blockTopBorder : blockBottomBorder;
-        float verticalMax = ballModel.getVelocity().getX() > 0 ? blockLeftBorder : blockRightBorder;
-
-        logger.debug(Arrays.toString(ballShape.subtract(otherShape)));
-        logger.debug(Arrays.toString(otherShape.subtract(ballShape)));
-
-        logger.debug("===============================");
-        logger.debug("BALL " + "X:" + ballShape.getMaxX() + " " + ballShape.getMinX() + "Y:" + ballShape.getMaxY() + " " + ballShape.getMinY());
-        logger.debug("OTHER: " + "X:" + otherShape.getMaxX() + " " + otherShape.getMinX() + "Y:" + otherShape.getMaxY() + " " + otherShape.getMinY());
-        logger.debug("===============================");
-        logger.debug("LEFT:BORDER: " + blockLeftBorder);
-        logger.debug("TOP:BORDER: " + blockTopBorder);
-        logger.debug("RIGHT:BORDER: " + blockRightBorder);
-        logger.debug("BOTTOM:BORDER: " + blockBottomBorder);
-        logger.debug("================================");
-        logger.debug(horizontalDiff + " ::: " + verticalMax);
-        if (horizontalDiff > verticalMax) {
-            if (ballModel.getVelocity().getX() < 0) {
-                //moves left
-                logger.debug("Collision right bounding box");
-                onCollide(collidedEntity.getShape(), Direction.LEFT);
-            } else {
-                //moves right
-                logger.debug("Collision left bounding box");
-                onCollide(collidedEntity.getShape(), Direction.RIGHT);
-            }
-        } else {
-            if (ballModel.getVelocity().getY() > 0) {
-                logger.debug("Collision top bounding box");
-                onCollide(collidedEntity.getShape(), Direction.DOWN);
-            } else {
-                logger.debug("Collision bottom bounding box");
-                onCollide(collidedEntity.getShape(), Direction.UP);
-            }
-        }
+        if(collisionValid) handleCollision(getCollisionDirection(ballShape,collidedShape),collidedShape);
+    
     }
 
+    /**
+     * Method for handling collision with blocks specifically
+     * 
+     * @param stateBasedGame
+     * @param blockModel
+     */
     private void onBlockCollide(StateBasedGame stateBasedGame, AbstractBlockModel blockModel) {
         // Decrease remaining blockModel hits, afterwards check for remaining hit points
         blockModel.decreaseRemainingHits(1);
@@ -108,36 +77,141 @@ public class BallCollideAction implements Action {
     }
 
     /**
-     * ToDo: write this
+     * Handles the collision by updating ball position and velocity
      *
      * @param otherShape
      * @param collisionDirection
      */
     
-    private void onCollide(Shape otherShape, Direction collisionDirection) {
-        Vector2f postion = ballModel.getPosition();
+    private void handleCollision(Direction collisionDirection, Shape collidedShape) {
+        Vector2f position = ballModel.getPosition();
         Vector2f velocity = ballModel.getVelocity();
         switch (collisionDirection) {
             case UP:
+            	position.add(velocity.copy().scale(-1));
                 velocity.set(velocity.getX(), -velocity.getY());
-                postion.set(postion.getX(), otherShape.getMaxY() + ballModel.getSize().getY() / 2);
+                if(checkCollision(collidedShape))position.set(position.getX(),collidedShape.getMinY() - ballModel.getShape().getHeight()/2 -1); //it's checked whether the objects are still colliding (due to non ball movement)
                 break;
             case DOWN:
+            	position.add(velocity.copy().scale(-1));
                 velocity.set(velocity.getX(), -velocity.getY());
-                postion.set(postion.getX(), otherShape.getMinY() - ballModel.getSize().getY() / 2);
+                if(checkCollision(collidedShape))position.set(position.getX(),collidedShape.getMaxY() + ballModel.getShape().getHeight()/2 +1);
                 break;
             case LEFT:
+            	position.add(velocity.copy().scale(-1));
                 velocity.set(-velocity.getX(), velocity.getY());
-                postion.set(otherShape.getMaxX() + ballModel.getSize().getX() / 2, postion.getY());
+                if(checkCollision(collidedShape))position.set(collidedShape.getMinX() - ballModel.getShape().getWidth()/2 +1, position.getY());
                 break;
             case RIGHT:
+            	position.add(velocity.copy().scale(-1));
                 velocity.set(-velocity.getX(), velocity.getY());
-                postion.set(otherShape.getMinX() - ballModel.getSize().getX() / 2, postion.getY());
+                if(checkCollision(collidedShape))position.set(collidedShape.getMaxX() + ballModel.getShape().getWidth()/2 +1, position.getY());
                 break;
         }
     }
  
-    private boolean checkCollision(){
+    /**
+     * Calculates where the collided shape has been hit.
+     * (pretty complicated, very math)
+     * 
+     * @param ballShape
+     * @param collidedShape
+     * @return
+     */
+    private Direction getCollisionDirection(Shape ballShape, Shape collidedShape){
+        float lBorder = collidedShape.getMinX() - ballShape.getWidth()/2; //the borders of the block
+        float tBorder = collidedShape.getMinY() - ballShape.getHeight()/2;
+
+        float rBorder = collidedShape.getMaxX() + ballShape.getWidth()/2;
+        float bBorder = collidedShape.getMaxY() + ballShape.getHeight()/2;
     	
+        Vector2f position = ballModel.getPosition().copy();
+        Vector2f velocity = ballModel.getVelocity().copy();
+    	Vector2f oldPosition = position.copy().add(velocity.copy().scale(-1));
+    	Vector2f direction = velocity.copy().normalise();
+    	    	
+    	float lScalingDistance = (lBorder - oldPosition.getX())/direction.getX();
+    	Vector2f positionOnLeftBorder = oldPosition.copy().add(direction.copy().scale(lScalingDistance));
+    	
+    	float rScalingDistance = (rBorder - oldPosition.getX())/direction.getX();
+    	Vector2f positionOnRightBorder = oldPosition.copy().add(direction.copy().scale(rScalingDistance));
+    	
+    	float tScalingDistance = (tBorder - oldPosition.getY())/direction.getY();
+    	Vector2f positionOnTopBorder = oldPosition.copy().add(direction.copy().scale(tScalingDistance));
+    	
+    	float bScalingDistance = (bBorder - oldPosition.getY())/direction.getY();
+    	Vector2f positionOnBottomBorder = oldPosition.copy().add(direction.copy().scale(bScalingDistance));
+    	
+    	
+    	logger.debug("===========================================================");
+    	logger.debug(position.toString());
+    	logger.debug("l: " + lBorder +" r: " + rBorder+" t: "+tBorder+ " b:" + bBorder);
+    	logger.debug("-----------------------------------------------------------");
+    	logger.debug(positionOnLeftBorder.toString());
+    	logger.debug(positionOnRightBorder.toString());
+    	logger.debug(positionOnTopBorder.toString());
+    	logger.debug(positionOnBottomBorder.toString());
+    	
+    	
+    	boolean[] isBorder = {true,true,true,true}; //left, right, bottom, top
+    	
+    	if(positionOnLeftBorder.getY() > bBorder || positionOnLeftBorder.getY() < tBorder) isBorder[0] = false;
+    	if(positionOnRightBorder.getY() > bBorder || positionOnRightBorder.getY() < tBorder) isBorder[1] = false;
+    	if(positionOnTopBorder.getX() > rBorder || positionOnTopBorder.getX() < lBorder) isBorder[2] = false;
+    	if(positionOnBottomBorder.getX() > rBorder || positionOnBottomBorder.getX() < lBorder) isBorder[3] = false;
+    	
+    	logger.debug(Arrays.toString(isBorder));
+        	
+    	Direction reboundDirection = null;
+    	
+    	float currentMinDistance = Float.POSITIVE_INFINITY;
+    	
+    	if(isBorder[0])
+    		if(position.distance(positionOnLeftBorder) < currentMinDistance){
+    		reboundDirection = Direction.LEFT;
+    		currentMinDistance = position.distance(positionOnLeftBorder);
+    		}
+    	
+    	if(isBorder[1])
+    		if(position.distance(positionOnRightBorder) < currentMinDistance){
+    		reboundDirection = Direction.RIGHT;
+    		currentMinDistance = position.distance(positionOnRightBorder);
+    		}
+    	
+    	if(isBorder[2])
+    		if(position.distance(positionOnTopBorder) < currentMinDistance){
+    		reboundDirection = Direction.UP;
+    		currentMinDistance = position.distance(positionOnTopBorder);
+    		}
+    	
+    	if(isBorder[3])
+    		if(position.distance(positionOnBottomBorder) < currentMinDistance){
+    		reboundDirection = Direction.DOWN;
+    		currentMinDistance = position.distance(positionOnBottomBorder);
+    		}
+    	
+    	if(reboundDirection == null){
+    		logger.error("Something went wrong during calculation of the rebound direction");
+    		reboundDirection = Direction.LEFT;
+    	}
+    	
+    	return reboundDirection;
     }
+    
+    /**
+     * Checks whether something has actually collided with the ball by checking
+     * if any of the balls outline points are contained within the shape
+     * 
+     * @param collidedShape
+     * @return
+     */
+    private boolean checkCollision(Shape collidedShape){
+    	Vector2f[] outline = ballModel.getOutline();
+    	Vector2f position  = ballModel.getPosition();    	
+    	for(int i = 0; i < outline.length;i++){
+    		if(collidedShape.contains(new Point(outline[i].getX()+position.getX(),outline[i].getY()+position.getY()))) return true;
+    	}
+    	return false;
+    }
+    
 }
