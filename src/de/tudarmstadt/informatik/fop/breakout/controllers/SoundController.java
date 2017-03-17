@@ -20,7 +20,7 @@ public class SoundController implements AutoCloseable {
     private final SoundStore soundStore = SoundStore.get();
     private final EnumMap<SoundType, Audio> loadedSound = new EnumMap<>(SoundType.class);
 
-    private float volume = 0.5f;
+    private float volume = 0.1f;
 
     /**
      * @return gets the current volume as a float 1.0f = 100% 0.0f = 0%

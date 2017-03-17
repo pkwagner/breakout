@@ -44,7 +44,8 @@ public class GameplayState extends BasicGameState {
         }
 
         //load sound effects
-        soundController.load(SoundType.BLOCK_HIT, SoundType.ITEM_PICKUP, SoundType.STICK_HIT);
+        soundController.load(SoundType.BLOCK_HIT, SoundType.ITEM_PICKUP, SoundType.STICK_HIT, SoundType.BACKGROUND_MUSIC);
+        soundController.playMusic(SoundType.BACKGROUND_MUSIC);
 
         backgroundSpriteSheet = new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
         backgroundAnimation = new Animation(backgroundSpriteSheet,70);

@@ -2,7 +2,9 @@ package de.tudarmstadt.informatik.fop.breakout.models;
 
 public enum SoundType {
 
-    ITEM_PICKUP( "/sounds/itemHitStick.wav"),
+    BACKGROUND_MUSIC("/sounds/background_music.wav"),
+
+    ITEM_PICKUP("/sounds/itemHitStick.wav"),
 
     STICK_HIT("/sounds/hitStick.wav"),
 
