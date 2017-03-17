@@ -14,6 +14,9 @@ import de.tudarmstadt.informatik.fop.breakout.actions.items.SmallerItemAction;
  */
 public interface GameParameters {
 
+	public static final String EXT_CONTROLLER = "_controller";
+	public static final String EXT_VIEW = "_view";
+
 	// Window Settings
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
@@ -77,6 +80,7 @@ public interface GameParameters {
 
 	// Pause
 	public static final String PAUSE_ID = "pause";
+	public static final String PAUSE_IMAGE_ID = "pause_image";
 	public static final String PAUSE_IMAGE = "/images/pause.png";
 
 	// Game start
@@ -94,6 +98,8 @@ public interface GameParameters {
 	//example format: "name:12345:123.0" or "name:1234:123.135"
 	public static final String HIGHSCORE_FILE_ENTRY_SCHEME = "[\\w]+:[\\d]{1,9}:[\\d]{1,9}\\.\\d{1,3}";
 
+	public static final String HIGHSCORE_BACKGROUND_PATH = "images/menu_blank.png";
+	public static final String HIGHSCORE_TITLE_ID = "title";
 	public static final int HIGHSCORE_TITLE_START_Y = 50;
 	public static final int HIGHSCORE_ENTRY_START_Y = 110;
 	public static final int HIGHSCORE_ENTRY_GAP = 4;
@@ -168,6 +174,8 @@ public interface GameParameters {
 	}
 
 	// Credits
+	public static final String CREDITS_BACKGROUND_PATH = "images/menu_blank.png";
+	public static final String CREDITS_TITLE_ID = "title";
 	public static final String CREDITS_TITLE_TEXT = "Credits";
 	public static final String CREDITS_DEV1_TEXT = "Leon Chemnitz";
 	public static final String CREDITS_DEV2_TEXT = "Martin Kerscher";

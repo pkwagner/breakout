@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.fop.breakout.views;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import eea.engine.component.RenderComponent;
 
 import org.newdawn.slick.GameContainer;
@@ -15,7 +16,7 @@ public class StartGameRenderComponent extends RenderComponent {
     private static final String TEXT = "Press spacebar to start the game";
 
     public StartGameRenderComponent() {
-        super("start_game_view");
+        super(GameParameters.GAMESTART_ENTITY_ID + GameParameters.EXT_VIEW);
     }
 
     @Override

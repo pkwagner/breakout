@@ -61,16 +61,16 @@ public class CreditsState extends BasicGameState {
 
         //center the image to be displayed on the complete window
         backgroundEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
-        backgroundEntity.addComponent(new ImageRenderComponent(new Image("images/menu_blank.png")));
+        backgroundEntity.addComponent(new ImageRenderComponent(new Image(GameParameters.CREDITS_BACKGROUND_PATH)));
 
         entityManager.addEntity(stateId, backgroundEntity);
     }
 
     private void addText(GameContainer gameContainer) {
-        Entity titleEntity = new Entity("title");
+        Entity titleEntity = new Entity(GameParameters.CREDITS_TITLE_ID);
 
         titleEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, GameParameters.CREDITS_TITLE_START_Y));
-        titleEntity.addComponent(new CreditsRenderComponent("title_view"));
+        titleEntity.addComponent(new CreditsRenderComponent(GameParameters.CREDITS_TITLE_ID + GameParameters.EXT_VIEW));
 
         entityManager.addEntity(stateId, titleEntity);
     }

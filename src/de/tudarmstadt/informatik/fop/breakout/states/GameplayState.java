@@ -51,21 +51,21 @@ public class GameplayState extends BasicGameState {
         backgroundAnimation = new Animation(backgroundSpriteSheet,70);
 
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
-        StickController stickController = new StickController(GameParameters.STICK_ID + "_controller");
+        StickController stickController = new StickController(GameParameters.STICK_ID + GameParameters.EXT_CONTROLLER);
         stickModel.addComponent(stickController);
         stickModel.addComponent(new StickRenderComponent());
 
         BallModel ballModel = new BallModel(GameParameters.BALL_ID);
-        BallController ballController = new BallController(GameParameters.BALL_ID + "_controller");
+        BallController ballController = new BallController(GameParameters.BALL_ID + GameParameters.EXT_CONTROLLER);
         ballModel.addComponent(ballController);
-        BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + "_view");
+        BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + GameParameters.EXT_VIEW);
         ballModel.addComponent(ballView);
         ballView.init();
 
         ClockModel clockModel = new ClockModel(GameParameters.STOP_WATCH_ID);
-        ClockController clockController = new ClockController(GameParameters.STOP_WATCH_ID + "_controller");
+        ClockController clockController = new ClockController(GameParameters.STOP_WATCH_ID + GameParameters.EXT_CONTROLLER);
         clockModel.addComponent(clockController);
-        ClockRenderComponent clockView = new ClockRenderComponent(GameParameters.STOP_WATCH_ID + "_view");
+        ClockRenderComponent clockView = new ClockRenderComponent(GameParameters.STOP_WATCH_ID + GameParameters.EXT_VIEW);
         clockModel.addComponent(clockView);
 
         ballController.init(stateBasedGame);
@@ -153,7 +153,7 @@ public class GameplayState extends BasicGameState {
         BackButton backButton = new BackButton();
         backButton.setVisible(false);
 
-        Entity pauseImage = new Entity("pause_image");
+        Entity pauseImage = new Entity(GameParameters.PAUSE_IMAGE_ID);
 
         //default hides the entity and make it passable so it won't effect the gameplay
         pauseImage.setVisible(false);

@@ -20,7 +20,7 @@ public class StickRenderComponent extends RenderComponent {
     private final Image image;
 
     public StickRenderComponent() throws SlickException {
-        super("stick_view");
+        super(GameParameters.STICK_ID + GameParameters.EXT_VIEW);
 
         this.image = new Image(GameParameters.STICK_IMAGE);
     }

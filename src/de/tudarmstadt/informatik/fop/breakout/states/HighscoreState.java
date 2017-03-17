@@ -38,6 +38,7 @@ public class HighscoreState extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         logger.info("Initialize highscore state");
+
         if (Breakout.getDebug()) {
             return;
         }
@@ -99,16 +100,16 @@ public class HighscoreState extends BasicGameState {
 
         //center the image to be displayed on the complete window
         backgroundEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
-        backgroundEntity.addComponent(new ImageRenderComponent(new Image("images/menu_blank.png")));
+        backgroundEntity.addComponent(new ImageRenderComponent(new Image(GameParameters.HIGHSCORE_BACKGROUND_PATH)));
 
         entityManager.addEntity(stateId, backgroundEntity);
     }
 
     private void addTitle(GameContainer gameContainer) {
-        Entity titleEntity = new Entity("title");
+        Entity titleEntity = new Entity(GameParameters.HIGHSCORE_TITLE_ID);
 
         titleEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, GameParameters.HIGHSCORE_TITLE_START_Y));
-        titleEntity.addComponent(new HighScoreTitleRenderComponent("title_view"));
+        titleEntity.addComponent(new HighScoreTitleRenderComponent(GameParameters.HIGHSCORE_TITLE_ID + GameParameters.EXT_VIEW));
 
         entityManager.addEntity(stateId, titleEntity);
     }
