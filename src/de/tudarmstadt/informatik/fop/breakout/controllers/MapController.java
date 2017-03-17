@@ -11,6 +11,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.AbstractBlockRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.blocks.RamBlockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.SimpleBlockRenderComponent;
 import eea.engine.component.render.ImageRenderComponent;
 
@@ -222,7 +223,7 @@ public class MapController {
 		try {
 			switch (block.getType()) {
 				case SIMPLE:	return new SimpleBlockRenderComponent(((SimpleBlock) block).getMaxHits());
-				case RAM:		return new SimpleBlockRenderComponent(1);
+				case RAM:		return new RamBlockRenderComponent();
 				default:
 					logger.error("Some error occured during the creation of the view of the block: " + block.getID());
 					return new SimpleBlockRenderComponent(1);

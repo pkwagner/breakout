@@ -52,19 +52,21 @@ public class GameplayState extends BasicGameState {
         backgroundAnimation = new Animation(backgroundSpriteSheet,70);
         
         StickModel stickModel = new StickModel(GameParameters.STICK_ID);
-        StickController stickController = new StickController("stickController");
+        StickController stickController = new StickController(GameParameters.STICK_ID + "_controller");
         stickModel.addComponent(stickController);
         stickModel.addComponent(new StickRenderComponent());
 
         BallModel ballModel = new BallModel(GameParameters.BALL_ID);
-        BallController ballController = new BallController("ball_controller");
+        BallController ballController = new BallController(GameParameters.BALL_ID + "_controller");
         ballModel.addComponent(ballController);
-        ballModel.addComponent(new BallRenderComponent());
+        BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + "_view");
+        ballModel.addComponent(ballView);
+        ballView.init();
 
         ClockModel clockModel = new ClockModel(GameParameters.STOP_WATCH_ID);
-        ClockController clockController = new ClockController("clock_controller");
+        ClockController clockController = new ClockController(GameParameters.STOP_WATCH_ID + "_controller");
         clockModel.addComponent(clockController);
-        ClockRenderComponent clockView = new ClockRenderComponent("clock_view");
+        ClockRenderComponent clockView = new ClockRenderComponent(GameParameters.STOP_WATCH_ID + "_view");
         clockModel.addComponent(clockView);
         
         ballController.init(stateBasedGame);

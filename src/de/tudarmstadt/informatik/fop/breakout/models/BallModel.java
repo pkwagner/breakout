@@ -7,14 +7,14 @@ import org.newdawn.slick.geom.Vector2f;
 public class BallModel extends Entity {
 
     private Vector2f velocity;
-    private int radius = 1;
+    private float radius = 12.5F;
     private int hitPoints = 1;
 
     public BallModel(String entityID) {
         super(entityID);
     }
 
-    public int getRadius() {
+    public float getRadius() {
         return radius;
     }
 
@@ -22,7 +22,7 @@ public class BallModel extends Entity {
         return hitPoints;
     }
 
-    public void setRadius(int radius) {
+    public void setRadius(float radius) {
         this.radius = radius;
     }
 

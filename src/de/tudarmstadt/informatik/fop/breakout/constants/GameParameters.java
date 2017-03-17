@@ -43,11 +43,12 @@ public interface GameParameters {
 	// Blocks
 	public static final String BLOCK_ID = "block";
 	public static final String MAP_FILE = "maps/level1.map";
-	public static final String BLOCK_1_IMAGE = "/images/block_1.png";
-	public static final String BLOCK_2_IMAGE = "/images/block_2.png";
-	public static final String BLOCK_3_IMAGE = "/images/block_3.png";
+	public static final String BLOCK_1_IMAGE = "/images/simpleBlock1.png";
+	public static final String BLOCK_2_IMAGE = "/images/simpleBlock2.png";
+	public static final String BLOCK_3_IMAGE = "/images/simpleBlock3.png";
 	public static final int		BLOCK_WIDTH = 50;
 	public static final int		BLOCK_HEIGHT = 30;
+	public static final String	RAM_BLOCK_IMAGE = "/images/ram-block.png";
 	public static final float	RAM_BLOCK_ACCELERATION = 0.0001F;
 	public static final int		RAM_BLOCK_REST_TIME = 1500;
 	public static final float	RAM_BLOCK_REBOUND_VELOCITY = 0.01F;
@@ -61,7 +62,7 @@ public interface GameParameters {
 	public static final String BALL_ID = "ball";
 	public static final float INITIAL_BALL_SPEED = 0.3f;
 	public static final float SPEEDUP_VALUE = 0.0001f;
-	public static final String BALL_IMAGE = "/images/ball.png";
+	public static final String BALL_SPRITESHEET = "/images/ball-spritesheet.png";
 
 	// StickModel
 	public static final String STICK_ID = "stick";
