@@ -72,4 +72,8 @@ public class PlayerModel extends Entity {
         this.remainingHitPoints = initialHitPoints;
         this.dead = false;
     }
+
+    public void heal(int hitPoints) {
+        this.remainingHitPoints += hitPoints;
+    }
 }

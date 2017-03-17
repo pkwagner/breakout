@@ -38,7 +38,7 @@ public abstract class AbstractBlockCollideAction {
     public void onCollision() {
         // Decrease remaining block hits by the balls hit points, afterwards check for remaining hit points
         blockModel.decreaseRemainingHits(ballModel.getHitPoints());
-        if (!blockModel.hasHitsLeft())
+        if (!blockModel.hasHitsLeft() || ballModel.isSmashMode())
             destroy();
 
         else {

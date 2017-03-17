@@ -17,7 +17,8 @@ public class BallModel extends Entity {
     private int numberOfVertices = 30;
 
     private PlayerModel controllingPlayer;
-    
+    private boolean smashMode = false;
+
     public BallModel(String entityID, PlayerModel initialControllingPlayer) {
         super(entityID);
 
@@ -58,8 +59,16 @@ public class BallModel extends Entity {
         this.velocity = velocity;
     }
     
-    public Vector2f[] getOutline(){
-    	return outline;
+    public Vector2f[] getOutline() {
+        return outline;
+    }
+
+    public boolean isSmashMode() {
+        return smashMode;
+    }
+
+    public void setSmashMode(boolean smashMode) {
+        this.smashMode = smashMode;
     }
 
     public PlayerModel getControllingPlayer() {

@@ -85,7 +85,7 @@ public class BallCollideAction implements Action {
             onBlockCollide(breakout, (AbstractBlockModel) collidedEntity);
         }
 
-        updateBallPositionAndVelocity(getCollisionDirection(ballShape, collidedShape), collidedShape); //the default collision handling method
+        updateBallPositionAndVelocity(getCollisionDirection(ballShape, collidedShape), collidedShape, collidedEntity); //the default collision handling method
     }
 
 
@@ -94,8 +94,12 @@ public class BallCollideAction implements Action {
      *
      * @param collisionDirection
      * @param collidedShape
+     * @param collidedEntity
      */
-    private void updateBallPositionAndVelocity(Direction collisionDirection, Shape collidedShape) {
+    private void updateBallPositionAndVelocity(Direction collisionDirection, Shape collidedShape, Entity collidedEntity) {
+    	if (ballModel.isSmashMode() && (collidedEntity instanceof AbstractBlockModel))
+    		return;
+
         Vector2f position = ballModel.getPosition();
         Vector2f velocity = ballModel.getVelocity();
         switch (collisionDirection) {
@@ -130,7 +134,7 @@ public class BallCollideAction implements Action {
     /**
      * Method for handling collision with blocks specifically
      *
-     * @param state
+     * @param breakout
      * @param collidedEntity
      */
     private void onBlockCollide(Breakout breakout, AbstractBlockModel collidedEntity) {

@@ -40,6 +40,8 @@ public class GameplayState extends BasicGameState {
     private PlayerModel player;
     private ClockModel clock;
 
+    private float gameSpeedFactor = 1;
+
     private final SoundController soundController = new SoundController();
 
     public GameplayState(int id) {
@@ -247,5 +249,13 @@ public class GameplayState extends BasicGameState {
 
     public MapController getMapController() {
         return mapController;
+    }
+
+    public float getGameSpeedFactor() {
+        return gameSpeedFactor;
+    }
+
+    public void setGameSpeedFactor(float gameSpeedFactor) {
+        this.gameSpeedFactor = gameSpeedFactor;
     }
 }

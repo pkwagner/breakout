@@ -1,5 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -9,7 +11,7 @@ import eea.engine.component.Component;
 public class ClockController extends Component {
 
 	private ClockModel clock;
-	
+
 	public ClockController(String componentID) {
 		super(componentID);
 	}
@@ -21,7 +23,7 @@ public class ClockController extends Component {
     public void setOwnerEntity(ClockModel owningEntity) {
         super.setOwnerEntity(owningEntity);
     }
-    
+
     public void init(StateBasedGame stateBasedGame){
     	clock = getOwnerEntity();
     	int xOffset = 50;
@@ -32,8 +34,9 @@ public class ClockController extends Component {
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
 		if(!clock.isPaused()){
-			clock.addSeconds(delta/1000F);
-		}		
+			GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
+			clock.addSeconds(delta * gameplayState.getGameSpeedFactor() / 1000F);
+		}
 	}
 
 }

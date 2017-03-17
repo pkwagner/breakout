@@ -1,10 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.constants;
 
-import de.tudarmstadt.informatik.fop.breakout.actions.items.BiggerItemAction;
-import de.tudarmstadt.informatik.fop.breakout.actions.items.FasterItemAction;
-import de.tudarmstadt.informatik.fop.breakout.actions.items.SlowerItemAction;
-import de.tudarmstadt.informatik.fop.breakout.actions.items.SmallerItemAction;
 import org.newdawn.slick.geom.Vector2f;
+import de.tudarmstadt.informatik.fop.breakout.actions.items.*;
 
 /**
  * Class for holding the game parameters and constants e.g. entity IDs or image
@@ -139,12 +136,17 @@ public interface GameParameters {
 	public static final float ITEM_SLOWER_SPEED_VALUE = 0.9f;
 	public static final float ITEM_BIGGER_CHANGE_VALUE = 1.3f;
 	public static final float ITEM_SMALLER_CHANGE_VALUE = 0.75f;
+	public static final float ITEM_SLOMO_SPEED_FACTOR = 0.5f;
+	public static final int ITEM_HP_HEALTHPOINTS = 1;
 	public static final float ITEM_DROP_POSSIBILITY = 0.25f;
 	public static enum ItemType {
 		FasterItem("/images/faster.png", 1, 0, FasterItemAction.class),
 		SlowerItem("/images/slower.png", 1, 0, SlowerItemAction.class),
 		BiggerItem("/images/bigger.png", 1, 0, BiggerItemAction.class),
-		SmallerItem("/images/smaller.png", 1, 0, SmallerItemAction.class);
+		SmallerItem("/images/smaller.png", 1, 0, SmallerItemAction.class),
+		SmashBallItem("/images/ball.png", 1, 5, SmashBallItemAction.class),
+		SloMoItem("/images/block_1.png", 1, 5, SloMoItemAction.class),
+		HealthPointItem("/images/block_2.png", 1, 0, HealthPointItemAction.class);
 
 		private final String imagePath;
 		private final double possibility;
