@@ -5,6 +5,7 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.ItemController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.AbstractBlockController;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
+import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.views.ItemRenderComponent;
@@ -39,6 +40,7 @@ public abstract class AbstractBlockCollideAction {
             blockModel.removeComponent("ImageRenderComponent");
             blockModel.addComponent(AbstractBlockController.createBlockView(blockModel));
         }
+        gameplayState.getSoundController().playEffect(SoundType.BLOCK_HIT);
     }
 
     private void destroy() {
@@ -102,20 +104,5 @@ public abstract class AbstractBlockCollideAction {
 
         // If this happens, something went terribly wrong...
         return null;
-    }
-
-    public Vector2f calculateCollisionVelocity(Vector2f previousVelocity) {
-        // Calculate ball to block distance
-        // NOTE: If the ball bumps against the left/right border of the block, the Y-distance must be equal or lower than the X-distance.
-        //       Otherwise it's the same case with the top/bottom border. It's magic.
-        float ballToBlockDistanceX = Math.abs(ballModel.getPosition().getX() - blockModel.getPosition().getX());
-        float ballToBlockDistanceY = Math.abs(ballModel.getPosition().getY() - blockModel.getPosition().getY());
-
-        // Check against left/right border bump
-        if (ballToBlockDistanceX > ballToBlockDistanceY)
-            return new Vector2f(-previousVelocity.getX(), previousVelocity.getY());
-
-        // Seemed to be a bump against the top/bottom block border
-        return new Vector2f(previousVelocity.getX(), -previousVelocity.getY());
     }
 }

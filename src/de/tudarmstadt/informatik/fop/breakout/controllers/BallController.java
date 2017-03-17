@@ -16,7 +16,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class BallController extends Component {
 
     private int gameHeight, gameWidth;
-
+    private BallModel ball;
+    
     public BallController(String componentID) {
         super(componentID);
     }
@@ -27,7 +28,7 @@ public class BallController extends Component {
     }
 
     public void init(StateBasedGame game) {
-        BallModel ball = getOwnerEntity();
+        ball = getOwnerEntity();
 
         // Get current width & height
         GameContainer container = game.getContainer();
@@ -58,7 +59,6 @@ public class BallController extends Component {
     }
 
     public void reset() {
-        BallModel ball = getOwnerEntity();
         ball.setPosition(new Vector2f(gameWidth / 2, gameHeight / 2));
         ball.setVelocity(new Vector2f(1, -1).scale(GameParameters.INITIAL_BALL_SPEED));
     }

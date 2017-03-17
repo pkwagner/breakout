@@ -3,12 +3,9 @@ package de.tudarmstadt.informatik.fop.breakout.views;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import eea.engine.component.RenderComponent;
-import eea.engine.component.render.ImageRenderComponent;
-
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
@@ -47,4 +44,5 @@ public class BallRenderComponent extends RenderComponent {
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
