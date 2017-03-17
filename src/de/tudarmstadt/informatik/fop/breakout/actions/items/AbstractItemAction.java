@@ -21,6 +21,7 @@ public abstract class AbstractItemAction implements Action {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
+        this.init(stateBasedGame);
         CollisionEvent collisionEvent = (CollisionEvent) component;
 
         ItemModel item = (ItemModel) collisionEvent.getOwnerEntity();
@@ -48,6 +49,8 @@ public abstract class AbstractItemAction implements Action {
                 collisionEvent.getCollidedEntity().addComponent(new ItemTimer(item.getID() + "_timer", item.getDuration(), this));
         }
     }
+
+    protected abstract void init(StateBasedGame stateBasedGame);
 
     /**
      * Will be triggered when an item was fetched by the stick

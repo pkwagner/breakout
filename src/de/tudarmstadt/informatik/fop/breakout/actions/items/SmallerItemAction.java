@@ -5,6 +5,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 
 import eea.engine.entity.StateBasedEntityManager;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
 
 /**
@@ -14,9 +15,8 @@ public class SmallerItemAction extends AbstractItemAction {
 
     private StickModel stickModel;
 
-    public SmallerItemAction() {
-        super();
-
+    @Override
+    protected void init(StateBasedGame stateBasedGame) {
         stickModel = (StickModel) StateBasedEntityManager.getInstance().getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STICK_ID);
     }
 
