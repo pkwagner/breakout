@@ -45,7 +45,7 @@ public class BallCollideAction implements Action {
         Entity collidedEntity = collisionEvent.getCollidedEntity();
         String collidedId = collidedEntity.getID();
         
-        if (GameParameters.PAUSE_ID.equals(collidedId)) return;
+        if(!(collidedEntity instanceof AbstractBlockModel||collidedId.contains("Border")||collidedId == GameParameters.STICK_ID)) return; //#wtf warum funktioniert passable nicht
                 
         logger.debug("Ball collision with {}", collidedId);
 
@@ -98,7 +98,7 @@ public class BallCollideAction implements Action {
             case LEFT:
             	position.add(velocity.copy().scale(-1));
                 velocity.set(-velocity.getX(), velocity.getY());
-                if(checkCollision(collidedShape))position.set(collidedShape.getMinX() - ballModel.getShape().getWidth()/2 +1, position.getY());
+                if(checkCollision(collidedShape))position.set(collidedShape.getMinX() - ballModel.getShape().getWidth()/2 -1, position.getY());
                 break;
             case RIGHT:
             	position.add(velocity.copy().scale(-1));
@@ -127,6 +127,8 @@ public class BallCollideAction implements Action {
         	case RAM:
         		collideAction = new RamBlockCollideAction(block, ballModel, state);
         }
+        
+        if (collideAction != null) collideAction.onCollision();
     }
     
  
@@ -167,10 +169,10 @@ public class BallCollideAction implements Action {
     	logger.debug(position.toString());
     	logger.debug("l: " + lBorder +" r: " + rBorder+" t: "+tBorder+ " b:" + bBorder);
     	logger.debug("-----------------------------------------------------------");
-    	logger.debug(positionOnLeftBorder.toString());
-    	logger.debug(positionOnRightBorder.toString());
-    	logger.debug(positionOnTopBorder.toString());
-    	logger.debug(positionOnBottomBorder.toString());
+    	logger.debug(positionOnLeftBorder.toString() + oldPosition.distance(positionOnLeftBorder));
+    	logger.debug(positionOnRightBorder.toString()+ oldPosition.distance(positionOnRightBorder));
+    	logger.debug(positionOnTopBorder.toString()+ oldPosition.distance(positionOnTopBorder));
+    	logger.debug(positionOnBottomBorder.toString()+ oldPosition.distance(positionOnBottomBorder));
     	
     	
     	boolean[] isBorder = {true,true,true,true}; //left, right, bottom, top
@@ -187,27 +189,27 @@ public class BallCollideAction implements Action {
     	float currentMinDistance = Float.POSITIVE_INFINITY;
     	
     	if(isBorder[0])
-    		if(position.distance(positionOnLeftBorder) < currentMinDistance){
+    		if(oldPosition.distance(positionOnLeftBorder) < currentMinDistance){
     		reboundDirection = Direction.LEFT;
-    		currentMinDistance = position.distance(positionOnLeftBorder);
+    		currentMinDistance = oldPosition.distance(positionOnLeftBorder);
     		}
     	
     	if(isBorder[1])
-    		if(position.distance(positionOnRightBorder) < currentMinDistance){
+    		if(oldPosition.distance(positionOnRightBorder) < currentMinDistance){
     		reboundDirection = Direction.RIGHT;
-    		currentMinDistance = position.distance(positionOnRightBorder);
+    		currentMinDistance = oldPosition.distance(positionOnRightBorder);
     		}
     	
     	if(isBorder[2])
-    		if(position.distance(positionOnTopBorder) < currentMinDistance){
+    		if(oldPosition.distance(positionOnTopBorder) < currentMinDistance){
     		reboundDirection = Direction.UP;
-    		currentMinDistance = position.distance(positionOnTopBorder);
+    		currentMinDistance = oldPosition.distance(positionOnTopBorder);
     		}
     	
     	if(isBorder[3])
-    		if(position.distance(positionOnBottomBorder) < currentMinDistance){
+    		if(oldPosition.distance(positionOnBottomBorder) < currentMinDistance){
     		reboundDirection = Direction.DOWN;
-    		currentMinDistance = position.distance(positionOnBottomBorder);
+    		currentMinDistance = oldPosition.distance(positionOnBottomBorder);
     		}
     	
     	if(reboundDirection == null){
@@ -215,6 +217,7 @@ public class BallCollideAction implements Action {
     		reboundDirection = Direction.LEFT;
     	}
     	
+    	logger.debug(reboundDirection);
     	return reboundDirection;
     }
     
@@ -229,7 +232,11 @@ public class BallCollideAction implements Action {
     	Vector2f[] outline = ballModel.getOutline();
     	Vector2f position  = ballModel.getPosition();    	
     	for(int i = 0; i < outline.length;i++){
-    		if(collidedShape.contains(new Point(outline[i].getX()+position.getX(),outline[i].getY()+position.getY()))) return true;
+    		Vector2f absolutePosition = outline[i].copy().add(position);
+    		if(		absolutePosition.getX() <= collidedShape.getMaxX() &&
+    				absolutePosition.getX() >= collidedShape.getMinX() &&
+    				absolutePosition.getY() <= collidedShape.getMaxY() &&
+    				absolutePosition.getY() >= collidedShape.getMinY()) return true;
     	}
     	return false;
     }

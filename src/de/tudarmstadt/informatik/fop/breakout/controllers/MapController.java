@@ -196,8 +196,6 @@ public class MapController {
     			}
     			
     			map.add(new RamBlock(GameParameters.BLOCK_ID + index ,d, Integer.parseInt(blockRep.substring(1)), gameplayState.getRBMC()));
-    			map.add(new SimpleBlock(GameParameters.BLOCK_ID + index,Integer.parseInt(blockRep)));
-
     			map.get(index).setPosition(new Vector2f(x,y));
     			index++;
     		}else{
@@ -248,6 +246,8 @@ public class MapController {
 			switch (block.getType()) {
 				case SIMPLE:
 					return new SimpleBlockRenderComponent(((SimpleBlock) block).getInitialHits());
+				case RAM:
+					return new RamBlockRenderComponent();
 				default:
 					logger.error("Some error occured during the creation of the view of the block: " + block.getID());
 					return new SimpleBlockRenderComponent(1);

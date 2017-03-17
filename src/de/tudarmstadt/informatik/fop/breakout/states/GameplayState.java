@@ -127,6 +127,7 @@ public class GameplayState extends BasicGameState {
         startGameEvent.addAction(new StartGameAction());
         startGameEntity.addComponent(startGameEvent);
 
+        startGameEntity.setPassable(true);
         addEntity(startGameEntity);
     }
 
@@ -157,20 +158,21 @@ public class GameplayState extends BasicGameState {
 
         //default hides the entity and make it passable so it won't effect the gameplay
         pauseImage.setVisible(false);
-        pauseImage.setPassable(true);
+        
 
         //center the entity
         pauseImage.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
 
         //view component
         pauseImage.addComponent(new ImageRenderComponent(new Image(GameParameters.PAUSE_IMAGE)));
-
+        pauseImage.setPassable(true);
         //key listener
         Entity pauseEntity = new Entity(GameParameters.PAUSE_ID);
         KeyPressedEvent escapeKeyEvent = new KeyPressedEvent(Input.KEY_ESCAPE);
         escapeKeyEvent.addAction(new PauseToggleAction(backButton, pauseImage));
         pauseEntity.addComponent(escapeKeyEvent);
 
+        pauseEntity.setPassable(true);
         addEntity(pauseEntity);
         addEntity(pauseImage);
         addEntity(backButton);
