@@ -5,6 +5,7 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.BallController;
 import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameoverState;
+import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
@@ -25,14 +26,23 @@ public class BallLeaveScreenAction implements Action {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i, Component component) {
-        // Pause game, reset ball and reactivate 'press key' screen
-        gameContainer.setPaused(true);
-        ballController.reset();
-        entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.GAMESTART_ENTITY_ID).setVisible(true);
-
-        // TODO Decrease remaining health points
-        // NOTICE: Only valid for 1 player
+        BallModel ball = (BallModel) component.getOwnerEntity();
         GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
+
+        // Check if there is more than one remaining ball
+        ArrayList<BallModel> allBalls = gameplayState.getBalls();
+        if (allBalls.size() > 1) {
+            // Remove ball completely
+            gameplayState.removeEntity(ball);
+            allBalls.remove(ball);
+        } else {
+            // Pause game, reset ball and reactivate 'press key' screen
+            gameContainer.setPaused(true);
+            ballController.reset();
+            entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.GAMESTART_ENTITY_ID).setVisible(true);
+        }
+
+        // NOTICE: Only valid for 1 player
         ArrayList<PlayerModel> allPlayers = gameplayState.getPlayers();
 
         if (allPlayers.size() == 1) {
@@ -40,7 +50,6 @@ public class BallLeaveScreenAction implements Action {
 
             player.hit();
             if (player.isDead()) {
-                // TODO Game over
                 float time = ((ClockModel) entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STOP_WATCH_ID)).getSeconds();
 
                 GameoverState gameoverState = (GameoverState) stateBasedGame.getState(GameParameters.GAMEOVER_STATE);

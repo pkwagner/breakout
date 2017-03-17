@@ -41,6 +41,8 @@ public class GameplayState extends BasicGameState {
     private ClockModel clock;
 
     private float gameSpeedFactor = 1;
+    private int ballIdCounter = 0;
+    private ArrayList<BallModel> balls = new ArrayList<>();
 
     private final SoundController soundController = new SoundController();
 
@@ -62,6 +64,7 @@ public class GameplayState extends BasicGameState {
         SoundController soundController = breakout.getSoundController();
         soundController.load(SoundType.BLOCK_HIT, SoundType.ITEM_PICKUP, SoundType.STICK_HIT);
 
+        // Load dynamic background
         backgroundSpriteSheet = new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
         backgroundAnimation = new Animation(backgroundSpriteSheet,70);
 
@@ -84,27 +87,14 @@ public class GameplayState extends BasicGameState {
         // Delete all previous entities
         entityManager.clearEntitiesFromState(stateId);
 
-        StickModel stickModel = new StickModel(GameParameters.STICK_ID, player);
-        StickController stickController = new StickController(GameParameters.STICK_ID + GameParameters.EXT_CONTROLLER);
-        stickModel.addComponent(stickController);
-        stickModel.addComponent(new StickRenderComponent());
-
-        BallModel ballModel = new BallModel(GameParameters.BALL_ID, player);
-        BallController ballController = new BallController(GameParameters.BALL_ID + GameParameters.EXT_CONTROLLER);
-        ballModel.addComponent(ballController);
-        BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + GameParameters.EXT_VIEW);
-        ballModel.addComponent(ballView);
-        ballView.init();
-
-        ballController.init(stateBasedGame);
-        stickController.init(stateBasedGame);
+        // TODO Change default positions
+        // Add stick & ball to state
+        addStick(stateBasedGame, gameContainer.getWidth() / 2);
+        addBall(stateBasedGame, new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
 
         mapController = new MapController(stateBasedGame, this);
         mapController.loadMap(mapId);
         addBorders();
-
-        addEntity(stickModel);
-        addEntity(ballModel);
 
         addEntity(clock);
         addEntity(player);
@@ -238,6 +228,33 @@ public class GameplayState extends BasicGameState {
         addEntity(backButton);
     }
 
+    public void addBall(StateBasedGame stateBasedGame, Vector2f position) throws SlickException {
+        // FORMAT: BALL_[ID][/_VIEW/_CONTROLLER]
+        BallModel ballModel = new BallModel(GameParameters.BALL_ID + "_" + ballIdCounter, player);
+        BallController ballController = new BallController(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_CONTROLLER);
+        ballModel.addComponent(ballController);
+        BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_VIEW);
+        ballModel.addComponent(ballView);
+        balls.add(ballModel);
+
+        ballView.init();
+        ballController.init(stateBasedGame, position);
+        addEntity(ballModel);
+
+        ballIdCounter++;
+    }
+
+    public void addStick(StateBasedGame stateBasedGame, int position) throws SlickException {
+        StickModel stickModel = new StickModel(GameParameters.STICK_ID, player);
+        StickController stickController = new StickController(GameParameters.STICK_ID + GameParameters.EXT_CONTROLLER);
+        stickModel.addComponent(stickController);
+        stickModel.addComponent(new StickRenderComponent());
+
+        stickController.init(stateBasedGame, position);
+        addEntity(stickModel);
+    }
+
+
     public RamBlockMovementController getRBMC(){
     	return ramBlockMovementController;
     }
@@ -257,5 +274,9 @@ public class GameplayState extends BasicGameState {
 
     public void setGameSpeedFactor(float gameSpeedFactor) {
         this.gameSpeedFactor = gameSpeedFactor;
+    }
+
+    public ArrayList<BallModel> getBalls() {
+        return balls;
     }
 }

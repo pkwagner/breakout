@@ -29,7 +29,7 @@ public class StickController extends Component {
         super.setOwnerEntity(owningEntity);
     }
 
-    public void init(StateBasedGame game) {
+    public void init(StateBasedGame game, int initialPosX) {
         KeyDownEvent leftEvent = new KeyDownEvent(Input.KEY_LEFT);
         leftEvent.addAction(new StickMoveAction(GameParameters.Direction.LEFT, getOwnerEntity()));
 
@@ -45,7 +45,7 @@ public class StickController extends Component {
         GameContainer container = game.getContainer();
 
         Vector2f stickSize = stick.getSize();
-        initialPos = new Vector2f(container.getWidth() / 2, container.getHeight() - stickSize.getY() / 2);
+        initialPos = new Vector2f(initialPosX, container.getHeight() - stickSize.getY() / 2);
 
         reset();
     }
@@ -57,6 +57,6 @@ public class StickController extends Component {
 
     public void reset() {
         StickModel stick = getOwnerEntity();
-        stick.setPosition(initialPos);
+        stick.setPosition(initialPos.copy());
     }
 }

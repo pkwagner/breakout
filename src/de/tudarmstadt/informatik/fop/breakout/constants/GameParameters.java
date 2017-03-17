@@ -146,7 +146,8 @@ public interface GameParameters {
 		SmallerItem("/images/smaller.png", 1, 0, SmallerItemAction.class),
 		SmashBallItem("/images/ball.png", 1, 5, SmashBallItemAction.class),
 		SloMoItem("/images/block_1.png", 1, 5, SloMoItemAction.class),
-		HealthPointItem("/images/block_2.png", 1, 0, HealthPointItemAction.class);
+		HealthPointItem("/images/block_2.png", 1, 0, HealthPointItemAction.class),
+		AdditionalBallItem("/images/additional_ball.png", 1, 0, AdditionalBallItemAction.class);
 
 		private final String imagePath;
 		private final double possibility;
