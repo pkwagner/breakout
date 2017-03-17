@@ -39,6 +39,7 @@ public class GameplayState extends BasicGameState {
     private MapController mapController;
     private PlayerModel player;
     private ClockModel clock;
+    private ClockController clockController;
 
     private float gameSpeedFactor = 1;
     private int ballIdCounter = 0;
@@ -109,7 +110,7 @@ public class GameplayState extends BasicGameState {
 
         // Initialize clock
         clock = new ClockModel(GameParameters.STOP_WATCH_ID);
-        ClockController clockController = new ClockController(GameParameters.STOP_WATCH_ID + GameParameters.EXT_CONTROLLER);
+        clockController = new ClockController(GameParameters.STOP_WATCH_ID + GameParameters.EXT_CONTROLLER);
         clock.addComponent(clockController);
         ClockRenderComponent clockView = new ClockRenderComponent(GameParameters.STOP_WATCH_ID + GameParameters.EXT_VIEW);
         clock.addComponent(clockView);
@@ -278,5 +279,9 @@ public class GameplayState extends BasicGameState {
 
     public ArrayList<BallModel> getBalls() {
         return balls;
+    }
+
+    public ClockController getClockController() {
+        return clockController;
     }
 }

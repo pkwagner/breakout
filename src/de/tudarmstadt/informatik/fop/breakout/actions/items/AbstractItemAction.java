@@ -1,14 +1,15 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.items;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.controllers.Timeout;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
-import de.tudarmstadt.informatik.fop.breakout.controllers.ItemTimer;
 import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
+import eea.engine.entity.StateBasedEntityManager;
 import eea.engine.event.basicevents.CollisionEvent;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +19,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class AbstractItemAction implements Action {
 
-    protected Logger logger = LogManager.getLogger();
+    private Logger logger = LogManager.getLogger();
+    private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
@@ -42,10 +44,12 @@ public abstract class AbstractItemAction implements Action {
             // Remove item from state
             ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).removeEntity(collisionEvent.getOwnerEntity());
 
-            // TODO Select another item as counter entity (?)
             // If this is an temporary item, add an item timer to disable it later
-            if (item.getDuration() != 0)
-                collisionEvent.getCollidedEntity().addComponent(new ItemTimer(item.getID() + "_timer", item.getDuration(), this));
+            if (item.getDuration() != 0) {
+                ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE))
+                        .getClockController()
+                        .addTimeout(new Timeout(item.getDuration(), wakeupTime -> onDisable()));
+            }
         }
     }
 
