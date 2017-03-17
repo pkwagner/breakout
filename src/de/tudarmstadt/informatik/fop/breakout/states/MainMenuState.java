@@ -2,7 +2,7 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 
-import de.tudarmstadt.informatik.fop.breakout.views.Button;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.Button;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -15,7 +15,7 @@ public class MainMenuState extends BasicGameState {
 
     private final int id;
 
-    private Button buttonStart, buttonHighscore, buttonCredits;
+    private Button buttonStart, buttonHighscore, buttonCredits, settingsButton;
     private Image background;
 
     public MainMenuState(int id) {
@@ -29,28 +29,33 @@ public class MainMenuState extends BasicGameState {
         Image buttonTex = new Image(GameParameters.ENTRY_IMAGE);
         Image buttonDownTex = new Image(GameParameters.ENTRY_DOWN_IMAGE);
 
-        buttonStart = new Button(gameContainer,buttonTex,40,150,"Start Game");
+        buttonStart = new Button(gameContainer, buttonTex, 40, 150, "Start Game");
         buttonStart.setMouseOverImage(buttonDownTex);
         buttonStart.addListener(source -> {
             stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE);
             gameContainer.setPaused(true);
         });
 
-        buttonHighscore = new Button(gameContainer,buttonTex,40,300,"Highscores");
+        settingsButton = new Button(gameContainer, buttonTex, 40, 250, "Settings");
+        settingsButton.setMouseOverImage(buttonDownTex);
+        settingsButton.addListener(source -> stateBasedGame.enterState(GameParameters.SETTINGS_STATE));
+
+        buttonHighscore = new Button(gameContainer, buttonTex, 40, 350, "Highscores");
         buttonHighscore.setMouseOverImage(buttonDownTex);
         buttonHighscore.addListener(source -> stateBasedGame.enterState(GameParameters.HIGHSCORE_STATE));
 
-        buttonCredits = new Button(gameContainer,buttonTex,40,450,"Credits");
+        buttonCredits = new Button(gameContainer, buttonTex, 40, 450, "Credits");
         buttonCredits.setMouseOverImage(buttonDownTex);
         buttonCredits.addListener(source -> stateBasedGame.enterState(GameParameters.CREDITS_STATE));
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        graphics.drawImage(background,0,0);
-        buttonStart.render(gameContainer,graphics);
-        buttonHighscore.render(gameContainer,graphics);
-        buttonCredits.render(gameContainer,graphics);
+        graphics.drawImage(background, 0, 0);
+        buttonStart.render(gameContainer, graphics);
+        buttonHighscore.render(gameContainer, graphics);
+        buttonCredits.render(gameContainer, graphics);
+        settingsButton.render(gameContainer, graphics);
     }
 
     @Override

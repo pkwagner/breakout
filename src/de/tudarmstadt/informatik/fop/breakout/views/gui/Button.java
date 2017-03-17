@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.fop.breakout.views;
+package de.tudarmstadt.informatik.fop.breakout.views.gui;
 
 import org.lwjgl.util.vector.Vector2f;
 

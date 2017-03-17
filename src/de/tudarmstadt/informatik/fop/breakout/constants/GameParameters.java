@@ -26,11 +26,14 @@ public interface GameParameters {
 	public static final int HIGHSCORE_STATE = 2;
 	public static final int CREDITS_STATE = 3;
 	public static final int GAMEOVER_STATE = 4;
+	public static final int SETTINGS_STATE = 5;
 
 	// Background
 	public static final String BACKGROUND_ID = "background";
 	public static final String BACKGROUND_IMAGE = "/images/background.png";
 	public static final String BACKGROUND_SPRITESHEET = "/images/background_spritesheet.png";
+
+	public static final String BLANK_BACKGROUND_IMAGE = "/images/menu_blank.png";
 
 	// Borders
 	public enum BorderType {
@@ -119,6 +122,9 @@ public interface GameParameters {
 	// Game over
 	public static final String GAMEOVER_BACKGROUND_PATH = "images/menu_blank.png";
 
+	//Settings
+	public static final String SETTINGS_TITLE = "Settings";
+
 	// MapParameters
 	public static final int MAP_COLUMNS = 16;
 	public static final int MAP_ROWS	= 10;
@@ -178,6 +184,8 @@ public interface GameParameters {
 			return actionHandler;
 		}
 	}
+
+	public static final float DEFAULT_VOLUME = 0.5f;
 
 	// Direction enum
 	public static enum Direction {

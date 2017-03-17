@@ -1,6 +1,8 @@
 package de.tudarmstadt.informatik.fop.breakout.views;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.KeyBinding;
+
 import eea.engine.component.RenderComponent;
 
 import org.newdawn.slick.GameContainer;
@@ -13,8 +15,6 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class StartGameRenderComponent extends RenderComponent {
 
-    private static final String TEXT = "Press spacebar to start the game";
-
     public StartGameRenderComponent() {
         super(GameParameters.GAMESTART_ENTITY_ID + GameParameters.EXT_VIEW);
     }
@@ -26,10 +26,12 @@ public class StartGameRenderComponent extends RenderComponent {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        int textWidth = graphics.getFont().getWidth(TEXT);
+        String text = "Press " + KeyBinding.START_GAME.getKeyName() +  " to start the game";
+
+        int textWidth = graphics.getFont().getWidth(text);
 
         Vector2f position = getOwnerEntity().getPosition();
-        graphics.drawString(TEXT, position.getX() - textWidth / 2, position.getY());
+        graphics.drawString(text, position.getX() - textWidth / 2, position.getY());
     }
 
     @Override

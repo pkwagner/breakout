@@ -2,7 +2,7 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
-import de.tudarmstadt.informatik.fop.breakout.views.Button;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.Button;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import org.apache.logging.log4j.LogManager;

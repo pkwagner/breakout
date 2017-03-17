@@ -1,7 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.models.BackButton;
+import de.tudarmstadt.informatik.fop.breakout.models.gui.BackButton;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.CreditsRenderComponent;
 import eea.engine.component.render.ImageRenderComponent;
@@ -61,7 +61,7 @@ public class CreditsState extends BasicGameState {
 
         //center the image to be displayed on the complete window
         backgroundEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
-        backgroundEntity.addComponent(new ImageRenderComponent(new Image(GameParameters.CREDITS_BACKGROUND_PATH)));
+        backgroundEntity.addComponent(new ImageRenderComponent(new Image(GameParameters.BLANK_BACKGROUND_IMAGE)));
 
         entityManager.addEntity(stateId, backgroundEntity);
     }

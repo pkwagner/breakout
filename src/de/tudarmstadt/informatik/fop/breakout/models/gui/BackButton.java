@@ -1,10 +1,10 @@
-package de.tudarmstadt.informatik.fop.breakout.models;
+package de.tudarmstadt.informatik.fop.breakout.models.gui;
 
-import de.tudarmstadt.informatik.fop.breakout.actions.BackButtonAction;
+import de.tudarmstadt.informatik.fop.breakout.actions.gui.BackButtonAction;
+import de.tudarmstadt.informatik.fop.breakout.events.MouseClickedEvent;
 
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
-import eea.engine.event.basicevents.MouseClickedEvent;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;

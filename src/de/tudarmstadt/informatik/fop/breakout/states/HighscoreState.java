@@ -3,19 +3,16 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
 import de.tudarmstadt.informatik.fop.breakout.interfaces.IHighscoreEntry;
-import de.tudarmstadt.informatik.fop.breakout.models.BackButton;
+import de.tudarmstadt.informatik.fop.breakout.models.gui.BackButton;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.HighScoreEntryRenderComponent;
-import de.tudarmstadt.informatik.fop.breakout.views.HighScoreTitleRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.MenuTitleRenderComponent;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -44,7 +41,7 @@ public class HighscoreState extends BasicGameState {
         }
 
         addBackground(gameContainer);
-        addTitle(gameContainer);
+        addTitle();
 
         Breakout breakout = (Breakout) stateBasedGame;
         HighScoreController highScoreController = breakout.getHighScoreController();
@@ -100,17 +97,14 @@ public class HighscoreState extends BasicGameState {
 
         //center the image to be displayed on the complete window
         backgroundEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
-        backgroundEntity.addComponent(new ImageRenderComponent(new Image(GameParameters.HIGHSCORE_BACKGROUND_PATH)));
+        backgroundEntity.addComponent(new ImageRenderComponent(new Image(GameParameters.BLANK_BACKGROUND_IMAGE)));
 
         entityManager.addEntity(stateId, backgroundEntity);
     }
 
-    private void addTitle(GameContainer gameContainer) {
+    private void addTitle() {
         Entity titleEntity = new Entity(GameParameters.HIGHSCORE_TITLE_ID);
-
-        titleEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, GameParameters.HIGHSCORE_TITLE_START_Y));
-        titleEntity.addComponent(new HighScoreTitleRenderComponent(GameParameters.HIGHSCORE_TITLE_ID + GameParameters.EXT_VIEW));
-
+        titleEntity.addComponent(new MenuTitleRenderComponent("title_view", GameParameters.HIGHSCORE_TITLE_TEXT));
         entityManager.addEntity(stateId, titleEntity);
     }
 }

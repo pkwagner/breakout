@@ -2,16 +2,17 @@ package de.tudarmstadt.informatik.fop.breakout.ui;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
-import de.tudarmstadt.informatik.fop.breakout.states.*;
 import de.tudarmstadt.informatik.fop.breakout.controllers.SoundController;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
+import de.tudarmstadt.informatik.fop.breakout.states.*;
+
 import eea.engine.entity.StateBasedEntityManager;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Breakout extends StateBasedGame implements GameParameters {
@@ -35,12 +36,6 @@ public class Breakout extends StateBasedGame implements GameParameters {
     public Breakout(boolean debug) {
         super("Breakout");
         Breakout.debug = debug;
-
-        //load sound drivers
-        SoundStore.get().init();
-
-        soundController.load(SoundType.BACKGROUND_MUSIC);
-        soundController.playMusic(SoundType.BACKGROUND_MUSIC);
     }
 
     public static void main(String[] args) throws SlickException {
@@ -62,7 +57,8 @@ public class Breakout extends StateBasedGame implements GameParameters {
 	        }
 
 	        // Add this StateBasedGame to an AppGameContainer
-	        AppGameContainer app = new AppGameContainer(new Breakout(false));
+            Breakout game = new Breakout(false);
+            AppGameContainer app = new AppGameContainer(game);
 
 	        // Set the display mode and frame rate
 	        app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
@@ -84,7 +80,10 @@ public class Breakout extends StateBasedGame implements GameParameters {
     }
 
     @Override
-    public void initStatesList(GameContainer arg0) throws SlickException {
+    public void initStatesList(GameContainer container) throws SlickException {
+        //load the sounds here in order to override the default sound volume from slick
+        initMusic(container);
+
         // Add the game states (the first added state will be started initially)
         // This may look as follows, assuming you use the associated class names and constants:
         addState(new MainMenuState(MAINMENU_STATE));
@@ -92,6 +91,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
         addState(new HighscoreState(HIGHSCORE_STATE));
         addState(new CreditsState(CREDITS_STATE));
         addState(new GameoverState(GAMEOVER_STATE));
+        addState(new SettingsState(SETTINGS_STATE));
 
         // Add the states to the StateBasedEntityManager
         StateBasedEntityManager.getInstance().addState(MAINMENU_STATE);
@@ -99,6 +99,20 @@ public class Breakout extends StateBasedGame implements GameParameters {
         StateBasedEntityManager.getInstance().addState(HIGHSCORE_STATE);
         StateBasedEntityManager.getInstance().addState(CREDITS_STATE);
         StateBasedEntityManager.getInstance().addState(GAMEOVER_STATE);
+        StateBasedEntityManager.getInstance().addState(SETTINGS_STATE);
+    }
+
+    /**
+     * Load and play background music.
+     *
+     * @param container the game container
+     */
+    private void initMusic(GameContainer container) {
+        soundController.load(SoundType.BACKGROUND_MUSIC);
+        soundController.playMusic(SoundType.BACKGROUND_MUSIC);
+
+        container.setMusicVolume(GameParameters.DEFAULT_VOLUME);
+        container.setSoundVolume(GameParameters.DEFAULT_VOLUME);
     }
 
     /**

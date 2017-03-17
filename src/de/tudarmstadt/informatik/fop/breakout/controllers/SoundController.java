@@ -20,22 +20,16 @@ public class SoundController implements AutoCloseable {
     private final SoundStore soundStore = SoundStore.get();
     private final EnumMap<SoundType, Audio> loadedSound = new EnumMap<>(SoundType.class);
 
-    private float volume = 0.1f;
-
-    /**
-     * @return gets the current volume as a float 1.0f = 100% 0.0f = 0%
-     */
-    public float getVolume() {
-        return volume;
+    public SoundController() {
+        //load sound drivers
+        soundStore.init();
     }
 
     /**
-     * Sets the new volume which takes effect on the next sound effect
-     *
-     * @param volume a float value between 0.0 = 0% and 1.0 = 100%
+     * @return
      */
-    public void setVolume(float volume) {
-        this.volume = volume;
+    public SoundStore getSoundStore() {
+        return soundStore;
     }
 
     /**
@@ -44,8 +38,6 @@ public class SoundController implements AutoCloseable {
      * @param types a list of all sounds that should be loaded
      */
     public void load(SoundType... types) {
-        //load sound system if not already done
-        soundStore.init();
         if (!soundStore.soundWorks()) {
             logger.warn("Failed to connect to the sound system");
         }
@@ -74,7 +66,7 @@ public class SoundController implements AutoCloseable {
         }
 
         logger.info("Playing sound effect {}", type.name());
-        audio.playAsSoundEffect(1.0f, volume, false);
+        audio.playAsSoundEffect(1f, 1f, false);
     }
 
     /**
@@ -93,7 +85,7 @@ public class SoundController implements AutoCloseable {
 
         //turn it on if it was off before
         soundStore.setMusicOn(true);
-        audio.playAsMusic(1.0f, volume, true);
+        audio.playAsMusic(1f, 1f, true);
     }
 
     public void setPitch(float pitch) {
@@ -102,7 +94,7 @@ public class SoundController implements AutoCloseable {
 
     /**
      * Stops the background music loop.
-     *
+     * <p>
      * This removes the lock in order to free the memory.
      */
     public void stopMusic() {
@@ -113,6 +105,7 @@ public class SoundController implements AutoCloseable {
     public void close() {
         logger.debug("Cleaning up sound resources");
 
+        //stop the music in order to release the native data
         stopMusic();
 
         //release allocated memory

@@ -4,20 +4,20 @@ import de.tudarmstadt.informatik.fop.breakout.actions.PauseToggleAction;
 import de.tudarmstadt.informatik.fop.breakout.actions.StartGameAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.*;
+import de.tudarmstadt.informatik.fop.breakout.events.KeyPressedEvent;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.*;
+import de.tudarmstadt.informatik.fop.breakout.models.gui.BackButton;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.*;
 
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
-import eea.engine.event.basicevents.KeyPressedEvent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.*;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -44,8 +44,6 @@ public class GameplayState extends BasicGameState {
     private float gameSpeedFactor = 1;
     private int ballIdCounter = 0;
     private ArrayList<BallModel> balls;
-
-    private final SoundController soundController = new SoundController();
 
     public GameplayState(int id) {
         this.stateId = id;
@@ -175,7 +173,7 @@ public class GameplayState extends BasicGameState {
         startGameEntity.setSize(new Vector2f(100, 100));
         startGameEntity.addComponent(new StartGameRenderComponent());
 
-        KeyPressedEvent startGameEvent = new KeyPressedEvent(Input.KEY_SPACE);
+        KeyPressedEvent startGameEvent = new KeyPressedEvent(KeyBinding.START_GAME);
         startGameEvent.addAction(new StartGameAction());
         startGameEntity.addComponent(startGameEvent);
 
@@ -220,7 +218,7 @@ public class GameplayState extends BasicGameState {
         pauseImage.setPassable(true);
         //key listener
         Entity pauseEntity = new Entity(GameParameters.PAUSE_ID);
-        KeyPressedEvent escapeKeyEvent = new KeyPressedEvent(Input.KEY_ESCAPE);
+        KeyPressedEvent escapeKeyEvent = new KeyPressedEvent(KeyBinding.PAUSE);
         escapeKeyEvent.addAction(new PauseToggleAction(backButton, pauseImage));
         pauseEntity.addComponent(escapeKeyEvent);
 
