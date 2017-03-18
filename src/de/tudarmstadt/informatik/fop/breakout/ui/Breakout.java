@@ -2,10 +2,7 @@ package de.tudarmstadt.informatik.fop.breakout.ui;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
-import de.tudarmstadt.informatik.fop.breakout.states.CreditsState;
-import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
-import de.tudarmstadt.informatik.fop.breakout.states.HighscoreState;
-import de.tudarmstadt.informatik.fop.breakout.states.MainMenuState;
+import de.tudarmstadt.informatik.fop.breakout.states.*;
 import eea.engine.entity.StateBasedEntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -79,12 +76,14 @@ public class Breakout extends StateBasedGame implements GameParameters {
         addState(new GameplayState(GAMEPLAY_STATE));
         addState(new HighscoreState(HIGHSCORE_STATE));
         addState(new CreditsState(CREDITS_STATE));
+        addState(new GameoverState(GAMEOVER_STATE));
 
         // Add the states to the StateBasedEntityManager
         StateBasedEntityManager.getInstance().addState(MAINMENU_STATE);
         StateBasedEntityManager.getInstance().addState(GAMEPLAY_STATE);
         StateBasedEntityManager.getInstance().addState(HIGHSCORE_STATE);
         StateBasedEntityManager.getInstance().addState(CREDITS_STATE);
+        StateBasedEntityManager.getInstance().addState(GAMEOVER_STATE);
     }
 
     /**

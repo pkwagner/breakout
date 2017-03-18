@@ -2,9 +2,11 @@ package de.tudarmstadt.informatik.fop.breakout.actions.blocks;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.ItemController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.AbstractBlockController;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
+import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
@@ -49,6 +51,17 @@ public abstract class AbstractBlockCollideAction {
 
         // Drop an item if wanted (check total possibility)
         dropItem();
+
+        // Add score points to the ball-controlling player (if there is one)
+        PlayerModel player = ballModel.getControllingPlayer();
+        player.destroyBlock(blockModel.getScorePoints());
+        System.out.println(player.getScore());
+
+        // Check if this was the last block, then call 'nextLevel' in GameplayState
+        MapController mapController = gameplayState.getMapController();
+        gameplayState.getMapController().removeBlock(blockModel);
+        if (mapController.isEmpty())
+            gameplayState.nextLevel();
     }
 
     private void dropItem() {

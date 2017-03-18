@@ -15,9 +15,14 @@ public class BallModel extends Entity {
     private int hitPoints = 1;
     private Vector2f[] outline;
     private int numberOfVertices = 30;
+
+    private PlayerModel controllingPlayer;
     
-    public BallModel(String entityID) {
+    public BallModel(String entityID, PlayerModel initialControllingPlayer) {
         super(entityID);
+
+        this.controllingPlayer = initialControllingPlayer;
+
         outline = new Vector2f[numberOfVertices];
         
         for(int i = 0; i < numberOfVertices; i++){
@@ -55,5 +60,13 @@ public class BallModel extends Entity {
     
     public Vector2f[] getOutline(){
     	return outline;
+    }
+
+    public PlayerModel getControllingPlayer() {
+        return controllingPlayer;
+    }
+
+    public void setControllingPlayer(PlayerModel controllingPlayer) {
+        this.controllingPlayer = controllingPlayer;
     }
 }

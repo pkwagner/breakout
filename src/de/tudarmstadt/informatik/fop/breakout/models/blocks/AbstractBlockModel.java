@@ -8,7 +8,8 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
 
     private int initialHits = 1;
     private int remainingHits = initialHits;
-    GameParameters.ItemType droppableItems[] = {};
+    protected int scorePoints = GameParameters.BLOCK_DEFAULT_SCOREPOINTS;
+    protected GameParameters.ItemType droppableItems[] = {};
 
     public AbstractBlockModel(String entityID) {
         super(entityID);
@@ -53,6 +54,10 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
 
 
     public abstract GameParameters.BlockType getType();
+
+    public int getScorePoints() {
+        return scorePoints;
+    }
 
     public abstract GameParameters.BlockType transformToBlockType();
 }

@@ -30,12 +30,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class MapController {
@@ -46,7 +40,8 @@ public class MapController {
     private static final String FILE_PREFIX = "level";
     private static final String FILE_EXT 	= ".map";
 
-    private final List<AbstractBlockModel> map = new ArrayList<>();
+    private List<AbstractBlockModel> map = new ArrayList<>();
+    private int mapId;
 
     private final GameplayState gameplayState;
     private final GameContainer gameContainer;
@@ -58,11 +53,8 @@ public class MapController {
         this.stateBasedGame = stateBasedGame;
     }
 
-    public void loadMap() {
-        loadMap(1); //load default map
-    }
-
     public void loadMap(int mapId) {
+        this.mapId = mapId;
 
     	ArrayList<String> rawMap;
 
@@ -83,9 +75,11 @@ public class MapController {
         map.forEach(block -> block.addComponent(createView(block)));
 
         //assign controller to blocks
-        map.stream().forEach(block -> {	AbstractBlockController c = createController(block);
-        								block.addComponent(c);
-        								c.init(stateBasedGame);});
+        map.forEach(block -> {
+            AbstractBlockController c = createController(block);
+            block.addComponent(c);
+            c.init(stateBasedGame);
+        });
 
 		//add block to game
 		map.forEach(gameplayState::addEntity);
@@ -174,8 +168,8 @@ public class MapController {
     		if(blockRep.equals("0")){
     			//don't add a Block when the string representation is "0"
     		}else if(Utility.isInteger(blockRep)){
-    			    		
-    			map.add(new SimpleBlock(GameParameters.BLOCK_ID + index,Integer.parseInt(blockRep)));    			    			
+
+    			map.add(new SimpleBlock(GameParameters.BLOCK_ID + index,Integer.parseInt(blockRep)));
     			map.get(index).setPosition(new Vector2f(x,y));
     			index++;
     			
@@ -258,4 +252,20 @@ public class MapController {
 		}
     }
 
+    public int getMapId() {
+        return mapId;
+    }
+
+    /**
+     * Removes a given block from map
+     *
+     * @param block the block that should been removed
+     */
+    public void removeBlock(AbstractBlockModel block) {
+        map.remove(block);
+    }
+
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
 }

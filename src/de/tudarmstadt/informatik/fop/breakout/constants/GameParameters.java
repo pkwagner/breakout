@@ -4,6 +4,7 @@ import de.tudarmstadt.informatik.fop.breakout.actions.items.BiggerItemAction;
 import de.tudarmstadt.informatik.fop.breakout.actions.items.FasterItemAction;
 import de.tudarmstadt.informatik.fop.breakout.actions.items.SlowerItemAction;
 import de.tudarmstadt.informatik.fop.breakout.actions.items.SmallerItemAction;
+import org.newdawn.slick.geom.Vector2f;
 
 /**
  * Class for holding the game parameters and constants e.g. entity IDs or image
@@ -27,6 +28,7 @@ public interface GameParameters {
 	public static final int GAMEPLAY_STATE = 1;
 	public static final int HIGHSCORE_STATE = 2;
 	public static final int CREDITS_STATE = 3;
+	public static final int GAMEOVER_STATE = 4;
 
 	// Background
 	public static final String BACKGROUND_ID = "background";
@@ -45,7 +47,8 @@ public interface GameParameters {
 
 	// Blocks
 	public static final String BLOCK_ID = "block";
-	public static final String MAP_FILE = "maps/level1.map";
+	public static final int MAP_INITIAL_ID = 1;
+	public static final int MAP_COUNT = 3;
 	public static final String BLOCK_1_IMAGE = "/images/simpleBlock1.png";
 	public static final String BLOCK_2_IMAGE = "/images/simpleBlock2.png";
 	public static final String BLOCK_3_IMAGE = "/images/simpleBlock3.png";
@@ -55,6 +58,9 @@ public interface GameParameters {
 	public static final float	RAM_BLOCK_ACCELERATION = 0.0001F;
 	public static final int		RAM_BLOCK_REST_TIME = 1500;
 	public static final float	RAM_BLOCK_REBOUND_VELOCITY = 0.01F;
+
+	public static final int BLOCK_DEFAULT_SCOREPOINTS = 10;
+	public static final int BLOCK_RAM_SCOREPOINTS = 20;
 
 	// Timer
 	public static final String 	STOP_WATCH_ID		= "stopWatch";
@@ -77,6 +83,9 @@ public interface GameParameters {
 	// Player
 	public static final String PLAYER_ID = "player";
 	public static final String NO_LIFE_LEFT = "noLifeLeft";
+	public static final int PLAYER_DEFAULT_HEALTHPOINTS = 3;
+	public static final Vector2f PLAYER_VIEW_SCORE_OFFSET = new Vector2f(20, 550);
+	public static final int PLAYER_VIEW_SCORE_DISTANCE_Y = 50;
 
 	// Pause
 	public static final String PAUSE_ID = "pause";
@@ -104,6 +113,9 @@ public interface GameParameters {
 	public static final int HIGHSCORE_ENTRY_START_Y = 110;
 	public static final int HIGHSCORE_ENTRY_GAP = 4;
 	public static final String HIGHSCORE_TITLE_TEXT = "Highscores";
+
+	// Game over
+	public static final String GAMEOVER_BACKGROUND_PATH = "images/menu_blank.png";
 
 	// MapParameters
 	public static final int MAP_COLUMNS = 16;

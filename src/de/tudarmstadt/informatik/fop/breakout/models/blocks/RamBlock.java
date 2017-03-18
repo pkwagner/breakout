@@ -14,6 +14,8 @@ public class RamBlock extends AbstractBlockModel {
 		this.direction	= direction;
 		this.distance	= distance;
 		this.rbmc		= rbmc;
+
+		this.scorePoints = GameParameters.BLOCK_RAM_SCOREPOINTS;
 	}
 
 	@Override

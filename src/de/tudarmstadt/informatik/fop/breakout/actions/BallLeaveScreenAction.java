@@ -2,11 +2,17 @@ package de.tudarmstadt.informatik.fop.breakout.actions;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.BallController;
+import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
+import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
+import de.tudarmstadt.informatik.fop.breakout.states.GameoverState;
+import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.StateBasedEntityManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.util.ArrayList;
 
 public class BallLeaveScreenAction implements Action {
 
@@ -25,5 +31,22 @@ public class BallLeaveScreenAction implements Action {
         entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.GAMESTART_ENTITY_ID).setVisible(true);
 
         // TODO Decrease remaining health points
+        // NOTICE: Only valid for 1 player
+        GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
+        ArrayList<PlayerModel> allPlayers = gameplayState.getPlayers();
+
+        if (allPlayers.size() == 1) {
+            PlayerModel player = allPlayers.get(0);
+
+            player.hit();
+            if (player.isDead()) {
+                // TODO Game over
+                float time = ((ClockModel) entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STOP_WATCH_ID)).getSeconds();
+
+                GameoverState gameoverState = (GameoverState) stateBasedGame.getState(GameParameters.GAMEOVER_STATE);
+                gameoverState.load(player, time);
+                stateBasedGame.enterState(GameParameters.GAMEOVER_STATE);
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
+import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 
@@ -44,9 +45,9 @@ public class BallCollideAction implements Action {
 
         Entity collidedEntity = collisionEvent.getCollidedEntity();
         String collidedId = collidedEntity.getID();
-        
-        if(!(collidedEntity instanceof AbstractBlockModel||collidedId.contains("Border")||collidedId == GameParameters.STICK_ID)) return; //#wtf warum funktioniert passable nicht
-                
+
+        if(!(collidedEntity instanceof AbstractBlockModel||collidedId.contains("Border")||collidedId.equals(GameParameters.STICK_ID))) return; //#wtf warum funktioniert passable nicht
+
         logger.debug("Ball collision with {}", collidedId);
 
         Shape collidedShape = collidedEntity.getShape();
@@ -58,15 +59,18 @@ public class BallCollideAction implements Action {
     /**
      * Handles the collision by updating ball position and velocity
      *
-     * @param otherShape
-     * @param collisionDirection
+     * @param collidedEntity
+     * @param state
      */
     private void handleCollision(Entity collidedEntity,GameplayState state) {
     	Shape ballShape 	= ballModel.getShape();
     	Shape collidedShape = collidedEntity.getShape();
-    	
-    	if(collidedEntity.getID() == GameParameters.STICK_ID){	//we should consider implementing a StickCollide action if more code is added here
+
+    	if(collidedEntity.getID().equals(GameParameters.STICK_ID)){	//we should consider implementing a StickCollide action if more code is added here
     		state.getSoundController().playEffect(SoundType.STICK_HIT);
+
+    		// Set ball's controlling player
+            ballModel.setControllingPlayer(((StickModel) collidedEntity).getOwner());
     	}else if(collidedEntity instanceof AbstractBlockModel){
     		onBlockCollide(state, (AbstractBlockModel)collidedEntity);
     	}
@@ -111,9 +115,9 @@ public class BallCollideAction implements Action {
     
     /**
      * Method for handling collision with blocks specifically
-     * 
-     * @param stateBasedGame
-     * @param blockModel
+     *
+     * @param state
+     * @param collidedEntity
      */
     private void onBlockCollide(GameplayState state, AbstractBlockModel collidedEntity) {
         // Decrease remaining blockModel hits, afterwards check for remaining hit points

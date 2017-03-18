@@ -9,10 +9,12 @@ import org.newdawn.slick.geom.Vector2f;
 public class StickModel extends Entity {
 
     private Vector velocity;
+    private final PlayerModel owner;
 
-    public StickModel(String entityID) {
+    public StickModel(String entityID, PlayerModel owner) {
         super(entityID);
 
+        this.owner = owner;
         this.setSize(new Vector2f(GameParameters.STICK_WIDTH, GameParameters.STICK_HEIGHT));
     }
 
@@ -26,5 +28,9 @@ public class StickModel extends Entity {
 
     public void setVelocity(Vector velocity) {
         this.velocity = velocity;
+    }
+
+    public PlayerModel getOwner() {
+        return owner;
     }
 }
