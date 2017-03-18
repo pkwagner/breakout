@@ -52,9 +52,13 @@ public interface GameParameters {
 	public static final String BLOCK_1_IMAGE = "/images/simpleBlock1.png";
 	public static final String BLOCK_2_IMAGE = "/images/simpleBlock2.png";
 	public static final String BLOCK_3_IMAGE = "/images/simpleBlock3.png";
+	public static final String SIMPLE_BLOCK_1_SPRITESHEET = "/images/simpleBlock1-spritesheet.png";
+	public static final String SIMPLE_BLOCK_2_SPRITESHEET = "/images/simpleBlock2-spritesheet.png";
+	public static final String SIMPLE_BLOCK_3_SPRITESHEET = "/images/simpleBlock3-spritesheet.png";
+	
 	public static final int		BLOCK_WIDTH = 50;
 	public static final int		BLOCK_HEIGHT = 30;
-	public static final String	RAM_BLOCK_IMAGE = "/images/ram-block.png";
+	public static final String	RAM_BLOCK_SPRITESHEET = "/images/ram-block-spritesheet.png";
 	public static final float	RAM_BLOCK_ACCELERATION = 0.0001F;
 	public static final int		RAM_BLOCK_REST_TIME = 1500;
 	public static final float	RAM_BLOCK_REBOUND_VELOCITY = 0.01F;

@@ -40,6 +40,8 @@ public class GameplayState extends BasicGameState {
     private PlayerModel player;
     private ClockModel clock;
 
+    private final SoundController soundController = new SoundController();
+
     public GameplayState(int id) {
         this.stateId = id;
     }
@@ -143,7 +145,7 @@ public class GameplayState extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta)
             throws SlickException {
         entityManager.updateEntities(gameContainer, stateBasedGame, delta);
-        ramBlockMovementController.update(delta);
+        if(!gameContainer.isPaused())ramBlockMovementController.update(delta);
     }
 
     @Override

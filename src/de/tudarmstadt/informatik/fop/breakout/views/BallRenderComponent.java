@@ -14,7 +14,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class BallRenderComponent extends RenderComponent {
     private SpriteSheet spriteSheet;
     private Animation animation;
-    BallModel ball;
+    private BallModel ball;
+    private boolean isPaused = true;
     
     public BallRenderComponent(String id) throws SlickException {
     	super(id);
@@ -36,6 +37,14 @@ public class BallRenderComponent extends RenderComponent {
 
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) {
+		if(gameContainer.isPaused() && isPaused == false){
+			isPaused = true;
+			animation.stop();
+		}else if(!gameContainer.isPaused() && isPaused == true){
+			isPaused = false;
+			animation.start();	
+		}			
+		
 		g.drawAnimation(animation, ball.getPosition().getX()-ball.getRadius(), ball.getPosition().getY()-ball.getRadius());
 	}
 

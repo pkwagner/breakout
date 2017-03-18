@@ -41,6 +41,12 @@ public abstract class AbstractBlockCollideAction {
         if (!blockModel.hasHitsLeft())
             destroy();
 
+        else {
+            // Change render component based on remaining hits
+        	blockModel.getView().updateImage(blockModel.getInitialHits()-blockModel.getHitsLeft());;
+            //blockModel.removeComponent("ImageRenderComponent");
+            //blockModel.addComponent(AbstractBlockController.createBlockView(blockModel));
+        }
 
         breakout.getSoundController().playEffect(SoundType.BLOCK_HIT);
     }

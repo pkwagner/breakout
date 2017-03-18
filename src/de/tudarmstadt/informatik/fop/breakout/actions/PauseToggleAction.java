@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +32,7 @@ public class PauseToggleAction implements Action {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
         boolean newPauseState = !gameContainer.isPaused();
         logger.info("Toggling pause state to {}", newPauseState);
-
+        
         gameContainer.setPaused(newPauseState);
         //hide or show the pause image/back button depending on the pause state
         for (Entity entity : entities) {

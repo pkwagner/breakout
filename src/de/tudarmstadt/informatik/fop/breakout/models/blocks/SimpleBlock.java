@@ -23,4 +23,5 @@ public class SimpleBlock extends AbstractBlockModel {
     public GameParameters.BlockType transformToBlockType() {
         return null;
     }
+    
 }
