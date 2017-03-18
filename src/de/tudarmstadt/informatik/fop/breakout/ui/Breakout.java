@@ -3,6 +3,8 @@ package de.tudarmstadt.informatik.fop.breakout.ui;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
 import de.tudarmstadt.informatik.fop.breakout.states.*;
+import de.tudarmstadt.informatik.fop.breakout.controllers.SoundController;
+import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import eea.engine.entity.StateBasedEntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +24,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
         return debug;
     }
 
+    private final SoundController soundController = new SoundController();
     private final HighScoreController highScoreController = new HighScoreController();
 
     /**
@@ -32,6 +35,12 @@ public class Breakout extends StateBasedGame implements GameParameters {
     public Breakout(boolean debug) {
         super("Breakout");
         Breakout.debug = debug;
+
+        //load sound drivers
+        SoundStore.get().init();
+
+        soundController.load(SoundType.BACKGROUND_MUSIC);
+        soundController.playMusic(SoundType.BACKGROUND_MUSIC);
     }
 
     public static void main(String[] args) throws SlickException {
@@ -59,13 +68,19 @@ public class Breakout extends StateBasedGame implements GameParameters {
 	        app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
 	        app.setTargetFrameRate(FRAME_RATE);
 
-            SoundStore.get().init();
-
 	        // now start the game!
 	        app.start();
     	}catch(Exception e){
     		logger.error(e);
     	}
+    }
+
+    @Override
+    public boolean closeRequested() {
+        //release resources to gracefully free the native data
+        soundController.close();
+
+        return super.closeRequested();
     }
 
     @Override
@@ -93,5 +108,9 @@ public class Breakout extends StateBasedGame implements GameParameters {
      */
     public HighScoreController getHighScoreController() {
         return highScoreController;
+    }
+
+    public SoundController getSoundController() {
+        return soundController;
     }
 }

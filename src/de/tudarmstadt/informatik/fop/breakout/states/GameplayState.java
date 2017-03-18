@@ -40,8 +40,6 @@ public class GameplayState extends BasicGameState {
     private PlayerModel player;
     private ClockModel clock;
 
-    private final SoundController soundController = new SoundController();
-
     public GameplayState(int id) {
         this.stateId = id;
     }
@@ -56,8 +54,9 @@ public class GameplayState extends BasicGameState {
         this.stateBasedGame = stateBasedGame;
 
         //load sound effects
-        soundController.load(SoundType.BLOCK_HIT, SoundType.ITEM_PICKUP, SoundType.STICK_HIT, SoundType.BACKGROUND_MUSIC);
-        soundController.playMusic(SoundType.BACKGROUND_MUSIC);
+        Breakout breakout = (Breakout) stateBasedGame;
+        SoundController soundController = breakout.getSoundController();
+        soundController.load(SoundType.BLOCK_HIT, SoundType.ITEM_PICKUP, SoundType.STICK_HIT);
 
         backgroundSpriteSheet = new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
         backgroundAnimation = new Animation(backgroundSpriteSheet,70);
@@ -237,10 +236,6 @@ public class GameplayState extends BasicGameState {
 
     public RamBlockMovementController getRBMC(){
     	return ramBlockMovementController;
-    }
-
-    public SoundController getSoundController() {
-        return soundController;
     }
 
     //TODO

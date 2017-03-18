@@ -9,6 +9,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
+import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.ItemRenderComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,10 +25,14 @@ public abstract class AbstractBlockCollideAction {
     private BallModel ballModel;
     private GameplayState gameplayState;
 
-    public AbstractBlockCollideAction(AbstractBlockModel blockModel, BallModel ballModel, GameplayState gameplayState) {
+    private final Breakout breakout;
+
+    public AbstractBlockCollideAction(AbstractBlockModel blockModel, BallModel ballModel, Breakout breakout) {
         this.blockModel = blockModel;
         this.ballModel = ballModel;
-        this.gameplayState = gameplayState;
+        this.gameplayState = (GameplayState) breakout.getCurrentState();
+
+        this.breakout = breakout;
     }
 
     public void onCollision() {
@@ -36,7 +41,8 @@ public abstract class AbstractBlockCollideAction {
         if (!blockModel.hasHitsLeft())
             destroy();
 
-        gameplayState.getSoundController().playEffect(SoundType.BLOCK_HIT);
+
+        breakout.getSoundController().playEffect(SoundType.BLOCK_HIT);
     }
 
     private void destroy() {

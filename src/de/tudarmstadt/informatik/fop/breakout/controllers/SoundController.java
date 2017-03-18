@@ -107,6 +107,8 @@ public class SoundController implements AutoCloseable {
 
     @Override
     public void close() {
+        logger.debug("Cleaning up sound resources");
+
         stopMusic();
 
         //release allocated memory

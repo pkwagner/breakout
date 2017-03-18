@@ -10,6 +10,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
+import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
@@ -53,7 +54,7 @@ public class BallCollideAction implements Action {
         boolean collisionValid = checkCollision(collidedShape);
 
         if (collisionValid) {
-            handleCollision(collidedEntity, state);
+            handleCollision(collidedEntity, state, (Breakout) stateBasedGame);
             increaseBallSpeed();
         }
     }
@@ -72,17 +73,17 @@ public class BallCollideAction implements Action {
      * @param collidedEntity
      * @param state
      */
-    private void handleCollision(Entity collidedEntity, GameplayState state) {
+    private void handleCollision(Entity collidedEntity, GameplayState state, Breakout breakout) {
         Shape ballShape = ballModel.getShape();
         Shape collidedShape = collidedEntity.getShape();
 
         if (collidedEntity.getID().equals(GameParameters.STICK_ID)) {    //we should consider implementing a StickCollide action if more code is added here
-            state.getSoundController().playEffect(SoundType.STICK_HIT);
+            breakout.getSoundController().playEffect(SoundType.STICK_HIT);
 
             // Set ball's controlling player
             ballModel.setControllingPlayer(((StickModel) collidedEntity).getOwner());
         } else if (collidedEntity instanceof AbstractBlockModel) {
-            onBlockCollide(state, (AbstractBlockModel) collidedEntity);
+            onBlockCollide(breakout, (AbstractBlockModel) collidedEntity);
         }
 
         updateBallPositionAndVelocity(getCollisionDirection(ballShape, collidedShape), collidedShape); //the default collision handling method
@@ -133,17 +134,17 @@ public class BallCollideAction implements Action {
      * @param state
      * @param collidedEntity
      */
-    private void onBlockCollide(GameplayState state, AbstractBlockModel collidedEntity) {
+    private void onBlockCollide(Breakout breakout, AbstractBlockModel collidedEntity) {
         // Decrease remaining blockModel hits, afterwards check for remaining hit points
         AbstractBlockModel block = collidedEntity;
         AbstractBlockCollideAction collideAction = null;
 
         switch (block.getType()) {
             case SIMPLE:
-                collideAction = new SimpleBlockCollideAction(block, ballModel, state);
+                collideAction = new SimpleBlockCollideAction(block, ballModel, breakout);
                 break;
             case RAM:
-                collideAction = new RamBlockCollideAction(block, ballModel, state);
+                collideAction = new RamBlockCollideAction(block, ballModel, breakout);
         }
 
         if (collideAction != null) collideAction.onCollision();

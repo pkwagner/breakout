@@ -6,6 +6,7 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.ItemTimer;
 import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 
+import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.event.basicevents.CollisionEvent;
@@ -30,10 +31,8 @@ public abstract class AbstractItemAction implements Action {
         if (collisionEvent.getCollidedEntity().getID().equals(GameParameters.STICK_ID)) {
             logger.info("Item pickup {}", component.getOwnerEntity().getID());
 
-            GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
-
             // Play sound
-            gameplayState.getSoundController().playEffect(SoundType.ITEM_PICKUP);
+            ((Breakout) stateBasedGame).getSoundController().playEffect(SoundType.ITEM_PICKUP);
 
             // Trigger onEnable listener
             onEnable();
