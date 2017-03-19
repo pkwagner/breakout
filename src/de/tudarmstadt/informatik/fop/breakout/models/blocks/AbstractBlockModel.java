@@ -17,6 +17,7 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
     
     public AbstractBlockModel(String entityID) {
         super(entityID);
+        setPassable(false);
     }
 
     public int getInitialHits() {

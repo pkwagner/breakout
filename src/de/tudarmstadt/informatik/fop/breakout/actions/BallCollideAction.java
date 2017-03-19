@@ -45,8 +45,7 @@ public class BallCollideAction implements Action {
         Entity collidedEntity = collisionEvent.getCollidedEntity();
         String collidedId = collidedEntity.getID();
 
-        if (!(collidedEntity instanceof AbstractBlockModel || collidedId.contains("Border") || collidedId.equals(GameParameters.STICK_ID)))
-            return; //#wtf warum funktioniert passable nicht
+        if (collidedEntity.isPassable())return;
 
         logger.debug("Ball collision with {}", collidedId);
 

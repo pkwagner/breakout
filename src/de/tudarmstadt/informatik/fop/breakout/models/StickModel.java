@@ -16,6 +16,7 @@ public class StickModel extends Entity {
 
         this.owner = owner;
         this.setSize(new Vector2f(GameParameters.STICK_WIDTH, GameParameters.STICK_HEIGHT));
+        setPassable(false);
     }
 
     public void setWidth(float width) {
