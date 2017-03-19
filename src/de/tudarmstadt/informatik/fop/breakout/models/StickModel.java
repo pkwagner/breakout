@@ -13,8 +13,8 @@ public class StickModel extends Entity {
     private final PlayerModel owner;
     private StickRenderComponent view;
 
-    public StickModel(String entityID, PlayerModel owner) {
-        super(entityID);
+    public StickModel(PlayerModel owner) {
+        super(GameParameters.STICK_ID);
 
         this.owner = owner;
         this.setSize(new Vector2f(GameParameters.STICK_WIDTH, GameParameters.STICK_HEIGHT));

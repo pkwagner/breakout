@@ -55,7 +55,7 @@ public interface GameParameters {
 	public static final String SIMPLE_BLOCK_1_SPRITESHEET = "/images/simpleBlock1-spritesheet.png";
 	public static final String SIMPLE_BLOCK_2_SPRITESHEET = "/images/simpleBlock2-spritesheet.png";
 	public static final String SIMPLE_BLOCK_3_SPRITESHEET = "/images/simpleBlock3-spritesheet.png";
-	
+
 	public static final int		BLOCK_WIDTH = 50;
 	public static final int		BLOCK_HEIGHT = 30;
 	public static final String	RAM_BLOCK_SPRITESHEET = "/images/ram-block-spritesheet.png";
@@ -90,7 +90,7 @@ public interface GameParameters {
 	public static final float STICK_MIN_WIDTH = 50;
 	public static final int BALL_INITIAL_POS_Y = 500;
 	public static final int EMITTER_Y_OFFSET = 17;
-	
+
 
 	//Particle systems
 	public static final String FLAME_PARTICLE_IMAGE = "/images/flame-particle.png";
@@ -103,7 +103,7 @@ public interface GameParameters {
 	public static final int EMITTER_LIFE_MIN = 300;
 	public static final int EMITTER_SPEED_MAX = 800;
 	public static final int EMITTER_SPEED_MIN = 400;
-	
+
 	// Player
 	public static final String PLAYER_ID = "player";
 	public static final String NO_LIFE_LEFT = "noLifeLeft";
@@ -125,6 +125,8 @@ public interface GameParameters {
 	// Escape
 	public static final String ESCAPE_ID = "escape";
 
+	public static final String MENU_TITLE_ID = "title";
+
 	// Highscore
 	public static final String HIGHSCORE_FILE = "highscores/highscore.hsc";
 	public static final int HIGHSCORE_MAX_ENTRIES = 10;
@@ -132,7 +134,6 @@ public interface GameParameters {
 	public static final String HIGHSCORE_FILE_ENTRY_SCHEME = "[\\w]+:[\\d]{1,9}:[\\d]{1,9}\\.\\d{1,3}";
 
 	public static final String HIGHSCORE_BACKGROUND_PATH = "images/menu_blank.png";
-	public static final String HIGHSCORE_TITLE_ID = "title";
 	public static final int HIGHSCORE_TITLE_START_Y = 50;
 	public static final int HIGHSCORE_ENTRY_START_Y = 110;
 	public static final int HIGHSCORE_ENTRY_GAP = 4;
@@ -229,13 +230,13 @@ public interface GameParameters {
 
 	// Credits
 	public static final String CREDITS_BACKGROUND_PATH = "images/menu_blank.png";
-	public static final String CREDITS_TITLE_ID = "title";
+	public static final String CREDITS_CONTENT_ID = "content";
 	public static final String CREDITS_TITLE_TEXT = "Credits";
 	public static final String CREDITS_DEV1_TEXT = "Leon Chemnitz";
 	public static final String CREDITS_DEV2_TEXT = "Martin Kerscher";
 	public static final String CREDITS_DEV3_TEXT = "Alexander Siegler";
 	public static final String CREDITS_DEV4_TEXT = "Paul Wagner";
-	public static final int CREDITS_TITLE_START_Y = 50;
+	public static final int CREDITS_CONTENT_START_Y = 50;
 	public static final int CREDITS_DEVS_START_X = 115;
 	public static final int CREDITS_DEVS_START_Y = 150;
 	public static final int CREDITS_DEVS_SPACE_Y = 110;

@@ -22,6 +22,10 @@ public class PlayerModel extends Entity {
         this.displayName = "Player" + rank;
     }
 
+    public PlayerModel(String entityID) {
+        this(entityID, 0, GameParameters.PLAYER_DEFAULT_HEALTHPOINTS);
+    }
+
     public int getBlockCounter() {
         return blockCounter;
     }

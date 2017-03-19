@@ -1,78 +1,96 @@
 package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.views.gui.Button;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.ButtonView;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class MainMenuState extends BasicGameState {
+import java.util.HashSet;
+import java.util.Set;
 
-    private final int id;
+/**
+ * Showing the main menu where can switch to sub menus or starting a new game.
+ */
+public class MainMenuState extends AbstractGameState {
 
-    private Button buttonStart, buttonHighscore, buttonCredits, buttonSettings;
-    private Image background;
+    private Set<AbstractComponent> buttons = new HashSet<>();
 
-    public MainMenuState(int id) {
-        this.id = id;
+    public MainMenuState(int id) throws SlickException {
+        super(id, new Image(GameParameters.MENU_BACKGROUND_IMAGE));
     }
 
     @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background = new Image(GameParameters.MENU_BACKGROUND_IMAGE);
+    public void init(GameContainer gc, StateBasedGame stateBasedGame) throws SlickException {
+        if (isTesting()) {
+            return;
+        }
 
-        Image buttonImage		= new Image(GameParameters.ENTRY_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
-        Image buttonDownImage 	= new Image(GameParameters.ENTRY_DOWN_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
-        Image buttonOverImage 	= new Image(GameParameters.ENTRY_OVER_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
+        Image buttonImage = new Image(GameParameters.ENTRY_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
+        Image buttonDownImage = new Image(GameParameters.ENTRY_DOWN_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
+        Image buttonOverImage = new Image(GameParameters.ENTRY_OVER_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
 
-        int x = (GameParameters.WINDOW_WIDTH - buttonImage.getWidth()) / 2;
-        
-        buttonStart = new Button(gameContainer,buttonImage,x,GameParameters.MAIN_MENU_ENTRY_Y,"START GAME");    
-        buttonStart.setMouseOverImage(buttonOverImage);
-        buttonStart.setMouseDownImage(buttonDownImage);
-        
-        buttonStart.addListener(source -> {
-            stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE);
-            gameContainer.setPaused(true);
-        });
+        int posY = GameParameters.MAIN_MENU_ENTRY_Y;
 
-        buttonHighscore = new Button(gameContainer,buttonImage,x,GameParameters.MAIN_MENU_ENTRY_Y + GameParameters.MAIN_MENU_ENTRY_DISTANCE,"HIGHSCORES");
-        buttonHighscore.setMouseOverImage(buttonOverImage);
-        buttonHighscore.setMouseDownImage(buttonDownImage);
-        
-        buttonHighscore.addListener(source -> stateBasedGame.enterState(GameParameters.HIGHSCORE_STATE));
+        ButtonView startButton = addMenuEntry(gc, buttonImage, posY, "START GAME");
+        addListeners(startButton, stateBasedGame, buttonDownImage, buttonOverImage, GameParameters.GAMEPLAY_STATE);
 
+        posY += GameParameters.MAIN_MENU_ENTRY_DISTANCE;
+        ButtonView highScoreButton = addMenuEntry(gc, buttonImage, posY, "HIGHSCORES");
+        addListeners(highScoreButton, stateBasedGame, buttonDownImage, buttonOverImage, GameParameters.HIGHSCORE_STATE);
 
-        buttonCredits = new Button(gameContainer,buttonImage,x,GameParameters.MAIN_MENU_ENTRY_Y+ GameParameters.MAIN_MENU_ENTRY_DISTANCE*2,"CREDITS");
-        buttonCredits.setMouseOverImage(buttonOverImage);
-        buttonCredits.setMouseDownImage(buttonDownImage);
-        buttonCredits.addListener(source -> stateBasedGame.enterState(GameParameters.CREDITS_STATE));
-        
-        buttonSettings = new Button(gameContainer,buttonImage,x,GameParameters.MAIN_MENU_ENTRY_Y+ GameParameters.MAIN_MENU_ENTRY_DISTANCE*3,"SETTINGS");
-        buttonSettings.setMouseOverImage(buttonOverImage);
-        buttonSettings.setMouseDownImage(buttonDownImage);
-        buttonSettings.addListener(source -> stateBasedGame.enterState(GameParameters.SETTINGS_STATE));
+        posY += GameParameters.MAIN_MENU_ENTRY_DISTANCE;
+        ButtonView creditsButton = addMenuEntry(gc, buttonImage, posY, "CREDITS");
+        addListeners(creditsButton, stateBasedGame, buttonDownImage, buttonOverImage, GameParameters.CREDITS_STATE);
+
+        posY += GameParameters.MAIN_MENU_ENTRY_DISTANCE;
+        ButtonView settingsButton = addMenuEntry(gc, buttonImage, posY, "SETTINGS");
+        addListeners(settingsButton, stateBasedGame, buttonDownImage, buttonOverImage, GameParameters.SETTINGS_STATE);
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        graphics.drawImage(background, 0, 0);
-        buttonStart.render(gameContainer, graphics);
-        buttonHighscore.render(gameContainer, graphics);
-        buttonCredits.render(gameContainer, graphics);
-        buttonSettings.render(gameContainer, graphics);
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
+            throws SlickException {
+        super.render(gameContainer, stateBasedGame, graphics);
+
+        for (AbstractComponent button : buttons) {
+            button.render(gameContainer, graphics);
+        }
     }
 
-    @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-
+    /**
+     * Creates a new button and adds it to this state.
+     *
+     * @param container screen container
+     * @param buttonImage background image of this button
+     * @param posY start y position
+     * @param text button label
+     *
+     * @return the created button
+     */
+    private ButtonView addMenuEntry(GameContainer container, Image buttonImage, int posY, String text) {
+        int posX = (GameParameters.WINDOW_WIDTH - buttonImage.getWidth()) / 2;
+        ButtonView button = new ButtonView(container, buttonImage, posX, posY, text);
+        buttons.add(button);
+        return button;
     }
 
-    @Override
-    public int getID() {
-        return id;
+    /**
+     * Add the change state, mouse over and mouse down listeners.
+     *
+     * @param button where to add the listeners
+     * @param game the game instance
+     * @param mouseDown which image should be displayed if the user pressed on the button but didn't released it
+     * @param mouseOver which image should be displayed if the user hovers over the button
+     * @param nextState to which state should we switch if the player clicked on the button
+     */
+    private void addListeners(ButtonView button, StateBasedGame game, Image mouseDown, Image mouseOver, int nextState) {
+        button.setMouseDownImage(mouseDown);
+        button.setMouseOverImage(mouseOver);
+        button.addListener(source -> game.enterState(nextState));
     }
 }

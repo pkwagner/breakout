@@ -2,7 +2,7 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
-import de.tudarmstadt.informatik.fop.breakout.views.gui.Button;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.ButtonView;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +18,7 @@ import java.awt.Font;
 
 public class GameoverState extends BasicGameState {
 
-    private Button menuButton, newGameButton;
+    private ButtonView menuButtonRenderComponent, newGameButtonRenderComponent;
 
     private int stateId;
 
@@ -55,8 +55,8 @@ public class GameoverState extends BasicGameState {
         graphics.setFont(new TrueTypeFont(new java.awt.Font("Verdana", Font.PLAIN, 20), true));
         graphics.drawString("Score: " + Math.round(score) + " Time: " + time, 0, frameHeight / 4);
 
-        menuButton.render(gameContainer, graphics);
-        newGameButton.render(gameContainer, graphics);
+        menuButtonRenderComponent.render(gameContainer, graphics);
+        newGameButtonRenderComponent.render(gameContainer, graphics);
     }
 
     public void load(PlayerModel player, float time) {
@@ -97,16 +97,16 @@ public class GameoverState extends BasicGameState {
             Image buttonTex = new Image(GameParameters.ENTRY_IMAGE);
             Image buttonDownTex = new Image(GameParameters.ENTRY_DOWN_IMAGE);
 
-            menuButton = new Button(gameContainer, buttonTex, 0, 0, "Main Menu");
-            menuButton.addListener(component -> stateBasedGame.enterState(GameParameters.MAINMENU_STATE));
-            menuButton.setLocation(frameWidth / 2 - menuButton.getWidth() / 2, frameHeight / 2);
+            menuButtonRenderComponent = new ButtonView(gameContainer, buttonTex, 0, 0, "Main Menu");
+            menuButtonRenderComponent.addListener(component -> stateBasedGame.enterState(GameParameters.MAINMENU_STATE));
+            menuButtonRenderComponent.setLocation(frameWidth / 2 - menuButtonRenderComponent.getWidth() / 2, frameHeight / 2);
 
-            newGameButton = new Button(gameContainer, buttonTex, 0, 0, "New Game");
-            newGameButton.addListener(component -> stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE));
-            newGameButton.setLocation(frameWidth / 2 - menuButton.getWidth() / 2, frameHeight / 2 + menuButton.getHeight() + 10);
+            newGameButtonRenderComponent = new ButtonView(gameContainer, buttonTex, 0, 0, "New Game");
+            newGameButtonRenderComponent.addListener(component -> stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE));
+            newGameButtonRenderComponent.setLocation(frameWidth / 2 - menuButtonRenderComponent.getWidth() / 2, frameHeight / 2 + menuButtonRenderComponent.getHeight() + 10);
 
-            menuButton.setMouseDownImage(buttonDownTex);
-            newGameButton.setMouseDownImage(buttonDownTex);
+            menuButtonRenderComponent.setMouseDownImage(buttonDownTex);
+            newGameButtonRenderComponent.setMouseDownImage(buttonDownTex);
         } catch (SlickException e) {
             logger.error("Error loading buttons");
             e.printStackTrace();
