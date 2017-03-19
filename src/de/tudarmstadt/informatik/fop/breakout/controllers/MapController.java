@@ -10,7 +10,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.blocks.RamBlock;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.util.Utility;
-import de.tudarmstadt.informatik.fop.breakout.views.blocks.AbstractBlockRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.blocks.BlockImageRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.RamBlockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.SimpleBlockRenderComponent;
 import org.apache.logging.log4j.LogManager;
@@ -235,16 +235,16 @@ public class MapController {
   	 * @param block the block for which a view shall be created
   	 * @return
   	 */
-    private AbstractBlockRenderComponent createView(AbstractBlockModel block) { //TODO: an dieser Stelle warte ich auf den lieben paul, das hier is alles provisorisch
+    private BlockImageRenderComponent createView(AbstractBlockModel block) { //TODO: an dieser Stelle warte ich auf den lieben paul, das hier is alles provisorisch -- Bitte sehr liebster Leon, neue RenderComponent ist da!
 		try {
 			switch (block.getType()) {
 				case SIMPLE:
-					return new SimpleBlockRenderComponent(((SimpleBlock) block).getInitialHits());
+					return new SimpleBlockRenderComponent(block.getID() + GameParameters.EXT_VIEW, (SimpleBlock) block);
 				case RAM:
-					return new RamBlockRenderComponent();
+					return new RamBlockRenderComponent(block.getID() + GameParameters.EXT_VIEW);
 				default:
 					logger.error("Some error occured during the creation of the view of the block: " + block.getID());
-					return new SimpleBlockRenderComponent(1);
+					return new SimpleBlockRenderComponent(block.getID() + GameParameters.EXT_VIEW, new SimpleBlock(block.getID() + "_dummy", 1));
 			}
 		} catch (SlickException e) {
 			logger.error("The following error occured during the creation of block " + block.getID() + ": " + e);

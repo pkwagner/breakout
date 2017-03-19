@@ -3,7 +3,6 @@ package de.tudarmstadt.informatik.fop.breakout.actions.blocks;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.ItemController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
-import de.tudarmstadt.informatik.fop.breakout.controllers.blocks.AbstractBlockController;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
 import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
@@ -14,7 +13,6 @@ import de.tudarmstadt.informatik.fop.breakout.views.ItemRenderComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 
 import java.util.stream.Stream;
 
@@ -37,11 +35,7 @@ public abstract class AbstractBlockCollideAction {
         blockModel.decreaseRemainingHits(ballModel.getHitPoints());
         if (!blockModel.hasHitsLeft())
             destroy();
-        else {
-            // Change render component based on remaining hits
-            blockModel.removeComponent("ImageRenderComponent");
-            blockModel.addComponent(AbstractBlockController.createBlockView(blockModel));
-        }
+
         gameplayState.getSoundController().playEffect(SoundType.BLOCK_HIT);
     }
 
