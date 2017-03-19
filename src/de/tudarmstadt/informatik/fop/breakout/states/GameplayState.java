@@ -41,7 +41,7 @@ public class GameplayState extends BasicGameState {
     private ClockModel clock;
     private ClockController clockController;
 
-    private float gameSpeedFactor = 1;
+    private float gameSpeedFactor = 1, gameSpeedFactorGoal = 1;
     private int ballIdCounter = 0;
     private ArrayList<BallModel> balls;
 
@@ -67,7 +67,7 @@ public class GameplayState extends BasicGameState {
         backgroundSpriteSheet = new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
         backgroundAnimation = new Animation(backgroundSpriteSheet,70);
 
-        ramBlockMovementController = new RamBlockMovementController();
+        ramBlockMovementController = new RamBlockMovementController(stateBasedGame);
 
         // Basic player implementation
         // TODO Multiplayer
@@ -82,6 +82,9 @@ public class GameplayState extends BasicGameState {
         // TODO Move some parts to 'init(...)' to avoid double calculations
         // Pause game
         gameContainer.setPaused(true);
+
+        // Reset speed
+        gameSpeedFactorGoal = 1;
 
         // Delete all previous entities
         entityManager.clearEntitiesFromState(stateId);
@@ -138,6 +141,22 @@ public class GameplayState extends BasicGameState {
             throws SlickException {
         entityManager.updateEntities(gameContainer, stateBasedGame, delta);
         if(!gameContainer.isPaused())ramBlockMovementController.update(delta);
+
+        // Check if game speed fade is needed
+        if (gameSpeedFactorGoal != gameSpeedFactor) {
+            // Update game speed
+            if (gameSpeedFactor < gameSpeedFactorGoal)
+                gameSpeedFactor += GameParameters.GAME_SLOMO_ANIMATION_SPEED * delta;
+            else
+                gameSpeedFactor -= GameParameters.GAME_SLOMO_ANIMATION_SPEED * delta;
+
+            // If gameSpeed is near it's goal, abort the animation
+            if (Math.abs(gameSpeedFactor - gameSpeedFactorGoal) <= 0.01)
+                gameSpeedFactor = gameSpeedFactorGoal;
+
+            // Update pitch
+            ((Breakout) stateBasedGame).getSoundController().setPitch(gameSpeedFactor);
+        }
     }
 
     @Override
@@ -278,7 +297,7 @@ public class GameplayState extends BasicGameState {
     }
 
     public void setGameSpeedFactor(float gameSpeedFactor) {
-        this.gameSpeedFactor = gameSpeedFactor;
+        this.gameSpeedFactorGoal = gameSpeedFactor;
     }
 
     public ArrayList<BallModel> getBalls() {

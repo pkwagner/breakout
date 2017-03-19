@@ -5,10 +5,10 @@ import eea.engine.entity.Entity;
 import org.newdawn.slick.geom.Vector2f;
 
 public class ItemModel extends Entity {
-    private int duration = 0;
+    private float duration = 0;
     private Vector2f velocity;
 
-    public ItemModel(String entityID, int duration) {
+    public ItemModel(String entityID, float duration) {
         super(entityID);
 
         // duration=0 means that this item is permanent
@@ -18,7 +18,7 @@ public class ItemModel extends Entity {
         velocity = new Vector2f(0, GameParameters.ITEM_FALL_SPEED);
     }
 
-    public int getDuration() {
+    public float getDuration() {
         return duration;
     }
 

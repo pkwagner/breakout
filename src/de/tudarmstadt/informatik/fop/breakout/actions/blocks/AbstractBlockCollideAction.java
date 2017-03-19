@@ -53,8 +53,9 @@ public abstract class AbstractBlockCollideAction {
         // Call the state to remove this block
         gameplayState.removeEntity(blockModel);
 
-        // Drop an item if wanted (check total possibility)
-        dropItem();
+        // Drop an item if wanted (check total possibility) [possibly not in smash mode to avoid too much items]
+        if (!ballModel.isSmashMode() || GameParameters.ITEM_DROP_IN_SMASH_MODE)
+            dropItem();
 
         // Add score points to the ball-controlling player (if there is one)
         PlayerModel player = ballModel.getControllingPlayer();

@@ -71,6 +71,8 @@ public interface GameParameters {
 	public static final int		STOP_WATCH_WIDTH	= 40;
 	public static final int		STOP_WATCH_HEIGHT	= 50;
 
+	public static final double	GAME_SLOMO_ANIMATION_SPEED = 0.0005;
+
 	// Ball
 	public static final String BALL_ID = "ball";
 	public static final float INITIAL_BALL_SPEED = 0.35f;
@@ -160,12 +162,13 @@ public interface GameParameters {
 	public static final int		MAIN_MENU_ENTRY_DISTANCE = 80;
 
 	// Items
+	public static final boolean ITEM_DROP_IN_SMASH_MODE = false;
 	public static final float ITEM_FALL_SPEED = 0.2f;
 	public static final float ITEM_FASTER_SPEEDUP_VALUE = 1.1f;
 	public static final float ITEM_SLOWER_SPEED_VALUE = 0.9f;
 	public static final float ITEM_BIGGER_CHANGE_VALUE = 1.3f;
 	public static final float ITEM_SMALLER_CHANGE_VALUE = 0.75f;
-	public static final float ITEM_SLOMO_SPEED_FACTOR = 0.5f;
+	public static final float ITEM_SLOMO_SPEED_FACTOR = 0.2f;
 	public static final int ITEM_HP_HEALTHPOINTS = 1;
 	public static final float ITEM_DROP_POSSIBILITY = 0.25f;
 	public static final float ITEM_IMAGE_SIZE = 0.65f; //it's a scaling factor
@@ -174,17 +177,17 @@ public interface GameParameters {
 		SlowerItem("/images/slower.png", 1, 0, SlowerItemAction.class),
 		BiggerItem("/images/bigger-spritesheet.png", 1, 0, BiggerItemAction.class),
 		SmallerItem("/images/smaller-spritesheet.png", 1, 0, SmallerItemAction.class),
-		SmashBallItem("/images/ball.png", 1, 5, SmashBallItemAction.class),
-		SloMoItem("/images/block_1.png", 1, 5, SloMoItemAction.class),
+		SmashBallItem("/images/ball.png", 1, 3, SmashBallItemAction.class),
+		SloMoItem("/images/block_1.png", 1, 1.5f, SloMoItemAction.class),
 		HealthPointItem("/images/block_2.png", 1, 0, HealthPointItemAction.class),
 		AdditionalBallItem("/images/additional-ball-spritesheet.png", 1, 0, AdditionalBallItemAction.class);
 
 		private final String imagePath;
 		private final double possibility;
 		private final Class actionHandler;
-		private final int duration;
+		private final float duration;
 
-		ItemType(String imagePath, double possibility, int duration, Class actionHandler) {
+		ItemType(String imagePath, double possibility, float duration, Class actionHandler) {
 			this.imagePath = imagePath;
 			this.possibility = possibility;
 			this.duration = duration;
@@ -199,7 +202,7 @@ public interface GameParameters {
 			return possibility;
 		}
 
-		public int getDuration() {
+		public float getDuration() {
 			return duration;
 		}
 
