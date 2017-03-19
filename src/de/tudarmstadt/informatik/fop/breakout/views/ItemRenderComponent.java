@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.views;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
 import eea.engine.component.RenderComponent;
 import eea.engine.component.render.ImageRenderComponent;
 
@@ -17,31 +18,45 @@ public class ItemRenderComponent extends RenderComponent {
 	private GameParameters.ItemType itemType;
 	private SpriteSheet spritesheet;
 	private Animation animation;
+	private ItemModel itemModel;
+	private boolean isPaused = false;
 	
-    public ItemRenderComponent(String id,GameParameters.ItemType itemType) throws SlickException {
+    public ItemRenderComponent(String id,ItemModel itemModel,GameParameters.ItemType itemType) throws SlickException {
         super(id);
-        this.itemType = itemType;
-        switch(itemType){
-        case Bigger
+        this.itemModel = itemModel;
         
+        Image image = new Image(itemType.getImagePath());
+        int imageWidth =  (int)(GameParameters.ITEM_IMAGE_SIZE * image.getHeight());
+        
+        if(itemType == GameParameters.ItemType.BiggerItem||itemType == GameParameters.ItemType.SmallerItem||itemType == GameParameters.ItemType.AdditionalBallItem){        	
+        	spritesheet = new SpriteSheet(image.getScaledCopy(GameParameters.ITEM_IMAGE_SIZE),imageWidth,imageWidth);
+        }else{
+        	
+        	spritesheet = new SpriteSheet(image.getScaledCopy(GameParameters.ITEM_IMAGE_SIZE),(int)(image.getWidth()*GameParameters.ITEM_IMAGE_SIZE),(int)(image.getHeight()*GameParameters.ITEM_IMAGE_SIZE));
         }
+        
+        animation 	= new Animation(spritesheet,600/spritesheet.getHorizontalCount()); 
     }
 
 	@Override
 	public Vector2f getSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Vector2f(80,80);
 	}
 
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) {
-		// TODO Auto-generated method stub
-		
+	public void render(GameContainer gameContainer, StateBasedGame arg1, Graphics arg2) {
+		Vector2f position = itemModel.getPosition().copy();
+		if(gameContainer.isPaused() && isPaused == false){
+			isPaused = true;
+			animation.stop();
+		}else if(!gameContainer.isPaused() && isPaused == true){
+			isPaused = false;
+			animation.start();	
+		}
+		animation.draw(position.getX(),position.getY());		
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
 	}
 }

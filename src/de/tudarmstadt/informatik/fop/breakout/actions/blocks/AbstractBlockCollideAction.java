@@ -88,7 +88,7 @@ public abstract class AbstractBlockCollideAction {
             item.addComponent(itemController);
             itemController.init();
             try {
-                item.addComponent(new ItemRenderComponent(itemId+GameParameters.EXT_VIEW,itemType));
+                item.addComponent(new ItemRenderComponent(itemId+GameParameters.EXT_VIEW,item,itemType));
                 item.setPosition(blockModel.getPosition());
                 gameplayState.addEntity(item);
             } catch (SlickException e) {

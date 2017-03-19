@@ -140,15 +140,16 @@ public interface GameParameters {
 	public static final float ITEM_SLOMO_SPEED_FACTOR = 0.5f;
 	public static final int ITEM_HP_HEALTHPOINTS = 1;
 	public static final float ITEM_DROP_POSSIBILITY = 0.25f;
+	public static final float ITEM_IMAGE_SIZE = 0.65f; //it's a scaling factor
 	public static enum ItemType {
 		FasterItem("/images/faster.png", 1, 0, FasterItemAction.class),
 		SlowerItem("/images/slower.png", 1, 0, SlowerItemAction.class),
-		BiggerItem("/images/bigger.png", 1, 0, BiggerItemAction.class),
-		SmallerItem("/images/smaller.png", 1, 0, SmallerItemAction.class),
+		BiggerItem("/images/bigger-spritesheet.png", 1, 0, BiggerItemAction.class),
+		SmallerItem("/images/smaller-spritesheet.png", 1, 0, SmallerItemAction.class),
 		SmashBallItem("/images/ball.png", 1, 5, SmashBallItemAction.class),
 		SloMoItem("/images/block_1.png", 1, 5, SloMoItemAction.class),
 		HealthPointItem("/images/block_2.png", 1, 0, HealthPointItemAction.class),
-		AdditionalBallItem("/images/additional_ball.png", 1, 0, AdditionalBallItemAction.class);
+		AdditionalBallItem("/images/additional-ball-spritesheet.png", 10, 0, AdditionalBallItemAction.class);
 
 		private final String imagePath;
 		private final double possibility;
