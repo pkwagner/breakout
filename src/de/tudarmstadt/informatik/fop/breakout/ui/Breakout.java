@@ -39,7 +39,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
         //load sound drivers
         SoundStore.get().init();
 
-        soundController.load(SoundType.BACKGROUND_MUSIC, SoundType.BACKGROUND_MUSIC_SLOMO);
+        soundController.load(SoundType.BACKGROUND_MUSIC);
         soundController.playMusic(SoundType.BACKGROUND_MUSIC);
     }
 

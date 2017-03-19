@@ -96,6 +96,10 @@ public class SoundController implements AutoCloseable {
         audio.playAsMusic(1.0f, volume, true);
     }
 
+    public void setPitch(float pitch) {
+        soundStore.setMusicPitch(pitch);
+    }
+
     /**
      * Stops the background music loop.
      *
