@@ -61,7 +61,6 @@ public abstract class AbstractBlockCollideAction {
         // Add score points to the ball-controlling player (if there is one)
         PlayerModel player = ballModel.getControllingPlayer();
         player.destroyBlock(blockModel.getScorePoints());
-        System.out.println(player.getScore());
 
         // Check if this was the last block, then call 'nextLevel' in GameplayState
         MapController mapController = gameplayState.getMapController();

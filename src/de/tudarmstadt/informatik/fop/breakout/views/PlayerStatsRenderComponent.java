@@ -26,7 +26,7 @@ public class PlayerStatsRenderComponent extends RenderComponent {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        String scoreStats = (showPlayerName ? player.getDisplayName() + " | " : "") + "Score: " + player.getScore();
+        String scoreStats = (showPlayerName ? player.getDisplayName() + " | " : "") + "Blocks: " + player.getBlockCounter();
         String healthStats = "Leben: " + player.getRemainingHitPoints();
         String stats = scoreStats + " // " + healthStats;
         graphics.drawString(stats, player.getPosition().getX(), player.getPosition().getY());
