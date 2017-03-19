@@ -38,23 +38,24 @@ public class BallLeaveScreenAction implements Action {
         } else {
             // Pause game, reset ball and reactivate 'press key' screen
             gameContainer.setPaused(true);
-            ballController.reset();
+            ballController.reset(gameContainer);
             entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.GAMESTART_ENTITY_ID).setVisible(true);
-        }
 
-        // NOTICE: Only valid for 1 player
-        ArrayList<PlayerModel> allPlayers = gameplayState.getPlayers();
+            // Decrease health points & check game end
+            // NOTICE: Only valid for 1 player
+            ArrayList<PlayerModel> allPlayers = gameplayState.getPlayers();
 
-        if (allPlayers.size() == 1) {
-            PlayerModel player = allPlayers.get(0);
+            if (allPlayers.size() == 1) {
+                PlayerModel player = allPlayers.get(0);
 
-            player.hit();
-            if (player.isDead()) {
-                float time = ((ClockModel) entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STOP_WATCH_ID)).getSeconds();
+                player.hit();
+                if (player.isDead()) {
+                    float time = ((ClockModel) entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STOP_WATCH_ID)).getSeconds();
 
-                GameoverState gameoverState = (GameoverState) stateBasedGame.getState(GameParameters.GAMEOVER_STATE);
-                gameoverState.load(player, time);
-                stateBasedGame.enterState(GameParameters.GAMEOVER_STATE);
+                    GameoverState gameoverState = (GameoverState) stateBasedGame.getState(GameParameters.GAMEOVER_STATE);
+                    gameoverState.load(player, time);
+                    stateBasedGame.enterState(GameParameters.GAMEOVER_STATE);
+                }
             }
         }
     }

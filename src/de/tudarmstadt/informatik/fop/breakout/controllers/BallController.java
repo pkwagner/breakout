@@ -16,8 +16,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class BallController extends Component {
 
-    private Vector2f initialPos;
-
     public BallController(String componentID) {
         super(componentID);
     }
@@ -27,13 +25,11 @@ public class BallController extends Component {
         return (BallModel) super.getOwnerEntity();
     }
 
-    public void init(StateBasedGame game, Vector2f initialPos) {
-        this.initialPos = initialPos;
-
+    public void init(GameContainer gameContainer, StateBasedGame game) {
         BallModel ball = getOwnerEntity();
 
         // Reset position & velocity
-        reset();
+        reset(gameContainer);
 
         CollisionEvent collisionEvent = new CollisionEvent();
         collisionEvent.addAction(new BallCollideAction(ball));
@@ -56,10 +52,10 @@ public class BallController extends Component {
         ball.setPosition(newPosition);
     }
 
-    public void reset() {
+    public void reset(GameContainer gameContainer) {
         BallModel ball = getOwnerEntity();
 
-        ball.setPosition(initialPos.copy());
+        ball.setPosition(new Vector2f(gameContainer.getWidth() / 2, GameParameters.BALL_INITIAL_POS_Y));
         ball.setVelocity(new Vector2f(1, -1).scale(GameParameters.INITIAL_BALL_SPEED));
     }
 }

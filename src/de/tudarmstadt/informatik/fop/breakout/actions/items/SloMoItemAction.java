@@ -20,12 +20,12 @@ public class SloMoItemAction extends AbstractItemAction {
     @Override
     public void onEnable() {
         gameplayState.setGameSpeedFactor(GameParameters.ITEM_SLOMO_SPEED_FACTOR);
-        breakout.getSoundController().playMusic(SoundType.BACKGROUND_MUSIC_SLOMO);
+        breakout.getSoundController().setPitch(GameParameters.ITEM_SLOMO_SPEED_FACTOR);
     }
 
     @Override
     public void onDisable() {
         gameplayState.setGameSpeedFactor(1);
-        breakout.getSoundController().playMusic(SoundType.BACKGROUND_MUSIC);
+        breakout.getSoundController().setPitch(1f);
     }
 }

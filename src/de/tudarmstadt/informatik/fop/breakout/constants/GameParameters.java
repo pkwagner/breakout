@@ -80,7 +80,7 @@ public interface GameParameters {
 	public static final String STICK_IMAGE = "/images/stick.png";
 	public static final float STICK_HEIGHT = 25;
 	public static final float STICK_WIDTH = 130;
-	public static final int STICK_INITIAL_POS_Y = 500;
+	public static final int BALL_INITIAL_POS_Y = 500;
 
 	// Player
 	public static final String PLAYER_ID = "player";
