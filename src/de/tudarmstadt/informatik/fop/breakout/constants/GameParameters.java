@@ -91,6 +91,7 @@ public interface GameParameters {
 	public static final int BALL_INITIAL_POS_Y = 500;
 	public static final int BALL_INITIAL_POS_Y_PLAYER2 = 100;
 	public static final int EMITTER_Y_OFFSET = 17;
+	public static final int STICK_MAX_BALL_THETA = 15;
 
 
 	//Particle systems

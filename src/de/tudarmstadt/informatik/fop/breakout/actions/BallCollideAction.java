@@ -78,6 +78,7 @@ public class BallCollideAction implements Action {
 
         if (collidedEntity.getID().equals(GameParameters.STICK_ID)) {    //we should consider implementing a StickCollide action if more code is added here
             breakout.getSoundController().playEffect(SoundType.STICK_HIT);
+
             ((StickModel) collidedEntity).setThrust(true);
 
             // Set ball's controlling player
@@ -101,29 +102,37 @@ public class BallCollideAction implements Action {
     	if (ballModel.isSmashMode() && (collidedEntity instanceof AbstractBlockModel))
     		return;
 
+    	boolean isStick = (collidedEntity instanceof StickModel);
+
         Vector2f position = ballModel.getPosition();
         Vector2f velocity = ballModel.getVelocity();
+
+        position.add(velocity.copy().scale(-1));
+
         switch (collisionDirection) {
             case UP:
-                position.add(velocity.copy().scale(-1));
-                velocity.set(velocity.getX(), -velocity.getY());
+                if (isStick)
+                    velocity.set(getStickBumpVelocity((StickModel) collidedEntity, velocity));
+                else
+                    velocity.set(velocity.getX(), -velocity.getY());
                 if (checkCollision(collidedShape))
                     position.set(position.getX(), collidedShape.getMinY() - ballModel.getShape().getHeight() / 2 - 1); //it's checked whether the objects are still colliding (due to non ball movement)
                 break;
             case DOWN:
-                position.add(velocity.copy().scale(-1));
-                velocity.set(velocity.getX(), -velocity.getY());
+                // NOTICE: Downside stick check collision check is only relevant for multiplayer
+                if (isStick)
+                    velocity.set(getStickBumpVelocity((StickModel) collidedEntity, velocity));
+                else
+                    velocity.set(velocity.getX(), -velocity.getY());
                 if (checkCollision(collidedShape))
                     position.set(position.getX(), collidedShape.getMaxY() + ballModel.getShape().getHeight() / 2 + 1);
                 break;
             case LEFT:
-                position.add(velocity.copy().scale(-1));
                 velocity.set(-velocity.getX(), velocity.getY());
                 if (checkCollision(collidedShape))
                     position.set(collidedShape.getMinX() - ballModel.getShape().getWidth() / 2 - 1, position.getY());
                 break;
             case RIGHT:
-                position.add(velocity.copy().scale(-1));
                 velocity.set(-velocity.getX(), velocity.getY());
                 if (checkCollision(collidedShape))
                     position.set(collidedShape.getMaxX() + ballModel.getShape().getWidth() / 2 + 1, position.getY());
@@ -264,4 +273,25 @@ public class BallCollideAction implements Action {
         return false;
     }
 
+    private Vector2f getStickBumpVelocity(StickModel stick, Vector2f previousVelocity) {
+        // Check position on stick
+        float stickWidth = stick.getSize().getX();
+        // NOTICE: FLOAT BETWEEN -1 (LEFT STICK SIDE) AND 1 (RIGHT STICK SIDE)
+        float positionOnStick = (2 * (ballModel.getPosition().getX() - (stick.getPosition().getX() - (stickWidth / 2))) / stickWidth) - 1;
+
+        // Invert position on stick for the opposite (player2)
+        if (stick.getOwner().isSecondPlayer())
+            positionOnStick *= -1;
+
+        // Theta is the anti-clockwise vector-movement in this example
+        // NOTICE: Clockwise tilt: theta=(360-tilt); anti-clockwise tilt: theta=tilt
+        double theta = (positionOnStick < 0) ? (positionOnStick * -GameParameters.STICK_MAX_BALL_THETA) : (360 - (positionOnStick * GameParameters.STICK_MAX_BALL_THETA));
+        logger.debug("Ball hit stick of player {} at relative position {} (calculated theta: {})", stick.getOwner().getDisplayName(), positionOnStick, theta);
+
+        // Calculate the new ball velocity with theta
+        Vector2f newVelocity = new Vector2f(previousVelocity.getX(), -previousVelocity.getY()).sub(theta);
+
+        logger.debug("Changed new ball velocity to {}", newVelocity);
+        return newVelocity;
+    }
 }
