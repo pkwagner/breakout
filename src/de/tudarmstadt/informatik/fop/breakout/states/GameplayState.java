@@ -91,7 +91,7 @@ public class GameplayState extends BasicGameState {
         // TODO Change default positions
         // Add stick & ball to state
         addStick(stateBasedGame, gameContainer.getWidth() / 2);
-        addBall(stateBasedGame, new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
+        addBall(stateBasedGame, new Vector2f(gameContainer.getWidth() / 2, GameParameters.STICK_INITIAL_POS_Y));
 
         mapController = new MapController(stateBasedGame, this);
         mapController.loadMap(mapId);
