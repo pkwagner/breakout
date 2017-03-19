@@ -43,9 +43,7 @@ public abstract class AbstractBlockCollideAction {
 
         else {
             // Change render component based on remaining hits
-        	blockModel.getView().updateImage(blockModel.getInitialHits()-blockModel.getHitsLeft());;
-            //blockModel.removeComponent("ImageRenderComponent");
-            //blockModel.addComponent(AbstractBlockController.createBlockView(blockModel));
+        	blockModel.getView().updateImage(blockModel.getInitialHits()-blockModel.getHitsLeft());
         }
 
         breakout.getSoundController().playEffect(SoundType.BLOCK_HIT);
@@ -90,7 +88,7 @@ public abstract class AbstractBlockCollideAction {
             item.addComponent(itemController);
             itemController.init();
             try {
-                item.addComponent(new ItemRenderComponent(itemType));
+                item.addComponent(new ItemRenderComponent(itemId+GameParameters.EXT_VIEW,itemType));
                 item.setPosition(blockModel.getPosition());
                 gameplayState.addEntity(item);
             } catch (SlickException e) {
