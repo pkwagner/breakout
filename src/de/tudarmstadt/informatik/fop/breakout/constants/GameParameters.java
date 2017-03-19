@@ -127,9 +127,14 @@ public interface GameParameters {
 	public static final String MAP_FILE_EXT 	= ".map";
 
 	// Menu
-	public static final String ENTRY_IMAGE = "/images/entry.png";
-	public static final String ENTRY_DOWN_IMAGE = "/images/entry_down.png";
-	public static final String MENU_BACKGROUND_IMAGE = "images/menu.png";
+	public static final String 	ENTRY_IMAGE = "/images/entry.png";
+	public static final String 	ENTRY_OVER_IMAGE = "/images/entry_over.png";
+	public static final String 	ENTRY_DOWN_IMAGE = "/images/entry_down.png";
+	public static final String 	MENU_BACKGROUND_IMAGE = "images/menu.png";
+	public static final int 	ENTRY_Y_OFFSET = -7;
+	public static final float	ENTRY_SCALE_FACTOR = 0.8F;
+	public static final int 	MAIN_MENU_ENTRY_Y = 200;
+	public static final int		MAIN_MENU_ENTRY_DISTANCE = 80;
 
 	// Items
 	public static final float ITEM_FALL_SPEED = 0.2f;

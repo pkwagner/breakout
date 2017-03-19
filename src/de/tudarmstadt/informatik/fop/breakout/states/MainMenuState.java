@@ -26,22 +26,28 @@ public class MainMenuState extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background = new Image(GameParameters.MENU_BACKGROUND_IMAGE);
 
-        Image buttonTex = new Image(GameParameters.ENTRY_IMAGE);
-        Image buttonDownTex = new Image(GameParameters.ENTRY_DOWN_IMAGE);
+        Image buttonImage		= new Image(GameParameters.ENTRY_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
+        Image buttonDownImage 	= new Image(GameParameters.ENTRY_DOWN_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
+        Image buttonOverImage 	= new Image(GameParameters.ENTRY_OVER_IMAGE).getScaledCopy(GameParameters.ENTRY_SCALE_FACTOR);
 
-        buttonStart = new Button(gameContainer,buttonTex,40,150,"Start Game");
-        buttonStart.setMouseOverImage(buttonDownTex);
+        int x = (GameParameters.WINDOW_WIDTH - buttonImage.getWidth()) / 2;
+        
+        buttonStart = new Button(gameContainer,buttonImage,x,GameParameters.MAIN_MENU_ENTRY_Y,"START GAME");    
+        buttonStart.setMouseOverImage(buttonOverImage);
+        buttonStart.setMouseDownImage(buttonDownImage);
         buttonStart.addListener(source -> {
             stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE);
             gameContainer.setPaused(true);
         });
 
-        buttonHighscore = new Button(gameContainer,buttonTex,40,300,"Highscores");
-        buttonHighscore.setMouseOverImage(buttonDownTex);
+        buttonHighscore = new Button(gameContainer,buttonImage,x,GameParameters.MAIN_MENU_ENTRY_Y + GameParameters.MAIN_MENU_ENTRY_DISTANCE,"HIGHSCORES");
+        buttonHighscore.setMouseOverImage(buttonOverImage);
+        buttonHighscore.setMouseDownImage(buttonDownImage);
         buttonHighscore.addListener(source -> stateBasedGame.enterState(GameParameters.HIGHSCORE_STATE));
 
-        buttonCredits = new Button(gameContainer,buttonTex,40,450,"Credits");
-        buttonCredits.setMouseOverImage(buttonDownTex);
+        buttonCredits = new Button(gameContainer,buttonImage,x,GameParameters.MAIN_MENU_ENTRY_Y+ GameParameters.MAIN_MENU_ENTRY_DISTANCE*2,"CREDITS");
+        buttonCredits.setMouseOverImage(buttonOverImage);
+        buttonCredits.setMouseDownImage(buttonDownImage);
         buttonCredits.addListener(source -> stateBasedGame.enterState(GameParameters.CREDITS_STATE));
     }
 
