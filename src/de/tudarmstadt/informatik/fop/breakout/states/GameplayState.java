@@ -43,7 +43,7 @@ public class GameplayState extends BasicGameState {
 
     private float gameSpeedFactor = 1;
     private int ballIdCounter = 0;
-    private ArrayList<BallModel> balls = new ArrayList<>();
+    private ArrayList<BallModel> balls;
 
     private final SoundController soundController = new SoundController();
 
@@ -90,8 +90,9 @@ public class GameplayState extends BasicGameState {
 
         // TODO Change default positions
         // Add stick & ball to state
+        balls = new ArrayList<>();
         addStick(stateBasedGame, gameContainer.getWidth() / 2);
-        addBall(stateBasedGame, new Vector2f(gameContainer.getWidth() / 2, GameParameters.STICK_INITIAL_POS_Y));
+        addBall(stateBasedGame);
 
         mapController = new MapController(stateBasedGame, this);
         mapController.loadMap(mapId);
@@ -229,7 +230,7 @@ public class GameplayState extends BasicGameState {
         addEntity(backButton);
     }
 
-    public void addBall(StateBasedGame stateBasedGame, Vector2f position) throws SlickException {
+    public BallModel addBall(StateBasedGame stateBasedGame) throws SlickException {
         // FORMAT: BALL_[ID][/_VIEW/_CONTROLLER]
         BallModel ballModel = new BallModel(GameParameters.BALL_ID + "_" + ballIdCounter, player);
         BallController ballController = new BallController(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_CONTROLLER);
@@ -239,13 +240,15 @@ public class GameplayState extends BasicGameState {
         balls.add(ballModel);
 
         ballView.init();
-        ballController.init(stateBasedGame, position);
+        ballController.init(gameContainer, stateBasedGame);
         addEntity(ballModel);
 
         ballIdCounter++;
+
+        return ballModel;
     }
 
-    public void addStick(StateBasedGame stateBasedGame, int position) throws SlickException {
+    public StickModel addStick(StateBasedGame stateBasedGame, int position) throws SlickException {
         StickModel stickModel = new StickModel(GameParameters.STICK_ID, player);
         StickController stickController = new StickController(GameParameters.STICK_ID + GameParameters.EXT_CONTROLLER);
         stickModel.addComponent(stickController);
@@ -253,6 +256,8 @@ public class GameplayState extends BasicGameState {
 
         stickController.init(stateBasedGame, position);
         addEntity(stickModel);
+
+        return stickModel;
     }
 
 

@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.items;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,9 +22,16 @@ public class AdditionalBallItemAction extends AbstractItemAction {
 
     @Override
     public void onEnable() {
+        GameplayState gameplayState = ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE));
+
+        // Get primary ball to set contrary position
+        BallModel primaryBall = gameplayState.getBalls().get(0);
+
         try {
-            // TODO Change default position
-            ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).addBall(stateBasedGame, new Vector2f(100, 100));
+            // Spawn new ball contrary to the primary one
+            BallModel newBall = gameplayState.addBall(stateBasedGame);
+            newBall.setPosition(primaryBall.getPosition().copy());
+            newBall.setVelocity(new Vector2f(primaryBall.getVelocity().getX(), -primaryBall.getVelocity().getY()));
         } catch (SlickException e) {
             logger.error("Some error occurred while adding an additional ball to game: " + e);
         }
