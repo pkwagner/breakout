@@ -73,13 +73,13 @@ public interface GameParameters {
 
 	// Ball
 	public static final String BALL_ID = "ball";
-	public static final float INITIAL_BALL_SPEED = 0.2f;
+	public static final float INITIAL_BALL_SPEED = 0.35f;
 	public static final float SPEEDUP_VALUE = 0.0001f;
 	public static final String BALL_SPRITESHEET = "/images/ball-spritesheet.png";
 
 	// StickModel
 	public static final String STICK_ID = "stick";
-	public static final float STICK_SPEED = 0.5f;
+	public static final float STICK_SPEED = 1f;
 	public static final String STICK_IMAGE = "/images/stick.png";
 	public static final float STICK_HEIGHT = 25;
 	public static final float STICK_WIDTH = 130;
@@ -139,7 +139,7 @@ public interface GameParameters {
 	public static final float ITEM_SLOWER_SPEED_VALUE = 0.9f;
 	public static final float ITEM_BIGGER_CHANGE_VALUE = 1.3f;
 	public static final float ITEM_SMALLER_CHANGE_VALUE = 0.75f;
-	public static final float ITEM_DROP_POSSIBILITY = 0.1f;
+	public static final float ITEM_DROP_POSSIBILITY = 0.25f;
 	public static enum ItemType {
 		FasterItem("/images/faster.png", 1, 0, FasterItemAction.class),
 		SlowerItem("/images/slower.png", 1, 0, SlowerItemAction.class),
