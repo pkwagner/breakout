@@ -2,6 +2,7 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
+import de.tudarmstadt.informatik.fop.breakout.exceptions.IllegalHighscoreFormat;
 import de.tudarmstadt.informatik.fop.breakout.interfaces.IHighscoreEntry;
 import de.tudarmstadt.informatik.fop.breakout.models.gui.BackButton;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
@@ -17,6 +18,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -45,6 +47,13 @@ public class HighscoreState extends BasicGameState {
 
         Breakout breakout = (Breakout) stateBasedGame;
         HighScoreController highScoreController = breakout.getHighScoreController();
+
+        // Load highscore from file
+        try {
+            highScoreController.loadFromFile();
+        } catch (IOException | IllegalHighscoreFormat e) {
+            logger.error("Some error occurred while loading highscore: {}", e);
+        }
 
         //add all score entries
         List<IHighscoreEntry> highscores = highScoreController.getHighscores();
