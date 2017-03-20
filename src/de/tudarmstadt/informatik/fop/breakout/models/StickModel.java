@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.models;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
 import eea.engine.entity.Entity;
 
 import org.lwjgl.util.vector.Vector;
@@ -10,6 +11,7 @@ public class StickModel extends Entity {
 
     private Vector velocity;
     private final PlayerModel owner;
+    private StickRenderComponent view;
 
     public StickModel(String entityID, PlayerModel owner) {
         super(entityID);
@@ -34,4 +36,13 @@ public class StickModel extends Entity {
     public PlayerModel getOwner() {
         return owner;
     }
+
+	public StickRenderComponent getView() {
+		return view;
+	}
+
+	public void setView(StickRenderComponent view) {
+		addComponent(view);
+		this.view = view;
+	}
 }

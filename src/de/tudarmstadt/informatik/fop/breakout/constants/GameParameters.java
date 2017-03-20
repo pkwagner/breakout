@@ -80,11 +80,28 @@ public interface GameParameters {
 	// StickModel
 	public static final String STICK_ID = "stick";
 	public static final float STICK_SPEED = 1f;
-	public static final String STICK_IMAGE = "/images/stick.png";
+	public static final String STICK_MIDDLE_IMAGE = "/images/stick-middle.png";
+	public static final String STICK_LEFT_IMAGE = "/images/stick-side-l.png";
+	public static final String STICK_RIGHT_IMAGE = "/images/stick-side-r.png";
 	public static final float STICK_HEIGHT = 25;
 	public static final float STICK_WIDTH = 130;
+	public static final float STICK_MIN_WIDTH = 50;
 	public static final int BALL_INITIAL_POS_Y = 500;
+	public static final int EMITTER_Y_OFFSET = 17;
+	
 
+	//Particle systems
+	public static final String FLAME_PARTICLE_IMAGE = "/images/flame-particle.png";
+	public static final String FLAME_LEFT_EMITTER_FILE = "/emitter/flame-l.xml";
+	public static final String FLAME_RIGHT_EMITTER_FILE = "/emitter/flame-r.xml";
+	public static final int THRUST_DURATION = 200;
+	public static final int EMITTER_GRAVITY_MAX = -40;
+	public static final int EMITTER_GRAVITY_MIN = -20;
+	public static final int EMITTER_LIFE_MAX = 300;
+	public static final int EMITTER_LIFE_MIN = 300;
+	public static final int EMITTER_SPEED_MAX = 800;
+	public static final int EMITTER_SPEED_MIN = 400;
+	
 	// Player
 	public static final String PLAYER_ID = "player";
 	public static final String NO_LIFE_LEFT = "noLifeLeft";
@@ -133,9 +150,14 @@ public interface GameParameters {
 	public static final String MAP_FILE_EXT 	= ".map";
 
 	// Menu
-	public static final String ENTRY_IMAGE = "/images/entry.png";
-	public static final String ENTRY_DOWN_IMAGE = "/images/entry_down.png";
-	public static final String MENU_BACKGROUND_IMAGE = "images/menu.png";
+	public static final String 	ENTRY_IMAGE = "/images/entry.png";
+	public static final String 	ENTRY_OVER_IMAGE = "/images/entry_over.png";
+	public static final String 	ENTRY_DOWN_IMAGE = "/images/entry_down.png";
+	public static final String 	MENU_BACKGROUND_IMAGE = "images/menu.png";
+	public static final int 	ENTRY_Y_OFFSET = -7;
+	public static final float	ENTRY_SCALE_FACTOR = 0.8F;
+	public static final int 	MAIN_MENU_ENTRY_Y = 200;
+	public static final int		MAIN_MENU_ENTRY_DISTANCE = 80;
 
 	// Items
 	public static final float ITEM_FALL_SPEED = 0.2f;
@@ -146,15 +168,16 @@ public interface GameParameters {
 	public static final float ITEM_SLOMO_SPEED_FACTOR = 0.5f;
 	public static final int ITEM_HP_HEALTHPOINTS = 1;
 	public static final float ITEM_DROP_POSSIBILITY = 0.25f;
+	public static final float ITEM_IMAGE_SIZE = 0.65f; //it's a scaling factor
 	public static enum ItemType {
 		FasterItem("/images/faster.png", 1, 0, FasterItemAction.class),
 		SlowerItem("/images/slower.png", 1, 0, SlowerItemAction.class),
-		BiggerItem("/images/bigger.png", 1, 0, BiggerItemAction.class),
-		SmallerItem("/images/smaller.png", 1, 0, SmallerItemAction.class),
+		BiggerItem("/images/bigger-spritesheet.png", 1, 0, BiggerItemAction.class),
+		SmallerItem("/images/smaller-spritesheet.png", 1, 0, SmallerItemAction.class),
 		SmashBallItem("/images/ball.png", 1, 5, SmashBallItemAction.class),
 		SloMoItem("/images/block_1.png", 1, 5, SloMoItemAction.class),
 		HealthPointItem("/images/block_2.png", 1, 0, HealthPointItemAction.class),
-		AdditionalBallItem("/images/additional_ball.png", 1, 0, AdditionalBallItemAction.class);
+		AdditionalBallItem("/images/additional-ball-spritesheet.png", 1, 0, AdditionalBallItemAction.class);
 
 		private final String imagePath;
 		private final double possibility;

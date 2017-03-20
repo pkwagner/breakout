@@ -78,7 +78,8 @@ public class BallCollideAction implements Action {
 
         if (collidedEntity.getID().equals(GameParameters.STICK_ID)) {    //we should consider implementing a StickCollide action if more code is added here
             breakout.getSoundController().playEffect(SoundType.STICK_HIT);
-
+            ((StickModel)collidedEntity).getView().thrust();//push more particles out of the particle system
+            
             // Set ball's controlling player
             ballModel.setControllingPlayer(((StickModel) collidedEntity).getOwner());
         } else if (collidedEntity instanceof AbstractBlockModel) {
