@@ -40,7 +40,9 @@ public class ItemRenderComponent extends RenderComponent {
 
 	@Override
 	public Vector2f getSize() {
-		return new Vector2f(80,80);
+		int width = spritesheet.getWidth() /spritesheet.getHorizontalCount();
+		int height = spritesheet.getHeight();
+		return new Vector2f(width,height);
 	}
 
 	@Override

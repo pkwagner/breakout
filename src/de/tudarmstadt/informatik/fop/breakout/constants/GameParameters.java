@@ -77,9 +77,12 @@ public interface GameParameters {
 	// StickModel
 	public static final String STICK_ID = "stick";
 	public static final float STICK_SPEED = 1f;
-	public static final String STICK_IMAGE = "/images/stick.png";
+	public static final String STICK_MIDDLE_IMAGE = "/images/stick-middle.png";
+	public static final String STICK_LEFT_IMAGE = "/images/stick-side-l.png";
+	public static final String STICK_RIGHT_IMAGE = "/images/stick-side-r.png";
 	public static final float STICK_HEIGHT = 25;
 	public static final float STICK_WIDTH = 130;
+	public static final float STICK_MIN_WIDTH = 50;
 	public static final int BALL_INITIAL_POS_Y = 500;
 
 	// Player
@@ -154,7 +157,7 @@ public interface GameParameters {
 		SmashBallItem("/images/ball.png", 1, 5, SmashBallItemAction.class),
 		SloMoItem("/images/block_1.png", 1, 5, SloMoItemAction.class),
 		HealthPointItem("/images/block_2.png", 1, 0, HealthPointItemAction.class),
-		AdditionalBallItem("/images/additional-ball-spritesheet.png", 10, 0, AdditionalBallItemAction.class);
+		AdditionalBallItem("/images/additional-ball-spritesheet.png", 1, 0, AdditionalBallItemAction.class);
 
 		private final String imagePath;
 		private final double possibility;

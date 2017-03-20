@@ -17,12 +17,15 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class StickRenderComponent extends RenderComponent {
 
-    private final Image image;
+    private final Image leftImage;
+    private final Image rightImage;
+    private final Image middleImage;
 
     public StickRenderComponent() throws SlickException {
         super(GameParameters.STICK_ID + GameParameters.EXT_VIEW);
-
-        this.image = new Image(GameParameters.STICK_IMAGE);
+        leftImage = new Image(GameParameters.STICK_LEFT_IMAGE);
+        middleImage = new Image(GameParameters.STICK_MIDDLE_IMAGE);
+        rightImage = new Image(GameParameters.STICK_RIGHT_IMAGE);
     }
 
     @Override
@@ -36,11 +39,16 @@ public class StickRenderComponent extends RenderComponent {
         // retrieve the underlying entity's position
         Shape ownerShape = owner.getShape();
 
-        // retrieve the underlying entity's size to resize the image
-        Vector2f size = owner.getSize();
-
-        //draw from the top left corner with a scaled width
-        image.draw(ownerShape.getMinX(), ownerShape.getMinY(), size.getX(), size.getY());
+        int widthOfSide =leftImage.getWidth();
+        int widthOfMiddle = (int)owner.getSize().getX() - widthOfSide*2;
+        int height = middleImage.getHeight();
+        
+        
+        leftImage.draw(ownerShape.getMinX(), ownerShape.getMinY());
+        
+        middleImage.draw(ownerShape.getMinX()+widthOfSide, ownerShape.getMinY(),widthOfMiddle,height);
+        
+        rightImage.draw(ownerShape.getMinX()+widthOfSide+widthOfMiddle, ownerShape.getMinY());
     }
 
     @Override
