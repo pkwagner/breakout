@@ -31,7 +31,6 @@ public class ItemRenderComponent extends RenderComponent {
         if(itemType == GameParameters.ItemType.BiggerItem||itemType == GameParameters.ItemType.SmallerItem||itemType == GameParameters.ItemType.AdditionalBallItem){        	
         	spritesheet = new SpriteSheet(image.getScaledCopy(GameParameters.ITEM_IMAGE_SIZE),imageWidth,imageWidth);
         }else{
-        	
         	spritesheet = new SpriteSheet(image.getScaledCopy(GameParameters.ITEM_IMAGE_SIZE),(int)(image.getWidth()*GameParameters.ITEM_IMAGE_SIZE),(int)(image.getHeight()*GameParameters.ITEM_IMAGE_SIZE));
         }
         

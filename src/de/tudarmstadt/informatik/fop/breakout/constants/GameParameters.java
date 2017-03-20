@@ -84,7 +84,21 @@ public interface GameParameters {
 	public static final float STICK_WIDTH = 130;
 	public static final float STICK_MIN_WIDTH = 50;
 	public static final int BALL_INITIAL_POS_Y = 500;
+	public static final int EMITTER_Y_OFFSET = 17;
+	
 
+	//Particle systems
+	public static final String FLAME_PARTICLE_IMAGE = "/images/flame-particle.png";
+	public static final String FLAME_LEFT_EMITTER_FILE = "/emitter/flame-l.xml";
+	public static final String FLAME_RIGHT_EMITTER_FILE = "/emitter/flame-r.xml";
+	public static final int THRUST_DURATION = 200;
+	public static final int EMITTER_GRAVITY_MAX = -40;
+	public static final int EMITTER_GRAVITY_MIN = -20;
+	public static final int EMITTER_LIFE_MAX = 300;
+	public static final int EMITTER_LIFE_MIN = 300;
+	public static final int EMITTER_SPEED_MAX = 800;
+	public static final int EMITTER_SPEED_MIN = 400;
+	
 	// Player
 	public static final String PLAYER_ID = "player";
 	public static final String NO_LIFE_LEFT = "noLifeLeft";

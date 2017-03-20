@@ -252,8 +252,9 @@ public class GameplayState extends BasicGameState {
         StickModel stickModel = new StickModel(GameParameters.STICK_ID, player);
         StickController stickController = new StickController(GameParameters.STICK_ID + GameParameters.EXT_CONTROLLER);
         stickModel.addComponent(stickController);
-        stickModel.addComponent(new StickRenderComponent());
+        stickModel.setView(new StickRenderComponent());
 
+        
         stickController.init(stateBasedGame, position);
         addEntity(stickModel);
 
