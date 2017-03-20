@@ -15,7 +15,7 @@ public class MainMenuState extends BasicGameState {
 
     private final int id;
 
-    private Button buttonStart, buttonHighscore, buttonCredits, settingsButton;
+    private Button buttonStart, buttonHighscore, buttonCredits, buttonSettings;
     private Image background;
 
     public MainMenuState(int id) {
@@ -52,6 +52,11 @@ public class MainMenuState extends BasicGameState {
         buttonCredits.setMouseOverImage(buttonOverImage);
         buttonCredits.setMouseDownImage(buttonDownImage);
         buttonCredits.addListener(source -> stateBasedGame.enterState(GameParameters.CREDITS_STATE));
+        
+        buttonSettings = new Button(gameContainer,buttonImage,x,GameParameters.MAIN_MENU_ENTRY_Y+ GameParameters.MAIN_MENU_ENTRY_DISTANCE*3,"SETTINGS");
+        buttonSettings.setMouseOverImage(buttonOverImage);
+        buttonSettings.setMouseDownImage(buttonDownImage);
+        buttonSettings.addListener(source -> stateBasedGame.enterState(GameParameters.SETTINGS_STATE));
     }
 
     @Override
@@ -60,7 +65,7 @@ public class MainMenuState extends BasicGameState {
         buttonStart.render(gameContainer, graphics);
         buttonHighscore.render(gameContainer, graphics);
         buttonCredits.render(gameContainer, graphics);
-        settingsButton.render(gameContainer, graphics);
+        buttonSettings.render(gameContainer, graphics);
     }
 
     @Override
