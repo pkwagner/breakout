@@ -26,7 +26,7 @@ public class SoundController implements AutoCloseable {
     }
 
     /**
-     * @return
+     * @return the sound backend instance
      */
     public SoundStore getSoundStore() {
         return soundStore;
@@ -88,7 +88,12 @@ public class SoundController implements AutoCloseable {
         audio.playAsMusic(1f, 1f, true);
     }
 
-    public void setPitch(float pitch) {
+    /**
+     * Set the pitch at which the current music is being played
+     *
+     * @param pitch The pitch at which the current music is being played
+     */
+    public void setMusicPitch(float pitch) {
         soundStore.setMusicPitch(pitch);
     }
 

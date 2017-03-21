@@ -155,7 +155,7 @@ public class GameplayState extends BasicGameState {
                 gameSpeedFactor = gameSpeedFactorGoal;
 
             // Update pitch
-            ((Breakout) stateBasedGame).getSoundController().setPitch(gameSpeedFactor);
+            ((Breakout) stateBasedGame).getSoundController().setMusicPitch(gameSpeedFactor);
         }
     }
 
@@ -271,7 +271,7 @@ public class GameplayState extends BasicGameState {
         stickModel.addComponent(stickController);
         stickModel.setView(new StickRenderComponent());
 
-        
+
         stickController.init(stateBasedGame, position);
         addEntity(stickModel);
 
