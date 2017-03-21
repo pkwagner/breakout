@@ -9,6 +9,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.RamBlock;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
+import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.AbstractBlockRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.blocks.RamBlockRenderComponent;
@@ -18,32 +19,30 @@ import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.newdawn.slick.state.StateBasedGame;
 
 public class MapController {
 
 	private static final Logger logger = LogManager.getLogger();
 
-    private List<AbstractBlockModel> map = new ArrayList<>();
+    private Map<String, AbstractBlockModel> map = new HashMap<>();
+
     private int mapId;
     private final boolean multiplayer;
 
     private final GameplayState gameplayState;
     private final GameContainer gameContainer;
     private final StateBasedGame stateBasedGame;
-    
+
     public MapController(StateBasedGame stateBasedGame, GameplayState gameplayState, boolean multiplayer) {
         this.gameplayState 	= gameplayState;
         this.gameContainer	= stateBasedGame.getContainer();
@@ -70,17 +69,17 @@ public class MapController {
         createModels(rawMap);
 
         //assign views to blocks
-        map.forEach(block -> createView(block));
+        map.values().forEach(block -> createView(block));
 
         //assign controller to blocks
-        map.forEach(block -> {
+        map.values().forEach(block -> {
             AbstractBlockController c = createController(block);
             block.addComponent(c);
             c.init(stateBasedGame);
         });
 
 		//add block to game
-		map.forEach(gameplayState::addEntity);
+		map.values().forEach(gameplayState::addEntity);
     }
 
 
@@ -156,27 +155,28 @@ public class MapController {
 		int totalMapHeight = (int) rowHeight * GameParameters.MAP_ROWS;
 
     	for(String blockRep : rawMap){	//blockRep stands for the String representation of a Block
-    		
+
 			int row		= (positioningIndex - (positioningIndex % GameParameters.MAP_COLUMNS)) / GameParameters.MAP_COLUMNS;
 			int column 	= positioningIndex - row * GameParameters.MAP_COLUMNS;
-			
+
 			int x = (int) (columnWidth	* column	+ columnWidth/2);
 			int y = (int) (rowHeight	* row		+ rowHeight/2);
 
 			// Center map in multiplayer mode
 			if (multiplayer)
 				y += (totalMapHeight / 2);
-			
+
     		if(blockRep.equals("0")){
     			//don't add a Block when the string representation is "0"
-    		}else if(Utility.isInteger(blockRep)){
-
-    			map.add(new SimpleBlock(GameParameters.BLOCK_ID + index,Integer.parseInt(blockRep)));
-    			map.get(index).setPosition(new Vector2f(x,y));
+    		}else if(Utility.isInteger(blockRep)){    			
+    			//block id formating is block{row}_{column}
+                SimpleBlock block = new SimpleBlock(GameParameters.BLOCK_ID + column + '_' + row, Integer.parseInt(blockRep));
+                map.put(block.getID(), block);
+                block.setPosition(new Vector2f(x,y));
     			index++;
-    			
+    			logger.debug("created simpleblock " + Integer.parseInt(blockRep) + " at row " + row + " and column " + column + "::"+ block.getID());
     		}else if(isRamBlock(blockRep)){
-    			
+
     			GameParameters.Direction d;
     			switch(blockRep.charAt(0)){
 	    			case 'u': d = GameParameters.Direction.UP;
@@ -190,12 +190,13 @@ public class MapController {
 					default: d = GameParameters.Direction.RIGHT;
 						logger.error("Something went wrong during creation of RamBlock " + blockRep + " at row " + row + " and column " + column);
     			}
-    			
-    			map.add(new RamBlock(GameParameters.BLOCK_ID + index ,d, Integer.parseInt(blockRep.substring(1)), gameplayState.getRBMC()));
-    			map.get(index).setPosition(new Vector2f(x,y));
+
+                RamBlock block = new RamBlock(GameParameters.BLOCK_ID + column + '_' + row, d, Integer.parseInt(blockRep.substring(1)), gameplayState.getRBMC());
+    			map.put(block.getID(), block);
+                block.setPosition(new Vector2f(x,y));
     			index++;
+    			logger.debug("created ramblock " + d + Integer.parseInt(blockRep.substring(1)) +  " at row " + row + " and column " + column + "::"+ block.getID());
     		}else{
-    			//TODO: implement behavior for non-simpleBlocks
     			logger.error("Unknown Block type '" + blockRep + "'  at row " + (row +1) + " column " + (column +1));
     		}
     		positioningIndex++;
@@ -218,31 +219,35 @@ public class MapController {
     						return null;
     	}
     }
-    
+
     /**
      * Checks whether a given string is the string-representation of a RamBlock
-     * 
+     *
      * @param s the string to be checked
      * @return
-     */ 
+     */
     private boolean isRamBlock(String s){
     	if(!(s.startsWith("l")|s.startsWith("r")|s.startsWith("u")|s.startsWith("d"))) return false;
     	if(!Utility.isInteger(s.substring(1))) return false;
     	else return true;
     }
-    
- 	/**   
+
+ 	/**
   	 * Creates the view for a given block
   	 *
   	 * @param block the block for which a view shall be created
   	 * @return
   	 */
     private void createView(AbstractBlockModel block) { //TODO: an dieser Stelle warte ich auf den lieben paul, das hier is alles provisorisch
+		if (Breakout.getDebug()) {
+			return;
+		}
+
 		try {
 			AbstractBlockRenderComponent view;
 			switch (block.getType()) {
 				case SIMPLE:
-					view = new SimpleBlockRenderComponent(((SimpleBlock) block).getInitialHits(),block.getID()+GameParameters.EXT_VIEW);
+					view = new SimpleBlockRenderComponent(block.getInitialHits(),block.getID()+GameParameters.EXT_VIEW);
 					break;
 				case RAM:
 					view = new RamBlockRenderComponent(block.getID()+GameParameters.EXT_VIEW);
@@ -269,7 +274,11 @@ public class MapController {
      * @param block the block that should been removed
      */
     public void removeBlock(AbstractBlockModel block) {
-        map.remove(block);
+        map.remove(block.getID());
+    }
+
+    public AbstractBlockModel getBlock(String id) {
+        return map.get(id);
     }
 
     public boolean isEmpty() {

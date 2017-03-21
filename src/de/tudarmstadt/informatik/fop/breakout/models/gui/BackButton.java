@@ -4,6 +4,7 @@ import de.tudarmstadt.informatik.fop.breakout.actions.gui.BackButtonAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.events.MouseClickedEvent;
 
+import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 
@@ -22,7 +23,9 @@ public class BackButton extends Entity {
         setPosition(GameParameters.BACK_BUTTON_POSITION.copy());
         setSize(new Vector2f(64, 64));
 
-        addComponent(new ImageRenderComponent(new Image("/images/back-button.png")));
+        if (!Breakout.getDebug()) {
+            addComponent(new ImageRenderComponent(new Image("/images/back-button.png")));
+        }
 
         MouseClickedEvent clickedEvent = new MouseClickedEvent();
         clickedEvent.addAction(new BackButtonAction());

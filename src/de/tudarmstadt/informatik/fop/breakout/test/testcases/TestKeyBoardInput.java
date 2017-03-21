@@ -8,19 +8,19 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class TestKeyBoardInput {
-		
+
 		Adapter adapter;
-		
+
 		@Before
 		public void init() {
 			adapter = new Adapter();
 		}
-		
+
 		@After
 		public void finish() {
 			adapter.stopGame();
 		}
-		
+
 		@Test
 		public void testNewGame() {
 			adapter.initializeGame();
@@ -28,7 +28,7 @@ public class TestKeyBoardInput {
 			adapter.changeToGameplayState();
 			assertTrue(adapter.getStateBasedGame().getCurrentStateID()==GameParameters.GAMEPLAY_STATE);
 		}
-		
+
 		@Test
 		public void testSitckMoveLeft() {
 			adapter.initializeGame();
@@ -36,7 +36,7 @@ public class TestKeyBoardInput {
 			adapter.handleKeyDownLeftArrow();
 			assertTrue("Your stick should move left when pressing left arrow", adapter.getStickPosition().getX() < 200);
 		}
-		
+
 		@Test
 		public void testSitckMoveRight() {
 			adapter.initializeGame();
@@ -44,5 +44,5 @@ public class TestKeyBoardInput {
 			adapter.handleKeyDownRightArrow();
 			assertTrue("Your stick should move right when pressing right arrow", adapter.getStickPosition().getX() > 600);
 		}
-		
+
 }

@@ -6,7 +6,6 @@ import de.tudarmstadt.informatik.fop.breakout.views.CreditsRenderComponent;
 import eea.engine.entity.Entity;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -17,7 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class CreditsState extends AbstractMenuState {
 
     public CreditsState(int id) throws SlickException {
-        super(id, new Image(GameParameters.CREDITS_BACKGROUND_IMAGE));
+        super(id, GameParameters.CREDITS_BACKGROUND_IMAGE);
     }
 
     @Override

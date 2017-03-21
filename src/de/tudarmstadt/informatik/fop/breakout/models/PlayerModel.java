@@ -3,22 +3,21 @@ package de.tudarmstadt.informatik.fop.breakout.models;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
 import eea.engine.entity.Entity;
-import org.newdawn.slick.geom.Vector2f;
 
 public class PlayerModel extends Entity {
 
-    private int blockCounter = 0, score = 0, initialHitPoints, remainingHitPoints;
+    private int blockCounter, score;
+    private int remainingHealthpoints = GameParameters.PLAYER_DEFAULT_HEALTHPOINTS;
+    private int initialHealthpoints = remainingHealthpoints;
+
     private String displayName;
-    private boolean dead = false;
     private final boolean secondPlayer;
     private StickController stickController;
 
-    public PlayerModel(String entityId, boolean secondPlayer, int initialHitPoints) {
+    public PlayerModel(String entityId, boolean secondPlayer) {
         super(entityId);
 
         this.secondPlayer = secondPlayer;
-        this.initialHitPoints = initialHitPoints;
-        this.remainingHitPoints = initialHitPoints;
 
         // Calculate position based on offset
         setPosition(secondPlayer ? GameParameters.PLAYER_VIEW_SCORE_OFFSET_PLAYER2 : GameParameters.PLAYER_VIEW_SCORE_OFFSET);
@@ -33,8 +32,8 @@ public class PlayerModel extends Entity {
         return score;
     }
 
-    public int getRemainingHitPoints() {
-        return remainingHitPoints;
+    public int getRemainingHealthpoints() {
+        return remainingHealthpoints;
     }
 
     public String getDisplayName() {
@@ -54,7 +53,7 @@ public class PlayerModel extends Entity {
     }
 
     public boolean isDead() {
-        return dead;
+        return remainingHealthpoints == 0;
     }
 
     public boolean isSecondPlayer() {
@@ -75,20 +74,22 @@ public class PlayerModel extends Entity {
      * Decreases hit points counter by one
      */
     public void hit() {
-        if (--remainingHitPoints <= 0) {
-            dead = true;
-            remainingHitPoints = 0;
+        if (--remainingHealthpoints <= 0) {
+            remainingHealthpoints = 0;
         }
     }
 
     public void reset() {
         this.blockCounter = 0;
         this.score = 0;
-        this.remainingHitPoints = initialHitPoints;
-        this.dead = false;
+        this.remainingHealthpoints = initialHealthpoints;
     }
 
-    public void heal(int hitPoints) {
-        this.remainingHitPoints += hitPoints;
+    public void addHealthpoints(int hitPoints) {
+        this.remainingHealthpoints += hitPoints;
+    }
+
+    public void setRemainingHealthpoints(int remainingHealthpoints) {
+        this.remainingHealthpoints = remainingHealthpoints;
     }
 }

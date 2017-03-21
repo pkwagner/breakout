@@ -28,9 +28,8 @@ public class ClockController extends Component {
     public void init(StateBasedGame stateBasedGame) {
         clock = getOwnerEntity();
 
-        int offset = GameParameters.STOP_WATCH_OFFSET;
-
         GameContainer container = stateBasedGame.getContainer();
+        int offset = GameParameters.STOP_WATCH_OFFSET;
         clock.setPosition(new Vector2f(container.getWidth() - offset, container.getHeight() - offset));
         clock.setSize(new Vector2f(100, 20));
     }

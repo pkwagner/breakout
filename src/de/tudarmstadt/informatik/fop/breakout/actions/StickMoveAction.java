@@ -15,17 +15,9 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class StickMoveAction implements Action {
 
-    private static final Vector2f STICK_SPEED = new Vector2f(GameParameters.STICK_SPEED, 0);
-
     private final GameParameters.Direction moveDirection;
     private final StickModel stickModel;
 
-    /**
-     * Will be called when the player wants to move the stick
-     *
-     * @param moveDirection the direction the stick should be moved in
-     * @param stickModel the stick that should be moved
-     */
     public StickMoveAction(GameParameters.Direction moveDirection, StickModel stickModel) {
         this.moveDirection = moveDirection;
         this.stickModel = stickModel;
@@ -33,7 +25,7 @@ public class StickMoveAction implements Action {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
-        Vector2f frameVelocity = STICK_SPEED.copy().scale(delta);
+        Vector2f frameVelocity = stickModel.getVelocity().copy().scale(delta);
         if (moveDirection == GameParameters.Direction.LEFT)
             frameVelocity.scale(-1);
 

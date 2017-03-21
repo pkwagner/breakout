@@ -6,13 +6,8 @@ import de.tudarmstadt.informatik.fop.breakout.exceptions.IllegalHighscoreFormat;
 import de.tudarmstadt.informatik.fop.breakout.interfaces.IHighscoreEntry;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.HighScoreEntryRenderComponent;
-
 import de.tudarmstadt.informatik.fop.breakout.views.gui.ButtonView;
 import eea.engine.entity.Entity;
-
-import java.io.IOException;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
@@ -21,6 +16,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * State showing the top ten high scores
@@ -32,7 +30,7 @@ public class HighscoreState extends AbstractMenuState {
     private ButtonView buttonResetHighscore;
 
     public HighscoreState(int id) throws SlickException {
-        super(id, new Image(GameParameters.HIGHSCORE_BACKGROUND_IMAGE));
+        super(id, GameParameters.HIGHSCORE_BACKGROUND_IMAGE);
     }
 
     @Override

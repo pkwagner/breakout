@@ -4,13 +4,12 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
-import org.lwjgl.util.vector.Vector;
 import org.newdawn.slick.geom.Vector2f;
 
 
 public class StickModel extends Entity {
 
-    private Vector velocity;
+    private Vector2f velocity = new Vector2f(GameParameters.STICK_SPEED, 0);
     private final PlayerModel owner;
     private StickRenderComponent view;
     private boolean thrust;
@@ -27,11 +26,11 @@ public class StickModel extends Entity {
         setSize(new Vector2f(width, GameParameters.STICK_HEIGHT));
     }
 
-    public Vector getVelocity() {
+    public Vector2f getVelocity() {
         return velocity;
     }
 
-    public void setVelocity(Vector velocity) {
+    public void setVelocity(Vector2f velocity) {
         this.velocity = velocity;
     }
 
@@ -51,7 +50,7 @@ public class StickModel extends Entity {
     public void setThrust(boolean thrust) {
         this.thrust = thrust;
     }
-    
+
     @Override
     public void addComponent(Component component){
     	if(component instanceof StickRenderComponent){
@@ -59,7 +58,7 @@ public class StickModel extends Entity {
     	}
     	super.addComponent(component);
     }
-    
+
     public StickRenderComponent getView(){
     	return view;
     }

@@ -38,11 +38,15 @@ public class GameoverState extends AbstractGameState {
     private HighScoreController highScoreController;
 
     public GameoverState(int id) throws SlickException {
-        super(id, new Image(GameParameters.GAMEOVER_BACKGROUND_IMAGE));
+        super(id, GameParameters.GAMEOVER_BACKGROUND_IMAGE);
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        if (isTesting()) {
+            return;
+        }
+
         addGUI(gameContainer, stateBasedGame);
         highScoreController = ((Breakout) stateBasedGame).getHighScoreController();
     }

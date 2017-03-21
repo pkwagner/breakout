@@ -18,7 +18,7 @@ public class HealthPointItemAction extends AbstractItemAction {
 
     @Override
     public void onEnable() {
-        player.heal(GameParameters.ITEM_HP_HEALTHPOINTS);
+        player.addHealthpoints(GameParameters.ITEM_HP_HEALTHPOINTS);
     }
 
     @Override

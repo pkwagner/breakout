@@ -3,7 +3,6 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 import de.tudarmstadt.informatik.fop.breakout.models.gui.BackButton;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Renderable;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -12,8 +11,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class AbstractMenuState extends AbstractGameState {
 
-    AbstractMenuState(int stateId, Renderable background) {
-        super(stateId, background);
+    public AbstractMenuState(int stateId, String imagePath) throws SlickException {
+        super(stateId, imagePath);
     }
 
     @Override

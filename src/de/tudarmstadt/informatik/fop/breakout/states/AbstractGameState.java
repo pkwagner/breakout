@@ -1,14 +1,12 @@
 package de.tudarmstadt.informatik.fop.breakout.states;
 
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Renderable;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -22,10 +20,38 @@ public abstract class AbstractGameState extends BasicGameState {
     protected final int stateId;
     private final Renderable background;
 
-    public AbstractGameState(int stateId, Renderable background) {
-        this.stateId = stateId;
-        this.background = background;
+    /**
+     * Creates a new basic game state that holds the common implementation for background image and state id.
+     *
+     * @param stateId unique state id
+     * @param imagePath relative path to the background image
+     * @throws SlickException if the image cannot be loaded
+     */
+    public AbstractGameState(int stateId, String imagePath) throws SlickException {
+        this(stateId, imagePath, false);
     }
+
+    /**
+     * Creates a new basic game state that holds the common implementation for background image and state id.
+     *
+     * @param stateId unique state id
+     * @param imagePath relative path to the background image or spritesheet
+     * @param animation if the background image should be animated
+     * @throws SlickException if the image cannot be loaded
+     */
+    public AbstractGameState(int stateId, String imagePath, boolean animation) throws SlickException {
+        this.stateId = stateId;
+
+        if (isTesting()) {
+            background = (x, y) -> {};
+        } else if (animation) {
+            this.background = new Image(imagePath);
+        } else {
+            SpriteSheet sprites = new SpriteSheet(imagePath, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
+            this.background = new Animation(sprites, 70);
+        }
+    }
+
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {

@@ -51,20 +51,19 @@ public class GameplayState extends AbstractGameState {
 
     public GameplayState(int id, int initialLevelId) throws SlickException {
         // Load dynamic background
-        super(id, new Animation(new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET
-                , GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT), 70));
+        super(id, GameParameters.BACKGROUND_SPRITESHEET);
 
         this.initialLevelId = initialLevelId;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        this.gameContainer = gameContainer;
+        this.stateBasedGame = stateBasedGame;
+
         if (isTesting()) {
             return;
         }
-
-        this.gameContainer = gameContainer;
-        this.stateBasedGame = stateBasedGame;
 
         //load sound effects
         Breakout breakout = (Breakout) stateBasedGame;
@@ -127,16 +126,16 @@ public class GameplayState extends AbstractGameState {
      * @param multiplayer true if the game should been started in multiplayer mode; false if not
      * @throws SlickException if images cannot be loaded
      */
-    private void newGame(boolean multiplayer) throws SlickException {
+    public void newGame(boolean multiplayer) throws SlickException {
         // Reset all given players
         // Basic player implementation
-        PlayerModel player1 = new PlayerModel(GameParameters.PLAYER_ID, false, GameParameters.PLAYER_DEFAULT_HEALTHPOINTS);
+        PlayerModel player1 = new PlayerModel(GameParameters.PLAYER_ID, false);
         PlayerStatsRenderComponent player1View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID + GameParameters.EXT_VIEW, false);
         player1.addComponent(player1View);
         player1View.init();
 
         if (multiplayer) {
-            PlayerModel player2 = new PlayerModel(GameParameters.PLAYER_ID_PLAYER2, true, GameParameters.PLAYER_DEFAULT_HEALTHPOINTS);
+            PlayerModel player2 = new PlayerModel(GameParameters.PLAYER_ID_PLAYER2, true);
             PlayerStatsRenderComponent player2View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID_PLAYER2 + GameParameters.EXT_VIEW, false);
             player2.addComponent(player2View);
             player2View.init();
@@ -260,12 +259,14 @@ public class GameplayState extends AbstractGameState {
         //default hides the entity and make it passable so it won't effect the gameplay
         pauseImage.setVisible(false);
 
-
         //center the entity
         pauseImage.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));
 
-        //view component
-        pauseImage.addComponent(new ImageRenderComponent(new Image(GameParameters.PAUSE_IMAGE)));
+        if (!isTesting()) {
+            //view component
+            pauseImage.addComponent(new ImageRenderComponent(new Image(GameParameters.PAUSE_IMAGE)));
+        }
+
         pauseImage.setPassable(true);
         //key listener
         Entity pauseEntity = new Entity(GameParameters.PAUSE_ID);
@@ -294,11 +295,14 @@ public class GameplayState extends AbstractGameState {
         BallModel ballModel = new BallModel(GameParameters.BALL_ID + "_" + ballIdCounter, initialControllingPlayer);
         BallController ballController = new BallController(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_CONTROLLER);
         ballModel.addComponent(ballController);
-        BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_VIEW);
-        ballModel.addComponent(ballView);
-        balls.add(ballModel);
 
-        ballView.init();
+        if (!isTesting()) {
+            BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_VIEW);
+            ballModel.addComponent(ballView);
+            ballView.init();
+        }
+
+        balls.add(ballModel);
         ballController.init(gameContainer, stateBasedGame, secondPlayer);
         addEntity(ballModel);
 
@@ -315,7 +319,7 @@ public class GameplayState extends AbstractGameState {
      * @return the created stick
      * @throws SlickException if the stick image cannot be loaded
      */
-    private StickModel addStick(StateBasedGame stateBasedGame, int position, PlayerModel owner) throws SlickException {
+    public StickModel addStick(StateBasedGame stateBasedGame, int position, PlayerModel owner) throws SlickException {
         boolean secondPlayer = owner.isSecondPlayer();
 
         if (!secondPlayer || players.length == 2) {
@@ -323,13 +327,17 @@ public class GameplayState extends AbstractGameState {
             StickModel stickModel = new StickModel(stickId, owner);
             StickController stickController = new StickController(stickId + GameParameters.EXT_CONTROLLER);
             stickModel.addComponent(stickController);
-            StickRenderComponent stickRenderComponent = new StickRenderComponent();
-            stickModel.addComponent(stickRenderComponent);
+
+            if (!isTesting()) {
+                StickRenderComponent stickRenderComponent = new StickRenderComponent();
+                stickModel.addComponent(stickRenderComponent);
+
+                stickRenderComponent.init();
+            }
 
             owner.setStickController(stickController);
 
             stickController.init(stateBasedGame, position);
-            stickRenderComponent.init();
             addEntity(stickModel);
 
             return stickModel;

@@ -163,6 +163,10 @@ public class Breakout extends StateBasedGame implements GameParameters {
      * @param container the game container
      */
     private void initMusic(GameContainer container) {
+        if (debug) {
+            return;
+        }
+
         soundController.load(SoundType.BACKGROUND_MUSIC);
         soundController.playMusic(SoundType.BACKGROUND_MUSIC);
 

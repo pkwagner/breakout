@@ -6,6 +6,7 @@ import de.tudarmstadt.informatik.fop.breakout.events.KeyDownEvent;
 import de.tudarmstadt.informatik.fop.breakout.models.KeyBinding;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 
+import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
 import eea.engine.component.Component;
 
 import org.newdawn.slick.GameContainer;
@@ -64,6 +65,9 @@ public class StickController extends Component {
     public void reset() {
         StickModel stick = getOwnerEntity();
         stick.setPosition(initialPos.copy());
-        stick.getView().resetParticleSystems();
+        StickRenderComponent view = stick.getView();
+        if (view != null) {
+            view.resetParticleSystems();
+        }
     }
 }

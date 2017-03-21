@@ -12,11 +12,8 @@ import de.tudarmstadt.informatik.fop.breakout.views.gui.CheckboxRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.gui.KeyBindingRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.gui.SeparatorRenderComponent;
 import de.tudarmstadt.informatik.fop.breakout.views.gui.SliderRenderComponent;
-
 import eea.engine.entity.Entity;
-
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -33,7 +30,7 @@ public class SettingsState extends AbstractMenuState {
     private static final int CHECKBOX_X = RIGHT_START_X -137;
     
     public SettingsState(int stateId) throws SlickException {
-        super(stateId, new Image(GameParameters.SETTINGS_BACKGROUND_IMAGE));
+        super(stateId, GameParameters.SETTINGS_BACKGROUND_IMAGE);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class MainMenuState extends AbstractGameState {
     private Set<AbstractComponent> buttons = new HashSet<>();
 
     public MainMenuState(int id) throws SlickException {
-        super(id, new Image(GameParameters.MENU_BACKGROUND_IMAGE));
+        super(id, GameParameters.MENU_BACKGROUND_IMAGE);
     }
 
     @Override
