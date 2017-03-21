@@ -1,5 +1,6 @@
 package de.tudarmstadt.informatik.fop.breakout.actions;
 
+import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
@@ -30,13 +31,22 @@ public class PauseToggleAction implements Action {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
-        boolean newPauseState = !gameContainer.isPaused();
-        logger.info("Toggling pause state to {}", newPauseState);
-        
-        gameContainer.setPaused(newPauseState);
-        //hide or show the pause image/back button depending on the pause state
-        for (Entity entity : entities) {
-            entity.setVisible(newPauseState);
+        GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
+
+        // Check if the current pause state is caused by the player
+        if (gameplayState.isManuallyPaused() == gameContainer.isPaused()) {
+            boolean newPauseState = !gameContainer.isPaused();
+            logger.info("Toggling pause state to {}", newPauseState);
+
+            gameContainer.setPaused(newPauseState);
+            //hide or show the pause image/back button depending on the pause state
+            for (Entity entity : entities) {
+                entity.setVisible(newPauseState);
+            }
+
+            gameplayState.setManuallyPaused(newPauseState);
+        } else {
+            logger.debug("Doesn't pause/resume game because this toggle wasn't set manually");
         }
     }
 }

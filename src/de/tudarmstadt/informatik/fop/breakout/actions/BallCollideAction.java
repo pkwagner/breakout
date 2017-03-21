@@ -76,7 +76,7 @@ public class BallCollideAction implements Action {
         Shape ballShape = ballModel.getShape();
         Shape collidedShape = collidedEntity.getShape();
 
-        if (collidedEntity.getID().equals(GameParameters.STICK_ID)) {    //we should consider implementing a StickCollide action if more code is added here
+        if (collidedEntity instanceof StickModel) {
             breakout.getSoundController().playEffect(SoundType.STICK_HIT);
 
             ((StickModel) collidedEntity).setThrust(true);

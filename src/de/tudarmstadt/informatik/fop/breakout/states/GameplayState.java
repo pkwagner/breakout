@@ -44,7 +44,7 @@ public class GameplayState extends AbstractGameState {
     private float gameSpeedFactor = 1;
     private float gameSpeedFactorGoal = 1;
     private int ballIdCounter = 0;
-    private boolean startAsMultiplayer = false;
+    private boolean startAsMultiplayer = false, manuallyPaused;
 
     private boolean particleEffects = true;
 
@@ -139,6 +139,9 @@ public class GameplayState extends AbstractGameState {
         } else {
             players = new PlayerModel[]{player1};
         }
+
+        // Reset manually paused toggle
+        manuallyPaused = false;
 
         // Initialize clock
         clock = new ClockModel(GameParameters.STOP_WATCH_ID);
@@ -417,5 +420,13 @@ public class GameplayState extends AbstractGameState {
      */
     public void setParticleEffectsEnabled(boolean particleEffects) {
         this.particleEffects = particleEffects;
+    }
+
+    public boolean isManuallyPaused() {
+        return manuallyPaused;
+    }
+
+    public void setManuallyPaused(boolean manuallyPaused) {
+        this.manuallyPaused = manuallyPaused;
     }
 }
