@@ -2,14 +2,15 @@ package de.tudarmstadt.informatik.fop.breakout.actions.items;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.Timeout;
+import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
+import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
-import eea.engine.entity.StateBasedEntityManager;
 import eea.engine.event.basicevents.CollisionEvent;
 
 import org.apache.logging.log4j.LogManager;
@@ -20,18 +21,21 @@ import org.newdawn.slick.state.StateBasedGame;
 public abstract class AbstractItemAction implements Action {
 
     private Logger logger = LogManager.getLogger();
-    private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
-        this.init(stateBasedGame);
         CollisionEvent collisionEvent = (CollisionEvent) component;
 
-        ItemModel item = (ItemModel) collisionEvent.getOwnerEntity();
-
-        // Check if the ball collided with the stick block
-        if (collisionEvent.getCollidedEntity().getID().equals(GameParameters.STICK_ID)) {
+        // Check if the ball collided with a stick
+        if (collisionEvent.getCollidedEntity() instanceof StickModel) {
             logger.info("Item pickup {}", component.getOwnerEntity().getID());
+
+            // Get item & player who caught the item
+            ItemModel item = (ItemModel) collisionEvent.getOwnerEntity();
+            PlayerModel catchingPlayer = ((StickModel) collisionEvent.getCollidedEntity()).getOwner();
+
+            // Initialize with catching player
+            this.init(stateBasedGame, catchingPlayer);
 
             // Play sound
             ((Breakout) stateBasedGame).getSoundController().playEffect(SoundType.ITEM_PICKUP);
@@ -53,7 +57,7 @@ public abstract class AbstractItemAction implements Action {
         }
     }
 
-    protected abstract void init(StateBasedGame stateBasedGame);
+    protected abstract void init(StateBasedGame stateBasedGame, PlayerModel catchingPlayer);
 
     /**
      * Will be triggered when an item was fetched by the stick

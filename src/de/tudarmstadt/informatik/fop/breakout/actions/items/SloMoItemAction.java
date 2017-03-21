@@ -1,9 +1,8 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.items;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
+import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
-import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class SloMoItemAction extends AbstractItemAction {
@@ -11,7 +10,7 @@ public class SloMoItemAction extends AbstractItemAction {
     private GameplayState gameplayState;
 
     @Override
-    protected void init(StateBasedGame stateBasedGame) {
+    protected void init(StateBasedGame stateBasedGame, PlayerModel catchingPlayer) {
         this.gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
     }
 

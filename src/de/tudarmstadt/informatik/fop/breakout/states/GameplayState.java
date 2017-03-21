@@ -21,7 +21,6 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,13 +37,14 @@ public class GameplayState extends AbstractGameState {
     private StateBasedGame stateBasedGame;
 
     private MapController mapController;
-    private PlayerModel player;
+    private PlayerModel players[] = {};
     private ClockModel clock;
     private ClockController clockController;
 
     private float gameSpeedFactor = 1;
     private float gameSpeedFactorGoal = 1;
     private int ballIdCounter = 0;
+    private boolean startAsMultiplayer = false;
 
     public GameplayState(int id) throws SlickException {
         // Load dynamic background
@@ -65,13 +65,6 @@ public class GameplayState extends AbstractGameState {
         Breakout breakout = (Breakout) stateBasedGame;
         SoundController soundController = breakout.getSoundController();
         soundController.load(SoundType.BLOCK_HIT, SoundType.ITEM_PICKUP, SoundType.STICK_HIT);
-
-        // Basic player implementation
-        String playerId = GameParameters.PLAYER_ID + "_" + 0;
-        player = new PlayerModel(playerId);
-        PlayerStatsRenderComponent playerView = new PlayerStatsRenderComponent(playerId + GameParameters.EXT_VIEW, false);
-        player.addComponent(playerView);
-        playerView.init();
     }
 
     /**
@@ -81,44 +74,69 @@ public class GameplayState extends AbstractGameState {
      * @throws SlickException happens if images cannot be loaded
      */
     private void loadLevel(int mapId) throws SlickException {
-        // TODO Move some parts to 'init(...)' to avoid double calculations
-        // Pause game
-        gameContainer.setPaused(true);
+        if (players.length == 1 || players.length == 2) {
+            boolean multiplayer = (players.length == 2);
 
-        // Reset speed
-        gameSpeedFactorGoal = 1;
+            // TODO Move some parts to 'init(...)' to avoid double calculations
+            // Pause game
+            gameContainer.setPaused(true);
 
-        // Delete all previous entities
-        clearEntities();
+            // Reset speed
+            gameSpeedFactorGoal = 1;
 
-        // TODO Change default positions
-        // Add stick & ball to state
-        balls.clear();
-        addStick(stateBasedGame, gameContainer.getWidth() / 2);
-        addBall(stateBasedGame);
+            // Delete all previous entities
+            clearEntities();
 
-        mapController = new MapController(stateBasedGame, this);
-        mapController.loadMap(mapId);
-        addBorders();
+            // Add stick & ball to state
+            balls.clear();
 
-        addEntity(clock);
-        addEntity(player);
+            // Add stick & ball to state
+            addStick(stateBasedGame, gameContainer.getWidth() / 2, players[0]);
+            addBall(stateBasedGame, players[0]);
 
-        addStartGameEntity(gameContainer.getWidth() / 2);
-        addPauseEntities(gameContainer);
+            if (multiplayer) {
+                addStick(stateBasedGame, gameContainer.getWidth() / 2, players[1]);
+                addBall(stateBasedGame, players[1]);
+            }
+
+            mapController = new MapController(stateBasedGame, this, multiplayer);
+            mapController.loadMap(mapId);
+
+            addBorders(multiplayer);
+
+            addEntity(clock);
+
+            for (PlayerModel player : players)
+                addEntity(player);
+        } else {
+            logger.error("Some error occurred while initializing a new game: Player count is " + players.length);
+        }
     }
 
     /**
      * Starts a new game.
      *
-     * @param player the player model
+     * @param multiplayer true if the game should been started in multiplayer mode; false if not
      * @throws SlickException if images cannot be loaded
      */
-    private void newGame(PlayerModel player) throws SlickException {
-        gameContainer.setPaused(true);
+    private void newGame(boolean multiplayer) throws SlickException {
+        // Reset all given players
+        // Basic player implementation
+        PlayerModel player1 = new PlayerModel(GameParameters.PLAYER_ID, false, GameParameters.PLAYER_DEFAULT_HEALTHPOINTS);
+        PlayerStatsRenderComponent player1View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID + GameParameters.EXT_VIEW, multiplayer);
+        player1.addComponent(player1View);
+        player1View.init();
 
-        // Reset player
-        player.reset();
+        if (multiplayer) {
+            PlayerModel player2 = new PlayerModel(GameParameters.PLAYER_ID_PLAYER2, true, GameParameters.PLAYER_DEFAULT_HEALTHPOINTS);
+            PlayerStatsRenderComponent player2View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID_PLAYER2 + GameParameters.EXT_VIEW, true);
+            player2.addComponent(player2View);
+            player2View.init();
+
+            players = new PlayerModel[]{player1, player2};
+        } else {
+            players = new PlayerModel[]{player1};
+        }
 
         // Initialize clock
         clock = new ClockModel(GameParameters.STOP_WATCH_ID);
@@ -131,6 +149,10 @@ public class GameplayState extends AbstractGameState {
 
         // Load initial map
         loadLevel(GameParameters.MAP_INITIAL_ID);
+
+        // Initialize start game entity
+        addStartGameEntity(gameContainer.getWidth() / 2);
+        addPauseEntities(gameContainer);
     }
 
     /**
@@ -138,6 +160,7 @@ public class GameplayState extends AbstractGameState {
      */
     public void nextLevel() {
         int currentMapId = mapController.getMapId();
+
         if (currentMapId < GameParameters.MAP_COUNT) {
             try {
                 loadLevel(++currentMapId);
@@ -175,7 +198,7 @@ public class GameplayState extends AbstractGameState {
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        newGame(player);
+        newGame(startAsMultiplayer);
     }
 
     /**
@@ -199,16 +222,21 @@ public class GameplayState extends AbstractGameState {
     }
 
     /**
-     * Add left, right and top borders.
+     * Add left, right and top borders (top only in singleplayer).
+     *
+     * @param multiplayer true if in multiplayer mode (remove top border), false if not
      */
-    private void addBorders() {
+    private void addBorders(boolean multiplayer) {
         Entity leftBorder = new BorderFactory(GameParameters.BorderType.LEFT).createEntity();
         Entity rightBorder = new BorderFactory(GameParameters.BorderType.RIGHT).createEntity();
-        Entity topBorder = new BorderFactory(GameParameters.BorderType.TOP).createEntity();
 
         addEntity(leftBorder);
         addEntity(rightBorder);
-        addEntity(topBorder);
+
+        if (!multiplayer) {
+            Entity topBorder = new BorderFactory(GameParameters.BorderType.TOP).createEntity();
+            addEntity(topBorder);
+        }
     }
 
     /**
@@ -252,12 +280,15 @@ public class GameplayState extends AbstractGameState {
      * Creates and adds a new ball to the game
      *
      * @param stateBasedGame this game instance
+     * @param initialControllingPlayer the player who initially controls the ball and should gain the points for destroyed blocks
      * @return the created ball
      * @throws SlickException if the image cannot be loaded
      */
-    public BallModel addBall(StateBasedGame stateBasedGame) throws SlickException {
+    public BallModel addBall(StateBasedGame stateBasedGame, PlayerModel initialControllingPlayer) throws SlickException {
+        boolean secondPlayer = initialControllingPlayer.isSecondPlayer();
+
         // FORMAT: BALL_[ID][/_VIEW/_CONTROLLER]
-        BallModel ballModel = new BallModel(GameParameters.BALL_ID + "_" + ballIdCounter, player);
+        BallModel ballModel = new BallModel(GameParameters.BALL_ID + "_" + ballIdCounter, initialControllingPlayer);
         BallController ballController = new BallController(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_CONTROLLER);
         ballModel.addComponent(ballController);
         BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_VIEW);
@@ -265,7 +296,7 @@ public class GameplayState extends AbstractGameState {
         balls.add(ballModel);
 
         ballView.init();
-        ballController.init(gameContainer, stateBasedGame);
+        ballController.init(gameContainer, stateBasedGame, secondPlayer);
         addEntity(ballModel);
 
         ballIdCounter++;
@@ -281,16 +312,28 @@ public class GameplayState extends AbstractGameState {
      * @return the created stick
      * @throws SlickException if the stick image cannot be loaded
      */
-    private StickModel addStick(StateBasedGame stateBasedGame, int position) throws SlickException {
-        StickModel stickModel = new StickModel(player);
-        StickController stickController = new StickController(GameParameters.STICK_ID + GameParameters.EXT_CONTROLLER);
-        stickModel.addComponent(stickController);
-        stickModel.setView(new StickRenderComponent());
+    private StickModel addStick(StateBasedGame stateBasedGame, int position, PlayerModel owner) throws SlickException {
+        boolean secondPlayer = owner.isSecondPlayer();
 
-        stickController.init(stateBasedGame, position);
-        addEntity(stickModel);
+        if (!secondPlayer || players.length == 2) {
+            String stickId = (secondPlayer) ? GameParameters.STICK_ID_PLAYER2 : GameParameters.STICK_ID;
+            StickModel stickModel = new StickModel(stickId, owner);
+            StickController stickController = new StickController(stickId + GameParameters.EXT_CONTROLLER);
+            stickModel.addComponent(stickController);
+            StickRenderComponent stickRenderComponent = new StickRenderComponent();
+            stickModel.setView(stickRenderComponent);
 
-        return stickModel;
+            owner.setStickController(stickController);
+
+            stickController.init(stateBasedGame, position);
+            stickRenderComponent.init();
+            addEntity(stickModel);
+
+            return stickModel;
+        } else {
+            logger.error("Some error occurred while loading second stick: Player count is " + players.length);
+            return null;
+        }
     }
 
     /**
@@ -305,8 +348,8 @@ public class GameplayState extends AbstractGameState {
      *
      * @return all currently playing players
      */
-    public List<PlayerModel> getPlayers() {
-        return Arrays.asList(new PlayerModel[]{player});
+    public PlayerModel[] getPlayers() {
+        return players;
     }
 
     /**
@@ -346,5 +389,13 @@ public class GameplayState extends AbstractGameState {
      */
     public ClockController getClockController() {
         return clockController;
+    }
+
+    public void setMultiplayer(boolean multiplayer) {
+        this.startAsMultiplayer = multiplayer;
+    }
+
+    public boolean isMultiplayer() {
+        return (this.players.length == 2);
     }
 }

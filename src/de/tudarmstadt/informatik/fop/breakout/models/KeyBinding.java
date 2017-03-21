@@ -29,7 +29,17 @@ public enum KeyBinding {
     /**
      * Moves the stick to the right side
      */
-    RIGHT_MOVE(Input.KEY_RIGHT);
+    RIGHT_MOVE(Input.KEY_RIGHT),
+
+    /**
+     * Moves the stick of player 2 to the right side (only for multiplayer)
+     */
+    LEFT_MOVE_PLAYER2(Input.KEY_A),
+
+    /**
+     * Moves the stick of player 2 to the right side (only for multiplayer)
+     */
+    RIGHT_MOVE_PLAYER2(Input.KEY_D);
 
     private int currentBinding;
 

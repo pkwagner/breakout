@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.items;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 
 import eea.engine.entity.StateBasedEntityManager;
@@ -16,8 +17,8 @@ public class SmallerItemAction extends AbstractItemAction {
     private StickModel stickModel;
 
     @Override
-    protected void init(StateBasedGame stateBasedGame) {
-        stickModel = (StickModel) StateBasedEntityManager.getInstance().getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STICK_ID);
+    protected void init(StateBasedGame stateBasedGame, PlayerModel catchingPlayer) {
+        stickModel = (StickModel) StateBasedEntityManager.getInstance().getEntity(GameParameters.GAMEPLAY_STATE, catchingPlayer.isSecondPlayer() ? GameParameters.STICK_ID_PLAYER2 : GameParameters.STICK_ID);
     }
 
     @Override

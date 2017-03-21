@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.views;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 import eea.engine.component.RenderComponent;
 
@@ -40,6 +41,7 @@ public class StickRenderComponent extends RenderComponent {
     
     public StickRenderComponent() throws SlickException {
         super(GameParameters.STICK_ID + GameParameters.EXT_VIEW);
+
         leftImage = new Image(GameParameters.STICK_LEFT_IMAGE);
         middleImage = new Image(GameParameters.STICK_MIDDLE_IMAGE);
         rightImage = new Image(GameParameters.STICK_RIGHT_IMAGE);
@@ -64,6 +66,15 @@ public class StickRenderComponent extends RenderComponent {
         
         flameLeftParticleSystem.setBlendingMode(ParticleSystem.BLEND_ADDITIVE);
         flameRightParticleSystem.setBlendingMode(ParticleSystem.BLEND_ADDITIVE);
+    }
+
+    public void init() {
+        // If the controller is the second player, flip the images
+        if (((StickModel) getOwnerEntity()).getOwner().isSecondPlayer()) {
+            leftImage = leftImage.getFlippedCopy(false, true);
+            middleImage = middleImage.getFlippedCopy(false, true);
+            rightImage = rightImage.getFlippedCopy(false, true);
+        }
     }
 
     @Override

@@ -10,9 +10,8 @@ public class HealthPointItemAction extends AbstractItemAction {
     private PlayerModel player;
 
     @Override
-    protected void init(StateBasedGame stateBasedGame) {
-        // TODO
-        player = ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).getPlayers().get(0);
+    protected void init(StateBasedGame stateBasedGame, PlayerModel catchingPlayer) {
+        this.player = catchingPlayer;
     }
 
     @Override

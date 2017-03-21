@@ -57,18 +57,20 @@ public class SettingsState extends AbstractMenuState {
     private void addKeymapOptions(GameContainer container, float previousY) {
         //start key and left move key
         Entity startTitle = createKeyMapField(previousY, LEFT_START_X, KeyBinding.START_GAME, "Start game");
-        createKeyMapField(startTitle.getPosition().getY(), LEFT_START_X, KeyBinding.LEFT_MOVE, "Move left");
+        Entity leftMove = createKeyMapField(startTitle.getPosition().getY(), LEFT_START_X, KeyBinding.LEFT_MOVE, "Move left");
+        createKeyMapField(leftMove.getPosition().getY(), LEFT_START_X, KeyBinding.LEFT_MOVE_PLAYER2, "ML (Player2)");
 
         //separator
         Entity separator = new Entity("separator");
-        separator.setPosition(new Vector2f(container.getWidth() / 2, startTitle.getPosition().getY() + Y_GAP / 2));
-        separator.setSize(new Vector2f(5, 175));
+        separator.setPosition(new Vector2f(container.getWidth() / 2, startTitle.getPosition().getY() + Y_GAP));
+        separator.setSize(new Vector2f(5, 225));
         separator.addComponent(new SeparatorRenderComponent("separator" + GameParameters.EXT_VIEW));
         addEntity(separator);
 
         //pause key and right move key
         Entity pauseTitle = createKeyMapField(previousY, RIGHT_START_X, KeyBinding.PAUSE, "Pause");
-        createKeyMapField(pauseTitle.getPosition().getY(), RIGHT_START_X, KeyBinding.RIGHT_MOVE, "Move right");
+        Entity rightMove = createKeyMapField(pauseTitle.getPosition().getY(), RIGHT_START_X, KeyBinding.RIGHT_MOVE, "Move right");
+        createKeyMapField(rightMove.getPosition().getY(), RIGHT_START_X, KeyBinding.RIGHT_MOVE_PLAYER2, "MR (Player2)");
     }
 
     /**

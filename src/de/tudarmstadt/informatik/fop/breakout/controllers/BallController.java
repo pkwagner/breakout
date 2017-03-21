@@ -16,6 +16,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class BallController extends Component {
 
+    private boolean secondPlayer;
+
     public BallController(String componentID) {
         super(componentID);
     }
@@ -25,11 +27,13 @@ public class BallController extends Component {
         return (BallModel) super.getOwnerEntity();
     }
 
-    public void init(GameContainer gameContainer, StateBasedGame game) {
+    public void init(GameContainer gameContainer, StateBasedGame game, boolean secondPlayer) {
+        this.secondPlayer = secondPlayer;
+
         BallModel ball = getOwnerEntity();
 
         // Reset position & velocity
-        reset(gameContainer);
+        reset(gameContainer, game);
 
         CollisionEvent collisionEvent = new CollisionEvent();
         collisionEvent.addAction(new BallCollideAction(ball));
@@ -52,10 +56,12 @@ public class BallController extends Component {
         ball.setPosition(newPosition);
     }
 
-    public void reset(GameContainer gameContainer) {
+    public void reset(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         BallModel ball = getOwnerEntity();
+        GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
 
-        ball.setPosition(new Vector2f(gameContainer.getWidth() / 2, GameParameters.BALL_INITIAL_POS_Y));
-        ball.setVelocity(new Vector2f(1, -1).scale(GameParameters.INITIAL_BALL_SPEED));
+        // Spawn position depends on the question if this player is the second one
+        ball.setPosition(new Vector2f(gameContainer.getWidth() / 2, (secondPlayer ? GameParameters.BALL_INITIAL_POS_Y_PLAYER2 : GameParameters.BALL_INITIAL_POS_Y)));
+        ball.setVelocity(new Vector2f(1, (secondPlayer ? 1 : -1)).scale((gameplayState.isMultiplayer() ? GameParameters.INITIAL_BALL_SPEED_MULTIPLAYER : GameParameters.INITIAL_BALL_SPEED)));
     }
 }

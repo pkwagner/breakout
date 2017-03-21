@@ -36,21 +36,19 @@ public class MapController {
 
 	private static final Logger logger = LogManager.getLogger();
 
-	private static final String FILE_PATH	= System.getProperty("user.dir") + "/maps/";
-    private static final String FILE_PREFIX = "level";
-    private static final String FILE_EXT 	= ".map";
-
     private List<AbstractBlockModel> map = new ArrayList<>();
     private int mapId;
+    private final boolean multiplayer;
 
     private final GameplayState gameplayState;
     private final GameContainer gameContainer;
     private final StateBasedGame stateBasedGame;
     
-    public MapController(StateBasedGame stateBasedGame, GameplayState gameplayState) {
+    public MapController(StateBasedGame stateBasedGame, GameplayState gameplayState, boolean multiplayer) {
         this.gameplayState 	= gameplayState;
         this.gameContainer	= stateBasedGame.getContainer();
         this.stateBasedGame = stateBasedGame;
+        this.multiplayer = multiplayer;
     }
 
     public void loadMap(int mapId) {
@@ -153,17 +151,21 @@ public class MapController {
     	int index = 0;			  //index to keep track of the Blocks
     	int positioningIndex = 0; //index to keep track of the positioning of the blocks
 
+		float columnWidth	= gameContainer.getWidth() /(float) GameParameters.MAP_COLUMNS;       //map.get(index).getSize().getX();
+		float rowHeight		= gameContainer.getHeight() * 0.5F /(float) GameParameters.MAP_ROWS;  //map.get(index).getSize().getY();
+		int totalMapHeight = (int) rowHeight * GameParameters.MAP_ROWS;
+
     	for(String blockRep : rawMap){	//blockRep stands for the String representation of a Block
     		
 			int row		= (positioningIndex - (positioningIndex % GameParameters.MAP_COLUMNS)) / GameParameters.MAP_COLUMNS;
 			int column 	= positioningIndex - row * GameParameters.MAP_COLUMNS;
 			
-			float columnWidth	= gameContainer.getWidth() /(float) GameParameters.MAP_COLUMNS;       //map.get(index).getSize().getX();
-			float rowHeight		= gameContainer.getHeight() * 0.5F /(float) GameParameters.MAP_ROWS;  //map.get(index).getSize().getY();
-			
 			int x = (int) (columnWidth	* column	+ columnWidth/2);
 			int y = (int) (rowHeight	* row		+ rowHeight/2);
-    		
+
+			// Center map in multiplayer mode
+			if (multiplayer)
+				y += (totalMapHeight / 2);
 			
     		if(blockRep.equals("0")){
     			//don't add a Block when the string representation is "0"
@@ -273,4 +275,8 @@ public class MapController {
     public boolean isEmpty() {
         return map.isEmpty();
     }
+
+	public boolean isMultiplayer() {
+		return multiplayer;
+	}
 }

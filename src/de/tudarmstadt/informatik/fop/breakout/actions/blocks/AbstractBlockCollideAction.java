@@ -85,7 +85,7 @@ public abstract class AbstractBlockCollideAction {
 
             // Generate item with it's controller and render component
             ItemModel item = new ItemModel(itemId, itemType.getDuration());
-            ItemController itemController = new ItemController(itemId + GameParameters.EXT_CONTROLLER, itemType);
+            ItemController itemController = new ItemController(itemId + GameParameters.EXT_CONTROLLER, itemType, ballModel.getControllingPlayer());
             item.addComponent(itemController);
             itemController.init();
             try {

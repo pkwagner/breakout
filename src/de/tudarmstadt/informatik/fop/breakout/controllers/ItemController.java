@@ -3,6 +3,7 @@ package de.tudarmstadt.informatik.fop.breakout.controllers;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
 
+import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.StateBasedEntityManager;
@@ -20,15 +21,21 @@ public class ItemController extends Component {
     private final Logger logger = LogManager.getLogger();
 
     private final GameParameters.ItemType itemType;
+    private final PlayerModel owner;
 
-    public ItemController(String componentID, GameParameters.ItemType itemType) {
+    public ItemController(String componentID, GameParameters.ItemType itemType, PlayerModel owner) {
         super(componentID);
 
         this.itemType = itemType;
+        this.owner = owner;
     }
 
     public void init() {
         ItemModel itemModel = (ItemModel) getOwnerEntity();
+
+        // Invert direction if the second player shot the block
+        if (owner.isSecondPlayer())
+            itemModel.getVelocity().scale(-1);
 
         //destroyed the entity if the player couldn't pick it up
         LeavingScreenEvent leaveEvent = new LeavingScreenEvent();

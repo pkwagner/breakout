@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.models;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.controllers.StickController;
 import eea.engine.entity.Entity;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -9,21 +10,19 @@ public class PlayerModel extends Entity {
     private int blockCounter = 0, score = 0, initialHitPoints, remainingHitPoints;
     private String displayName;
     private boolean dead = false;
+    private final boolean secondPlayer;
+    private StickController stickController;
 
-    // NOTICE: 'rank' defines the player id
-    public PlayerModel(String entityId, int rank, int initialHitPoints) {
+    public PlayerModel(String entityId, boolean secondPlayer, int initialHitPoints) {
         super(entityId);
 
+        this.secondPlayer = secondPlayer;
         this.initialHitPoints = initialHitPoints;
         this.remainingHitPoints = initialHitPoints;
 
         // Calculate position based on offset
-        setPosition(new Vector2f(0, rank * GameParameters.PLAYER_VIEW_SCORE_DISTANCE_Y).add(GameParameters.PLAYER_VIEW_SCORE_OFFSET));
-        this.displayName = "Player" + rank;
-    }
-
-    public PlayerModel(String entityID) {
-        this(entityID, 0, GameParameters.PLAYER_DEFAULT_HEALTHPOINTS);
+        setPosition(secondPlayer ? GameParameters.PLAYER_VIEW_SCORE_OFFSET_PLAYER2 : GameParameters.PLAYER_VIEW_SCORE_OFFSET);
+        this.displayName = (secondPlayer) ? "Player2" : "Player1";
     }
 
     public int getBlockCounter() {
@@ -42,12 +41,24 @@ public class PlayerModel extends Entity {
         return displayName;
     }
 
+    public StickController getStickController() {
+        return stickController;
+    }
+
+    public void setStickController(StickController stickController) {
+        this.stickController = stickController;
+    }
+
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
     public boolean isDead() {
         return dead;
+    }
+
+    public boolean isSecondPlayer() {
+        return secondPlayer;
     }
 
     /**

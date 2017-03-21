@@ -38,6 +38,16 @@ public class MainMenuState extends AbstractGameState {
 
         ButtonView startButton = addMenuEntry(gc, buttonImage, posY, "START GAME");
         addListeners(startButton, stateBasedGame, buttonDownImage, buttonOverImage, GameParameters.GAMEPLAY_STATE);
+        startButton.addListener((abstractComponent -> {
+            ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).setMultiplayer(false);
+        }));
+
+        posY += GameParameters.MAIN_MENU_ENTRY_DISTANCE;
+        ButtonView multiplayerButton = addMenuEntry(gc, buttonImage, posY, "MULTIPLAYER");
+        addListeners(multiplayerButton, stateBasedGame, buttonDownImage, buttonOverImage, GameParameters.GAMEPLAY_STATE);
+        multiplayerButton.addListener((abstractComponent -> {
+            ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).setMultiplayer(true);
+        }));
 
         posY += GameParameters.MAIN_MENU_ENTRY_DISTANCE;
         ButtonView highScoreButton = addMenuEntry(gc, buttonImage, posY, "HIGHSCORES");

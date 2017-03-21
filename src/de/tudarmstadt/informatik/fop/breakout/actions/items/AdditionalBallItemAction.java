@@ -2,6 +2,7 @@ package de.tudarmstadt.informatik.fop.breakout.actions.items;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
+import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,10 +15,12 @@ public class AdditionalBallItemAction extends AbstractItemAction {
     private final Logger logger = LogManager.getLogger();
 
     private StateBasedGame stateBasedGame;
+    private PlayerModel catchingPlayer;
 
     @Override
-    protected void init(StateBasedGame stateBasedGame) {
+    protected void init(StateBasedGame stateBasedGame, PlayerModel catchingPlayer) {
         this.stateBasedGame = stateBasedGame;
+        this.catchingPlayer = catchingPlayer;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class AdditionalBallItemAction extends AbstractItemAction {
 
         try {
             // Spawn new ball contrary to the primary one
-            BallModel newBall = gameplayState.addBall(stateBasedGame);
+            BallModel newBall = gameplayState.addBall(stateBasedGame, catchingPlayer);
             newBall.setPosition(primaryBall.getPosition().copy());
             newBall.setVelocity(new Vector2f(primaryBall.getVelocity().getX(), -primaryBall.getVelocity().getY()));
         } catch (SlickException e) {

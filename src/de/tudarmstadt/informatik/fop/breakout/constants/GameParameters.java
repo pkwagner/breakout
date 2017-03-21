@@ -47,6 +47,7 @@ public interface GameParameters {
 	public static final String BLOCK_ID = "block";
 	public static final int MAP_INITIAL_ID = 1;
 	public static final int MAP_COUNT = 3;
+	//public static final int MAP_COUNT_MULTIPLAYER = 3;
 	public static final String BLOCK_1_IMAGE = "/images/simpleBlock1.png";
 	public static final String BLOCK_2_IMAGE = "/images/simpleBlock2.png";
 	public static final String BLOCK_3_IMAGE = "/images/simpleBlock3.png";
@@ -73,11 +74,13 @@ public interface GameParameters {
 	// Ball
 	public static final String BALL_ID = "ball";
 	public static final float INITIAL_BALL_SPEED = 0.35f;
+	public static final float INITIAL_BALL_SPEED_MULTIPLAYER = 0.05f;
 	public static final float SPEEDUP_VALUE = 0.0001f;
 	public static final String BALL_SPRITESHEET = "/images/ball-spritesheet.png";
 
 	// StickModel
 	public static final String STICK_ID = "stick";
+	public static final String STICK_ID_PLAYER2 = "stick_2";
 	public static final float STICK_SPEED = 1f;
 	public static final String STICK_MIDDLE_IMAGE = "/images/stick-middle.png";
 	public static final String STICK_LEFT_IMAGE = "/images/stick-side-l.png";
@@ -86,6 +89,7 @@ public interface GameParameters {
 	public static final float STICK_WIDTH = 130;
 	public static final float STICK_MIN_WIDTH = 50;
 	public static final int BALL_INITIAL_POS_Y = 500;
+	public static final int BALL_INITIAL_POS_Y_PLAYER2 = 100;
 	public static final int EMITTER_Y_OFFSET = 17;
 
 
@@ -103,9 +107,11 @@ public interface GameParameters {
 
 	// Player
 	public static final String PLAYER_ID = "player";
+	public static final String PLAYER_ID_PLAYER2 = "player2";
 	public static final String NO_LIFE_LEFT = "noLifeLeft";
 	public static final int PLAYER_DEFAULT_HEALTHPOINTS = 3;
 	public static final Vector2f PLAYER_VIEW_SCORE_OFFSET = new Vector2f(20, 550);
+	public static final Vector2f PLAYER_VIEW_SCORE_OFFSET_PLAYER2 = new Vector2f(20, 50);
 	public static final int PLAYER_VIEW_SCORE_DISTANCE_Y = 50;
 
 	// Pause
@@ -150,6 +156,7 @@ public interface GameParameters {
 	public static final int MAP_ROWS	= 10;
 	public static final String MAP_FILE_PATH	= System.getProperty("user.dir") + "/maps/";
 	public static final String MAP_FILE_PREFIX = "level";
+	//public static final String MAP_FILE_PREFIX_MULTIPLAYER = "level";
 	public static final String MAP_FILE_EXT 	= ".map";
 
 	// Menu

@@ -30,10 +30,12 @@ public class StickController extends Component {
     }
 
     public void init(StateBasedGame game, int initialPosX) {
-        KeyDownEvent leftEvent = new KeyDownEvent(KeyBinding.LEFT_MOVE);
+        boolean secondPlayer = getOwnerEntity().getOwner().isSecondPlayer();
+
+        KeyDownEvent leftEvent = new KeyDownEvent(secondPlayer ? KeyBinding.LEFT_MOVE_PLAYER2 : KeyBinding.LEFT_MOVE);
         leftEvent.addAction(new StickMoveAction(GameParameters.Direction.LEFT, getOwnerEntity()));
 
-        KeyDownEvent rightEvent = new KeyDownEvent(KeyBinding.RIGHT_MOVE);
+        KeyDownEvent rightEvent = new KeyDownEvent(secondPlayer ? KeyBinding.RIGHT_MOVE_PLAYER2 : KeyBinding.RIGHT_MOVE);
         rightEvent.addAction(new StickMoveAction(GameParameters.Direction.RIGHT, getOwnerEntity()));
 
         getOwnerEntity().addComponent(leftEvent);
@@ -44,8 +46,12 @@ public class StickController extends Component {
 
         GameContainer container = game.getContainer();
 
+        // Spawn position depends on the question if this player is the second one
         Vector2f stickSize = stick.getSize();
-        initialPos = new Vector2f(initialPosX, container.getHeight() - stickSize.getY() / 2);
+        if (secondPlayer)
+            initialPos = new Vector2f(initialPosX, stickSize.getY() / 2);
+        else
+            initialPos = new Vector2f(initialPosX, container.getHeight() - stickSize.getY() / 2);
 
         reset();
     }
