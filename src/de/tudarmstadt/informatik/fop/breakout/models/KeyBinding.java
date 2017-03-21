@@ -14,7 +14,7 @@ public enum KeyBinding {
     /**
      * Pauses the game inside the gameplay state
      */
-    PAUSE(Input.KEY_ESCAPE),
+    PAUSE(Input.KEY_P),
 
     /**
      * Starts the game on a new game or if the player lost a life
