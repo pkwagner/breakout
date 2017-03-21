@@ -97,25 +97,21 @@ public class SoundController implements AutoCloseable {
         soundStore.setMusicPitch(pitch);
     }
 
-    /**
-     * Stops the background music loop.
-     * <p>
-     * This removes the lock in order to free the memory.
-     */
-    public void stopMusic() {
-        soundStore.setMusicOn(false);
-    }
-
     @Override
     public void close() {
         logger.debug("Cleaning up sound resources");
 
         //stop the music in order to release the native data
-        stopMusic();
+        soundStore.setMusicOn(false);
+        soundStore.setSoundsOn(false);
 
         //release allocated memory
         for (Audio audio : loadedSound.values()) {
+            audio.stop();
             audio.release();
         }
+
+        soundStore.disable();
+        soundStore.clear();
     }
 }
