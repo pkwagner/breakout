@@ -19,7 +19,7 @@ public class BackButton extends Entity {
     public BackButton() throws SlickException {
         super(GameParameters.ESCAPE_ID);
 
-        setPosition(new Vector2f(50, 50));
+        setPosition(GameParameters.BACK_BUTTON_POSITION.copy());
         setSize(new Vector2f(64, 64));
 
         addComponent(new ImageRenderComponent(new Image("/images/back-button.png")));

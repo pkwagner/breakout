@@ -32,7 +32,7 @@ public class HighscoreState extends AbstractMenuState {
     private ButtonView buttonResetHighscore;
 
     public HighscoreState(int id) throws SlickException {
-        super(id, new Image(GameParameters.HIGHSCORE_BACKGROUND_PATH), GameParameters.HIGHSCORE_TITLE_TEXT);
+        super(id, new Image(GameParameters.HIGHSCORE_BACKGROUND_IMAGE));
     }
 
     @Override
@@ -107,6 +107,7 @@ public class HighscoreState extends AbstractMenuState {
                 + imageHeight * (rank - 1)
                 //the position is always the center - so divide the to-draw-content
                 + imageHeight / 2;
+
         entryEntity.setPosition(new Vector2f(midX, posY));
         addEntity(entryEntity);
     }

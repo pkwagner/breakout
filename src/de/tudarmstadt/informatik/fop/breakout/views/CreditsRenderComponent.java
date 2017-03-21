@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
+import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 
 import static de.tudarmstadt.informatik.fop.breakout.constants.GameParameters.*;
 
@@ -17,7 +18,7 @@ import static de.tudarmstadt.informatik.fop.breakout.constants.GameParameters.*;
  */
 public class CreditsRenderComponent extends RenderComponent {
 
-    private final TrueTypeFont creditsFont = new TrueTypeFont(new Font("Verdana", Font.BOLD, 25), true);
+    private final TrueTypeFont creditsFont = new TrueTypeFont(new Font("Poplar", Font.PLAIN, 45), true);
 
     public CreditsRenderComponent(String id) {
         super(id);
@@ -25,7 +26,7 @@ public class CreditsRenderComponent extends RenderComponent {
 
     @Override
     public Vector2f getSize() {
-        return getOwnerEntity().getSize();
+        return new Vector2f(GameParameters.WINDOW_WIDTH,GameParameters.WINDOW_HEIGHT);
     }
 
     @Override

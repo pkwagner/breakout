@@ -17,7 +17,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class CreditsState extends AbstractMenuState {
 
     public CreditsState(int id) throws SlickException {
-        super(id, new Image(GameParameters.CREDITS_BACKGROUND_PATH), GameParameters.CREDITS_TITLE_TEXT);
+        super(id, new Image(GameParameters.CREDITS_BACKGROUND_IMAGE));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CreditsState extends AbstractMenuState {
 
         String contentId = GameParameters.CREDITS_CONTENT_ID;
         Entity titleEntity = new Entity(contentId);
-        titleEntity.setPosition(new Vector2f(container.getWidth() / 2, GameParameters.CREDITS_CONTENT_START_Y));
+        titleEntity.setPosition(new Vector2f(container.getWidth() / 2, GameParameters.CREDITS_DEVS_START_Y));
         titleEntity.addComponent(new CreditsRenderComponent(contentId + GameParameters.EXT_VIEW));
         addEntity(titleEntity);
     }

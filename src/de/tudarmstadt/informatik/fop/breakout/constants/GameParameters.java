@@ -32,7 +32,6 @@ public interface GameParameters {
 	public static final String BACKGROUND_ID = "background";
 	public static final String BACKGROUND_IMAGE = "/images/background.png";
 	public static final String BACKGROUND_SPRITESHEET = "/images/background_spritesheet.png";
-	public static final String BLANK_BACKGROUND_IMAGE = "/images/menu_blank.png";
 
 	// Borders
 	public enum BorderType {
@@ -61,7 +60,6 @@ public interface GameParameters {
 	public static final float	RAM_BLOCK_ACCELERATION = 0.0001F;
 	public static final int		RAM_BLOCK_REST_TIME = 1500;
 	public static final float	RAM_BLOCK_REBOUND_VELOCITY = 0.01F;
-
 	public static final int BLOCK_DEFAULT_SCOREPOINTS = 10;
 	public static final int BLOCK_RAM_SCOREPOINTS = 20;
 
@@ -131,8 +129,7 @@ public interface GameParameters {
 	public static final int HIGHSCORE_MAX_ENTRIES = 10;
 	//example format: "name:12345:123.0" or "name:1234:123.135"
 	public static final String HIGHSCORE_FILE_ENTRY_SCHEME = "[\\w]+:[\\d]{1,9}:[\\d]{1,9}\\.\\d{1,3}";
-
-	public static final String HIGHSCORE_BACKGROUND_PATH = "images/menu_blank.png";
+	public static final String HIGHSCORE_BACKGROUND_IMAGE = "images/menu_highscore.png";
 	public static final int HIGHSCORE_TITLE_START_Y = 50;
 	public static final int HIGHSCORE_ENTRY_START_Y = 110;
 	public static final int HIGHSCORE_ENTRY_GAP = 4;
@@ -142,10 +139,11 @@ public interface GameParameters {
 	public static final float HIGHSCORE_RESET_SIZE = 0.7f;
 
 	// Game over
-	public static final String GAMEOVER_BACKGROUND_PATH = "images/menu_blank.png";
+	public static final String GAMEOVER_BACKGROUND_IMAGE = "images/menu_gameover.png";
 
 	//Settings
 	public static final String SETTINGS_TITLE = "Settings";
+	public static final String SETTINGS_BACKGROUND_IMAGE = "images/menu_settings.png";
 
 	// MapParameters
 	public static final int MAP_COLUMNS = 16;
@@ -158,7 +156,7 @@ public interface GameParameters {
 	public static final String 	ENTRY_IMAGE = "/images/entry.png";
 	public static final String 	ENTRY_OVER_IMAGE = "/images/entry_over.png";
 	public static final String 	ENTRY_DOWN_IMAGE = "/images/entry_down.png";
-	public static final String 	MENU_BACKGROUND_IMAGE = "images/menu.png";
+	public static final String 	MENU_BACKGROUND_IMAGE = "images/menu_main.png";
 	public static final int 	ENTRY_Y_OFFSET = -7;
 	public static final float	ENTRY_SCALE_FACTOR = 0.8F;
 	public static final int 	MAIN_MENU_ENTRY_Y = 200;
@@ -182,7 +180,7 @@ public interface GameParameters {
 		SmallerItem("/images/smaller-spritesheet.png", 1, 0, SmallerItemAction.class),
 		SmashBallItem("/images/ball.png", 1, 3, SmashBallItemAction.class),
 		SloMoItem("/images/block_1.png", 1, 1.5f, SloMoItemAction.class),
-		HealthPointItem("/images/block_2.png", 1, 0, HealthPointItemAction.class),
+		HealthPointItem("/images/health-point-spritesheet.png", 1, 0, HealthPointItemAction.class),
 		AdditionalBallItem("/images/additional-ball-spritesheet.png", 1, 0, AdditionalBallItemAction.class);
 
 		private final String imagePath;
@@ -231,15 +229,20 @@ public interface GameParameters {
 	}
 
 	// Credits
-	public static final String CREDITS_BACKGROUND_PATH = "images/menu_blank.png";
+	public static final String CREDITS_TITLE_ID = "title";
+	public static final String CREDITS_BACKGROUND_IMAGE = "images/menu_credits.png";
 	public static final String CREDITS_CONTENT_ID = "content";
 	public static final String CREDITS_TITLE_TEXT = "Credits";
+
 	public static final String CREDITS_DEV1_TEXT = "Leon Chemnitz";
 	public static final String CREDITS_DEV2_TEXT = "Martin Kerscher";
 	public static final String CREDITS_DEV3_TEXT = "Alexander Siegler";
 	public static final String CREDITS_DEV4_TEXT = "Paul Wagner";
-	public static final int CREDITS_CONTENT_START_Y = 50;
-	public static final int CREDITS_DEVS_START_X = 115;
-	public static final int CREDITS_DEVS_START_Y = 150;
-	public static final int CREDITS_DEVS_SPACE_Y = 110;
+	public static final int CREDITS_TITLE_START_Y = 100;
+	public static final int CREDITS_DEVS_START_X = 280;
+	public static final int CREDITS_DEVS_START_Y = 220;
+	public static final int CREDITS_DEVS_SPACE_Y = 70;
+	
+	// BackButton
+	public static final Vector2f BACK_BUTTON_POSITION = new Vector2f(60,70);
 }

@@ -16,12 +16,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class AbstractMenuState extends AbstractGameState {
 
-    private final String menuTitle;
-
-    public AbstractMenuState(int stateId, Renderable background, String menuTitle) {
+    AbstractMenuState(int stateId, Renderable background) {
         super(stateId, background);
-
-        this.menuTitle = menuTitle;
     }
 
     @Override
@@ -29,11 +25,6 @@ public abstract class AbstractMenuState extends AbstractGameState {
         if (isTesting()) {
             return;
         }
-
-        //every menu state has a title
-        Entity titleEntity = new Entity(GameParameters.MENU_TITLE_ID);
-        titleEntity.addComponent(new MenuTitleRenderComponent("title_view", menuTitle));
-        addEntity(titleEntity);
 
         //every state has button to move back to the main menu
         addEntity(new BackButton());

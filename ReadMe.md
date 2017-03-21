@@ -31,12 +31,6 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 | Gameplay | Space | Starts the game on a new game
 
 ## Credits
-
-### Images
-
-* [Back-Button](https://pixabay.com/en/arrows-blue-left-previous-glossy-147754/)
-CC0 Public Domain
-
 ### Sounds
 
 * [Background music](https://www.looperman.com/loops/detail/93477/drums-and-rust-by-flsouto-free-170bpm-industrial-drum-loop)

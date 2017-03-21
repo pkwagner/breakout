@@ -32,17 +32,16 @@ public class SettingsState extends AbstractMenuState {
     private static final int RIGHT_START_X = 490;
 
     public SettingsState(int stateId) throws SlickException {
-        super(stateId, new Image(GameParameters.BLANK_BACKGROUND_IMAGE), GameParameters.SETTINGS_TITLE);
+        super(stateId, new Image(GameParameters.SETTINGS_BACKGROUND_IMAGE));
     }
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         super.init(container, game);
-        if (isTesting()) {
+        if (isTesting())
             return;
-        }
 
-        Entity effects = addSliderEntity(75, container.getSoundVolume(), "Effects", new EffectsSliderAction());
+        Entity effects = addSliderEntity(125, container.getSoundVolume(), "Effects", new EffectsSliderAction());
         Entity music = addSliderEntity(effects.getPosition().getY(), container.getMusicVolume(), "Music", new MusicSliderAction());
         float previousY = addParticleBox(music.getPosition().getY());
 

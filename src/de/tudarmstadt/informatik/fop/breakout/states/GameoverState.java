@@ -35,7 +35,7 @@ public class GameoverState extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        addBackground(gameContainer, GameParameters.MENU_BACKGROUND_IMAGE);
+        addBackground(gameContainer, GameParameters.GAMEOVER_BACKGROUND_IMAGE);
         addButtons(gameContainer, stateBasedGame);
     }
 
@@ -82,7 +82,7 @@ public class GameoverState extends BasicGameState {
     }
 
     private void addBackground(GameContainer gameContainer, String file) throws SlickException {
-        backgroundEntity = new Entity(GameParameters.GAMEOVER_BACKGROUND_PATH);
+        backgroundEntity = new Entity(GameParameters.GAMEOVER_BACKGROUND_IMAGE);
 
         //center the image to be displayed on the complete window
         backgroundEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, gameContainer.getHeight() / 2));

@@ -28,7 +28,7 @@ public class ItemRenderComponent extends RenderComponent {
         Image image = new Image(itemType.getImagePath());
         int imageWidth =  (int)(GameParameters.ITEM_IMAGE_SIZE * image.getHeight());
         
-        if(itemType == GameParameters.ItemType.BiggerItem||itemType == GameParameters.ItemType.SmallerItem||itemType == GameParameters.ItemType.AdditionalBallItem){        	
+        if(itemType == GameParameters.ItemType.BiggerItem||itemType == GameParameters.ItemType.SmallerItem||itemType == GameParameters.ItemType.AdditionalBallItem||itemType == GameParameters.ItemType.HealthPointItem){        	
         	spritesheet = new SpriteSheet(image.getScaledCopy(GameParameters.ITEM_IMAGE_SIZE),imageWidth,imageWidth);
         }else{
         	spritesheet = new SpriteSheet(image.getScaledCopy(GameParameters.ITEM_IMAGE_SIZE),(int)(image.getWidth()*GameParameters.ITEM_IMAGE_SIZE),(int)(image.getHeight()*GameParameters.ITEM_IMAGE_SIZE));
