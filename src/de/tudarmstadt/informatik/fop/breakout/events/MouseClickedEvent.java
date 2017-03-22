@@ -19,6 +19,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MouseClickedEvent extends Event {
 
+    private static final int MOUSE_TOLERANCE = 5;
+
     private boolean wasDownBefore;
     private int startedClickX;
     private int startedClickY;
@@ -37,7 +39,8 @@ public class MouseClickedEvent extends Event {
         if (wasDownBefore && !isDown
                 //check if it's not a mouse drag
                 //the user released the mouse button at the same position he/she started to click
-                && mouseX == startedClickX && mouseY == startedClickY) {
+                && Math.abs(mouseX - startedClickX) < MOUSE_TOLERANCE
+                && Math.abs(mouseY - startedClickY) < MOUSE_TOLERANCE) {
             wasDownBefore = isDown;
             return true;
         }
