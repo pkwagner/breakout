@@ -54,7 +54,7 @@ public class BallController extends Component {
         // Add gravity to ball velocity (only singleplayer)
         if (!gameplayState.isMultiplayer()) {
             double pixelPerMeter = gameContainer.getHeight() / GameParameters.MAP_REAL_HEIGHT;
-            double gravityVelocity = GameParameters.MAP_GRAVITY * pixelPerMeter * (delta / 1000D);
+            double gravityVelocity = GameParameters.MAP_GRAVITY * pixelPerMeter * (delta / 1000D) * gameplayState.getGameSpeedFactor();
             ball.getVelocity().add(new Vector2f(0, (float) gravityVelocity));
         }
 

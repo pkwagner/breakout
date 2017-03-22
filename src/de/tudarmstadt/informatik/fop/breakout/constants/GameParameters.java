@@ -193,7 +193,7 @@ public interface GameParameters {
 		BiggerItem("/images/bigger-spritesheet.png", 1, 0, BiggerItemAction.class),
 		SmallerItem("/images/smaller-spritesheet.png", 1, 0, SmallerItemAction.class),
 		SmashBallItem("/images/ball.png", 1, 3, SmashBallItemAction.class),
-		SloMoItem("/images/block_1.png", 1000, 1.5f, SloMoItemAction.class),
+		SloMoItem("/images/block_1.png", 1, 1.5f, SloMoItemAction.class),
 		HealthPointItem("/images/health-point-spritesheet.png", 1, 0, HealthPointItemAction.class),
 		AdditionalBallItem("/images/additional-ball-spritesheet.png", 1, 0, AdditionalBallItemAction.class);
 
