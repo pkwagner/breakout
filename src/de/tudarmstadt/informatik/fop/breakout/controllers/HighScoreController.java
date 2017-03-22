@@ -4,6 +4,8 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.exceptions.IllegalHighscoreFormat;
 import de.tudarmstadt.informatik.fop.breakout.interfaces.IHighscoreEntry;
 import de.tudarmstadt.informatik.fop.breakout.models.HighScoreEntry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,9 +19,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 /**
  * Controller for managing the list of highscore entries.
  */
@@ -30,7 +29,8 @@ public class HighScoreController {
     private List<IHighscoreEntry> entries = new ArrayList<>(GameParameters.HIGHSCORE_MAX_ENTRIES);
 
     /**
-     * Loads the highscore file from disk into an internal representation in memory.
+     * Loads the highscore file from disk into an internal representation in memory. If the file doesn't exist
+     * at the moment it creates a new one.
      *
      * @throws IOException            if I/O occurred on reading file (i.e. FileNotFound, permission denied)
      * @throws IllegalHighscoreFormat if the lines are not correctly formatted
@@ -39,9 +39,11 @@ public class HighScoreController {
         logger.info("Loading highscore file");
 
         Path highScoreFile = Paths.get(GameParameters.HIGHSCORE_FILE);
-        List<String> lines = Files.readAllLines(highScoreFile);
+        if (Files.notExists(highScoreFile)) {
+            Files.createFile(highScoreFile);
+        }
 
-        load(lines);
+        load(Files.readAllLines(highScoreFile));
     }
 
     /**
