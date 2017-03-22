@@ -1,17 +1,18 @@
 package de.tudarmstadt.informatik.fop.breakout.models;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-
+import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
+import eea.engine.component.Component;
 import eea.engine.entity.Entity;
-
 import org.lwjgl.util.vector.Vector;
 import org.newdawn.slick.geom.Vector2f;
+
 
 public class StickModel extends Entity {
 
     private Vector velocity;
     private final PlayerModel owner;
-
+    private StickRenderComponent view;
     private boolean thrust;
 
     public StickModel(String stickId, PlayerModel owner) {
@@ -49,5 +50,17 @@ public class StickModel extends Entity {
      */
     public void setThrust(boolean thrust) {
         this.thrust = thrust;
+    }
+    
+    @Override
+    public void addComponent(Component component){
+    	if(component instanceof StickRenderComponent){
+    		view = (StickRenderComponent) component;
+    	}
+    	super.addComponent(component);
+    }
+    
+    public StickRenderComponent getView(){
+    	return view;
     }
 }

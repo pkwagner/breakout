@@ -15,7 +15,7 @@ import java.awt.*;
  */
 public class SettingsTitleRenderComponent extends RenderComponent {
 
-    private final TrueTypeFont titleFont = new TrueTypeFont(new Font("Verdana", Font.BOLD, 30), true);
+    private final TrueTypeFont titleFont = new TrueTypeFont(new Font("Poplar", Font.PLAIN, 30),true);
 
     private final String text;
     private final int textWidth;

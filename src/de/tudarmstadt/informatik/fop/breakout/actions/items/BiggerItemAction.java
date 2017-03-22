@@ -24,7 +24,9 @@ public class BiggerItemAction extends AbstractItemAction {
     @Override
     public void onEnable() {
         Vector2f oldSize = stickModel.getSize();
-        stickModel.setWidth(oldSize.getX() * GameParameters.ITEM_BIGGER_CHANGE_VALUE);
+        int newWidth = (int) (oldSize.getX() * GameParameters.ITEM_BIGGER_CHANGE_VALUE);
+        if(newWidth > GameParameters.WINDOW_WIDTH) newWidth = GameParameters.WINDOW_WIDTH;
+        stickModel.setWidth(newWidth);
     }
 
     @Override

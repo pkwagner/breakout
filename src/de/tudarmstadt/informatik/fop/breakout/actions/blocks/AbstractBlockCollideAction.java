@@ -51,7 +51,7 @@ public abstract class AbstractBlockCollideAction {
 
     private void destroy() {
         // Call the state to remove this block
-        gameplayState.removeEntity(blockModel);
+        blockModel.destroy();
 
         // Drop an item if wanted (check total possibility) [possibly not in smash mode to avoid too much items]
         if (!ballModel.isSmashMode() || GameParameters.ITEM_DROP_IN_SMASH_MODE)
@@ -90,7 +90,7 @@ public abstract class AbstractBlockCollideAction {
             itemController.init();
             try {
                 item.addComponent(new ItemRenderComponent(itemId+GameParameters.EXT_VIEW,item,itemType));
-                item.setPosition(blockModel.getPosition());
+                item.setPosition(blockModel.getPosition().copy());
                 gameplayState.addEntity(item);
             } catch (SlickException e) {
                 logger.error("Some error occurred during adding the render component of item '" + itemId + "': " + e);

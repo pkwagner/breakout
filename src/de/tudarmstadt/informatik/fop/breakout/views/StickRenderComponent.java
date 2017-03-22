@@ -37,8 +37,8 @@ public class StickRenderComponent extends RenderComponent {
     private ParticleSystem flameRightParticleSystem;
     private ConfigurableEmitter flameLeftEmitter;
     private ConfigurableEmitter flameRightEmitter;
-
     private int currentThrustTime = 0;
+    private boolean isSecondPlayer = false;
 
     public StickRenderComponent() throws SlickException {
         super(GameParameters.STICK_ID + GameParameters.EXT_VIEW);
@@ -79,6 +79,7 @@ public class StickRenderComponent extends RenderComponent {
             leftImage = leftImage.getFlippedCopy(false, true);
             middleImage = middleImage.getFlippedCopy(false, true);
             rightImage = rightImage.getFlippedCopy(false, true);
+            isSecondPlayer = true;
         }
     }
 
@@ -147,5 +148,25 @@ public class StickRenderComponent extends RenderComponent {
             flameRightEmitter.setPosition(x, y, false);
             flameRightParticleSystem.update(delta);
         }
+    }
+        
+    public void resetParticleSystems(){
+    	Shape stickShape = owner.getShape();
+    	stickShape = owner.getShape();
+    	int x,y;
+    	
+    	if(isSecondPlayer)
+    	y = (int) (stickShape.getMaxY()-GameParameters.EMITTER_Y_OFFSET);
+    	else
+    	y = (int) (stickShape.getMinY()+GameParameters.EMITTER_Y_OFFSET);
+    		
+    	x = (int) stickShape.getMinX();
+    	flameLeftEmitter.setPosition(x,y,false);    	
+        flameLeftParticleSystem.update(1000);
+        
+        
+    	x = (int) stickShape.getMaxX();
+    	flameRightEmitter.setPosition(x,y,false);    	
+        flameRightParticleSystem.update(1000);    
     }
 }

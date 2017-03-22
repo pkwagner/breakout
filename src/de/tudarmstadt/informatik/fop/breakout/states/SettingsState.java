@@ -27,7 +27,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class SettingsState extends AbstractMenuState {
 
     private static final int LEFT_START_X = 175;
-    private static final int Y_GAP = 75;
+    private static final int Y_GAP = 60;
 
     private static final int RIGHT_START_X = 490;
 
@@ -41,9 +41,9 @@ public class SettingsState extends AbstractMenuState {
         if (isTesting())
             return;
 
-        Entity effects = addSliderEntity(125, container.getSoundVolume(), "Effects", new EffectsSliderAction());
-        Entity music = addSliderEntity(effects.getPosition().getY(), container.getMusicVolume(), "Music", new MusicSliderAction());
-        float previousY = addParticleBox(music.getPosition().getY());
+        Entity effects	= addSliderEntity(140, container.getSoundVolume(), "Effects", new EffectsSliderAction());
+        Entity music	= addSliderEntity(effects.getPosition().getY(), container.getMusicVolume(), "Music", new MusicSliderAction());
+        float previousY = addParticleBox(music.getPosition().getY()) +40;
 
         addKeymapOptions(container, previousY);
     }
@@ -114,7 +114,7 @@ public class SettingsState extends AbstractMenuState {
     private float addParticleBox(float previousY) {
         Entity particleTitle = new Entity("particle_title");
         particleTitle.setPosition(new Vector2f(LEFT_START_X, previousY + Y_GAP));
-        particleTitle.addComponent(new SettingsTitleRenderComponent("particle_title" + GameParameters.EXT_VIEW, "Particle"));
+        particleTitle.addComponent(new SettingsTitleRenderComponent("particle_title" + GameParameters.EXT_VIEW, "Particles enabled"));
         addEntity(particleTitle);
 
         Entity particleCheck = new Checkbox("particle_check", true);

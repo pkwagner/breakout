@@ -26,7 +26,7 @@ public class SmallerItemAction extends AbstractItemAction {
         Vector2f oldSize = stickModel.getSize();
         int newWidth = (int) (oldSize.getX() * GameParameters.ITEM_SMALLER_CHANGE_VALUE);
         if(newWidth < GameParameters.STICK_MIN_WIDTH) newWidth = (int) GameParameters.STICK_MIN_WIDTH;
-        if(newWidth > GameParameters.WINDOW_WIDTH) newWidth = GameParameters.WINDOW_WIDTH;
+     
         stickModel.setSize(new Vector2f(newWidth, oldSize.getY()));
     }
 

@@ -10,10 +10,12 @@ public class SimpleBlockRenderComponent extends AbstractBlockRenderComponent {
         super(id);
         switch (hits) {
             case 1:
-                spritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_1_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
+                spritesheet		 = new SpriteSheet(GameParameters.SIMPLE_BLOCK_1_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
+                deathSpritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_1_DEATH_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
                 break;
             case 2:
-                spritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_2_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
+                spritesheet		 = new SpriteSheet(GameParameters.SIMPLE_BLOCK_2_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
+                deathSpritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_2_DEATH_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
                 break;
             case 3:
                 spritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_3_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
