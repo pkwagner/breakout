@@ -39,8 +39,10 @@ public class HighScoreController {
     public void loadFromFile() throws IOException, IllegalHighscoreFormat {
         logger.info("Loading highscore file");
 
+        //create new folder if it doesn't exist
         Path highScoreFile = Paths.get(GameParameters.HIGHSCORE_FILE);
         if (Files.notExists(highScoreFile)) {
+            Files.createDirectories(highScoreFile.getParent());
             Files.createFile(highScoreFile);
         }
 
@@ -69,7 +71,7 @@ public class HighScoreController {
                     int blocksDestroyed = Integer.parseInt(components[1]);
                     float elapsedTime = Float.parseFloat(components[2]);
                     return new HighScoreEntry(playerName, blocksDestroyed, elapsedTime);
-                }).collect(Collectors.toList());
+                }).sorted().collect(Collectors.toList());
     }
 
     /**
@@ -81,7 +83,12 @@ public class HighScoreController {
     public void saveToFile() throws IOException {
         logger.info("Saving highscore file");
 
-        Files.write(Paths.get(GameParameters.HIGHSCORE_FILE), entries.stream()
+        Path highScoreFile = Paths.get(GameParameters.HIGHSCORE_FILE);
+
+        //create new folder if it doesn't exist
+        Files.createDirectories(highScoreFile.getParent());
+
+        Files.write(highScoreFile, entries.stream()
                 .map(entry -> entry.getPlayerName()
                         + ':' + entry.getNumberOfDestroyedBlocks()
                         + ':' + entry.getElapsedTime())
