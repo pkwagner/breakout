@@ -25,7 +25,6 @@ public abstract class AbstractBlockController extends Component implements IHita
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-
     }
     
     public void init(StateBasedGame game){

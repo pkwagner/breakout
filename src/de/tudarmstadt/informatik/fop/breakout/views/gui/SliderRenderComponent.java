@@ -21,7 +21,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class SliderRenderComponent extends RenderComponent {
 
     private static final int SLIDER_CIRCLE_RADIUS = 15;
-    private static final int SLIDE_BOX_HEIGHT = 10;
+    private static final int SLIDER_CIRCLE_STROKE_THICKNESS = 4;
+    private static final int SLIDE_BOX_HEIGHT = 5;
 
     public SliderRenderComponent() {
         super("slider_view");
@@ -63,17 +64,29 @@ public class SliderRenderComponent extends RenderComponent {
     /**
      * Draw a filled circle at the correct percent position
      *
-     * @param graphicsContext where to draw to
+     * @param g where to draw to
      * @param percent the percentual value of the slider
      * @param ownerShape the boundingbox of the owning entity
      */
-    private void drawCircle(Graphics graphicsContext, float percent, Shape ownerShape) {
-        graphicsContext.setColor(Color.orange);
-
-        float percentPosition = ownerShape.getWidth() * percent;
+    private void drawCircle(Graphics g, float percent, Shape ownerShape) {
+    	float percentPosition = ownerShape.getWidth() * percent;
         float startX = ownerShape.getMinX() + percentPosition;
-        Circle shape = new Circle(startX, ownerShape.getCenterY(), SLIDER_CIRCLE_RADIUS);
-        graphicsContext.fill(shape);
+        g.setAntiAlias(true); 
+        int x,y;
+        //draw outer circle
+        g.setColor(Color.black);
+        x = (int) (startX-SLIDER_CIRCLE_RADIUS);
+        y = (int) (ownerShape.getCenterY()-SLIDER_CIRCLE_RADIUS);
+        
+        g.fillOval(x,y, SLIDER_CIRCLE_RADIUS*2, SLIDER_CIRCLE_RADIUS*2); 
+        
+        //draw inner circle
+        g.setColor(new Color(255,250,211));
+        x = (int) (startX-(SLIDER_CIRCLE_RADIUS-SLIDER_CIRCLE_STROKE_THICKNESS));
+        y = (int) (ownerShape.getCenterY()-(SLIDER_CIRCLE_RADIUS-SLIDER_CIRCLE_STROKE_THICKNESS));
+        
+        g.fillOval(x, y, (SLIDER_CIRCLE_RADIUS-SLIDER_CIRCLE_STROKE_THICKNESS)*2, (SLIDER_CIRCLE_RADIUS-SLIDER_CIRCLE_STROKE_THICKNESS)*2); 
+        g.setAntiAlias(false); 
     }
 
     @Override

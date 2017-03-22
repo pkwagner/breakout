@@ -64,5 +64,6 @@ public class StickController extends Component {
     public void reset() {
         StickModel stick = getOwnerEntity();
         stick.setPosition(initialPos.copy());
+        stick.getView().resetParticleSystems();
     }
 }

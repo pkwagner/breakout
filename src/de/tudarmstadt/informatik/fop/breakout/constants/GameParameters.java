@@ -48,12 +48,16 @@ public interface GameParameters {
 	public static final int MAP_INITIAL_ID = 1;
 	public static final int MAP_COUNT = 3;
 	//public static final int MAP_COUNT_MULTIPLAYER = 3;
+	public static final int BLOCK_DEATH_ANIMAION_LENGTH = 300;
 	public static final String BLOCK_1_IMAGE = "/images/simpleBlock1.png";
 	public static final String BLOCK_2_IMAGE = "/images/simpleBlock2.png";
 	public static final String BLOCK_3_IMAGE = "/images/simpleBlock3.png";
 	public static final String SIMPLE_BLOCK_1_SPRITESHEET = "/images/simpleBlock1-spritesheet.png";
+	public static final String SIMPLE_BLOCK_1_DEATH_SPRITESHEET = "/images/simpleBlock1-death-spritesheet.png";
 	public static final String SIMPLE_BLOCK_2_SPRITESHEET = "/images/simpleBlock2-spritesheet.png";
+	public static final String SIMPLE_BLOCK_2_DEATH_SPRITESHEET = "/images/simpleBlock2-death-spritesheet.png";
 	public static final String SIMPLE_BLOCK_3_SPRITESHEET = "/images/simpleBlock3-spritesheet.png";
+	public static final String SIMPLE_BLOCK_3_DEATH_SPRITESHEET = "/images/simpleBlock3-death-spritesheet.png";
 
 	public static final int		BLOCK_WIDTH = 50;
 	public static final int		BLOCK_HEIGHT = 30;
@@ -69,7 +73,7 @@ public interface GameParameters {
 	public static final int		STOP_WATCH_WIDTH	= 40;
 	public static final int		STOP_WATCH_HEIGHT	= 50;
 
-	public static final double	GAME_SLOMO_ANIMATION_SPEED = 0.0005;
+	public static final double	GAME_SLOMO_ANIMATION_SPEED =  0.0005;
 
 	// Ball
 	public static final String BALL_ID = "ball";
@@ -166,8 +170,8 @@ public interface GameParameters {
 	public static final String 	MENU_BACKGROUND_IMAGE = "images/menu_main.png";
 	public static final int 	ENTRY_Y_OFFSET = -7;
 	public static final float	ENTRY_SCALE_FACTOR = 0.8F;
-	public static final int 	MAIN_MENU_ENTRY_Y = 200;
-	public static final int		MAIN_MENU_ENTRY_DISTANCE = 80;
+	public static final int 	MAIN_MENU_ENTRY_Y = 190;
+	public static final int		MAIN_MENU_ENTRY_DISTANCE = 75;
 
 	// Items
 	public static final boolean ITEM_DROP_IN_SMASH_MODE = false;
@@ -179,14 +183,14 @@ public interface GameParameters {
 	public static final float ITEM_SLOMO_SPEED_FACTOR = 0.2f;
 	public static final int ITEM_HP_HEALTHPOINTS = 1;
 	public static final float ITEM_DROP_POSSIBILITY = 0.25f;
-	public static final float ITEM_IMAGE_SIZE = 0.65f; //it's a scaling factor
+	public static final float ITEM_IMAGE_SIZE = 0.6f; //it's a scaling factor
 	public static enum ItemType {
 		FasterItem("/images/faster.png", 1, 0, FasterItemAction.class),
 		SlowerItem("/images/slower.png", 1, 0, SlowerItemAction.class),
 		BiggerItem("/images/bigger-spritesheet.png", 1, 0, BiggerItemAction.class),
 		SmallerItem("/images/smaller-spritesheet.png", 1, 0, SmallerItemAction.class),
 		SmashBallItem("/images/ball.png", 1, 3, SmashBallItemAction.class),
-		SloMoItem("/images/block_1.png", 1, 1.5f, SloMoItemAction.class),
+		SloMoItem("/images/block_1.png", 1000, 1.5f, SloMoItemAction.class),
 		HealthPointItem("/images/health-point-spritesheet.png", 1, 0, HealthPointItemAction.class),
 		AdditionalBallItem("/images/additional-ball-spritesheet.png", 1, 0, AdditionalBallItemAction.class);
 

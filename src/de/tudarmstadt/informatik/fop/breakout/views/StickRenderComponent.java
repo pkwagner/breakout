@@ -38,6 +38,7 @@ public class StickRenderComponent extends RenderComponent {
     private boolean thrust = false;
     private int currentThrustTime = 0;
     private boolean particlesEnabled = true;
+    private boolean isSecondPlayer = false;
     
     public StickRenderComponent() throws SlickException {
         super(GameParameters.STICK_ID + GameParameters.EXT_VIEW);
@@ -74,6 +75,7 @@ public class StickRenderComponent extends RenderComponent {
             leftImage = leftImage.getFlippedCopy(false, true);
             middleImage = middleImage.getFlippedCopy(false, true);
             rightImage = rightImage.getFlippedCopy(false, true);
+            isSecondPlayer = true;
         }
     }
 
@@ -128,15 +130,18 @@ public class StickRenderComponent extends RenderComponent {
 	    	}    	
 	    	
 	    	int x,y;
-	    	
-	    	x = (int) stickShape.getMinX();
+	    		    	
+	    	if(isSecondPlayer)
+	    	y = (int) (stickShape.getMaxY()-GameParameters.EMITTER_Y_OFFSET);
+	    	else
 	    	y = (int) (stickShape.getMinY()+GameParameters.EMITTER_Y_OFFSET);
+	    		
+	    	x = (int) stickShape.getMinX();
 	    	flameLeftEmitter.setPosition(x,y,false);    	
 	        flameLeftParticleSystem.update(delta);
 	        
 	        
 	    	x = (int) stickShape.getMaxX();
-	    	y = (int) (stickShape.getMinY()+GameParameters.EMITTER_Y_OFFSET);
 	    	flameRightEmitter.setPosition(x,y,false);    	
 	        flameRightParticleSystem.update(delta);    
     	}
@@ -144,5 +149,24 @@ public class StickRenderComponent extends RenderComponent {
     
     public void thrust(){
     	thrust = true;
+    }
+    
+    public void resetParticleSystems(){
+    	stickShape = owner.getShape();
+    	int x,y;
+    	
+    	if(isSecondPlayer)
+    	y = (int) (stickShape.getMaxY()-GameParameters.EMITTER_Y_OFFSET);
+    	else
+    	y = (int) (stickShape.getMinY()+GameParameters.EMITTER_Y_OFFSET);
+    		
+    	x = (int) stickShape.getMinX();
+    	flameLeftEmitter.setPosition(x,y,false);    	
+        flameLeftParticleSystem.update(1000);
+        
+        
+    	x = (int) stickShape.getMaxX();
+    	flameRightEmitter.setPosition(x,y,false);    	
+        flameRightParticleSystem.update(1000);    
     }
 }
