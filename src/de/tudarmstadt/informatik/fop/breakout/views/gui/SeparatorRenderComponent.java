@@ -24,7 +24,7 @@ public class SeparatorRenderComponent extends RenderComponent {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sb, Graphics graphicsContext) {
-        graphicsContext.setLineWidth(5);
+        graphicsContext.setLineWidth(3);
 
         Shape shape = getOwnerEntity().getShape();
         graphicsContext.drawLine(shape.getCenterX(), shape.getMinY(), shape.getCenterX(), shape.getMaxY());

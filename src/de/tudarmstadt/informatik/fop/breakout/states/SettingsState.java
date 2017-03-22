@@ -30,7 +30,8 @@ public class SettingsState extends AbstractMenuState {
     private static final int Y_GAP = 60;
 
     private static final int RIGHT_START_X = 490;
-
+    private static final int CHECKBOX_X = RIGHT_START_X -137;
+    
     public SettingsState(int stateId) throws SlickException {
         super(stateId, new Image(GameParameters.SETTINGS_BACKGROUND_IMAGE));
     }
@@ -43,7 +44,7 @@ public class SettingsState extends AbstractMenuState {
 
         Entity effects	= addSliderEntity(140, container.getSoundVolume(), "Effects", new EffectsSliderAction());
         Entity music	= addSliderEntity(effects.getPosition().getY(), container.getMusicVolume(), "Music", new MusicSliderAction());
-        float previousY = addParticleBox(music.getPosition().getY()) +40;
+        float previousY = addParticleBox(music.getPosition().getY());
 
         addKeymapOptions(container, previousY);
     }
@@ -58,19 +59,27 @@ public class SettingsState extends AbstractMenuState {
         //start key and left move key
         Entity startTitle = createKeyMapField(previousY, LEFT_START_X, KeyBinding.START_GAME, "Start game");
         Entity leftMove = createKeyMapField(startTitle.getPosition().getY(), LEFT_START_X, KeyBinding.LEFT_MOVE, "Move left");
-        createKeyMapField(leftMove.getPosition().getY(), LEFT_START_X, KeyBinding.LEFT_MOVE_PLAYER2, "ML (Player2)");
+        
+        Entity player2 = new Entity("player2");
+        player2.setPosition(new Vector2f( LEFT_START_X,leftMove.getPosition().getY() + Y_GAP));
+        player2.addComponent(new SettingsTitleRenderComponent(player2.getID() + GameParameters.EXT_VIEW, "Player 2:"));
+        addEntity(player2);
+        
+        createKeyMapField(player2.getPosition().getY(), LEFT_START_X, KeyBinding.LEFT_MOVE_PLAYER2, "Move left"); //p2
 
         //separator
         Entity separator = new Entity("separator");
-        separator.setPosition(new Vector2f(container.getWidth() / 2, startTitle.getPosition().getY() + Y_GAP));
-        separator.setSize(new Vector2f(5, 225));
+        separator.setPosition(new Vector2f(container.getWidth() / 2 +15, startTitle.getPosition().getY() + Y_GAP+30));
+        separator.setSize(new Vector2f(3, 225));
         separator.addComponent(new SeparatorRenderComponent("separator" + GameParameters.EXT_VIEW));
         addEntity(separator);
 
+        
+        
         //pause key and right move key
         Entity pauseTitle = createKeyMapField(previousY, RIGHT_START_X, KeyBinding.PAUSE, "Pause");
         Entity rightMove = createKeyMapField(pauseTitle.getPosition().getY(), RIGHT_START_X, KeyBinding.RIGHT_MOVE, "Move right");
-        createKeyMapField(rightMove.getPosition().getY(), RIGHT_START_X, KeyBinding.RIGHT_MOVE_PLAYER2, "MR (Player2)");
+        createKeyMapField(rightMove.getPosition().getY()+Y_GAP, RIGHT_START_X, KeyBinding.RIGHT_MOVE_PLAYER2, "Move right)"); //p2
     }
 
     /**
@@ -118,8 +127,8 @@ public class SettingsState extends AbstractMenuState {
         addEntity(particleTitle);
 
         Entity particleCheck = new Checkbox("particle_check", true);
-        particleCheck.setPosition(new Vector2f(RIGHT_START_X, particleTitle.getPosition().getY()));
-        particleCheck.setSize(new Vector2f(25, 25));
+        particleCheck.setPosition(new Vector2f(CHECKBOX_X, particleTitle.getPosition().getY()));
+        particleCheck.setSize(new Vector2f(24, 24));
 
         MouseClickedEvent mousePressedEvent = new MouseClickedEvent();
         mousePressedEvent.addAction(new ParticleEffectsAction());
