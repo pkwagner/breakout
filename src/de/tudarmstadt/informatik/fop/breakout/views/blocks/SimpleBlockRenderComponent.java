@@ -19,6 +19,7 @@ public class SimpleBlockRenderComponent extends AbstractBlockRenderComponent {
                 break;
             case 3:
                 spritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_3_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
+                deathSpritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_3_DEATH_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
                 break;
         }
     }

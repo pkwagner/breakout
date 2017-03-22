@@ -30,7 +30,6 @@ public interface GameParameters {
 
 	// Background
 	public static final String BACKGROUND_ID = "background";
-	public static final String BACKGROUND_IMAGE = "/images/background.png";
 	public static final String BACKGROUND_SPRITESHEET = "/images/background_spritesheet.png";
 
 	// Borders
@@ -49,9 +48,6 @@ public interface GameParameters {
 	public static final int MAP_COUNT = 3;
 	//public static final int MAP_COUNT_MULTIPLAYER = 3;
 	public static final int BLOCK_DEATH_ANIMAION_LENGTH = 300;
-	public static final String BLOCK_1_IMAGE = "/images/simpleBlock1.png";
-	public static final String BLOCK_2_IMAGE = "/images/simpleBlock2.png";
-	public static final String BLOCK_3_IMAGE = "/images/simpleBlock3.png";
 	public static final String SIMPLE_BLOCK_1_SPRITESHEET = "/images/simpleBlock1-spritesheet.png";
 	public static final String SIMPLE_BLOCK_1_DEATH_SPRITESHEET = "/images/simpleBlock1-death-spritesheet.png";
 	public static final String SIMPLE_BLOCK_2_SPRITESHEET = "/images/simpleBlock2-spritesheet.png";
@@ -62,6 +58,7 @@ public interface GameParameters {
 	public static final int		BLOCK_WIDTH = 50;
 	public static final int		BLOCK_HEIGHT = 30;
 	public static final String	RAM_BLOCK_SPRITESHEET = "/images/ram-block-spritesheet.png";
+	public static final String	RAM_BLOCK_DEATH_SPRITESHEET = "/images/ram-block-death-spritesheet.png";
 	public static final float	RAM_BLOCK_ACCELERATION = 0.0001F;
 	public static final int		RAM_BLOCK_REST_TIME = 1500;
 	public static final float	RAM_BLOCK_REBOUND_VELOCITY = 0.01F;
@@ -97,7 +94,9 @@ public interface GameParameters {
 	public static final int BALL_INITIAL_POS_Y = 500;
 	public static final int BALL_INITIAL_POS_Y_PLAYER2 = 100;
 	public static final int EMITTER_Y_OFFSET = 17;
-	public static final int STICK_MAX_BALL_THETA = 15;
+	public static final int STICK_MAX_BALL_THETA = 90;
+	public static final int STICK_MAX_REBOUND_ANGLE = 140;
+	public static final int STICK_MIN_REBOUND_ANGLE = 40;
 
 
 	//Particle systems
@@ -191,12 +190,12 @@ public interface GameParameters {
 	public static final float ITEM_DROP_POSSIBILITY = 0.25f;
 	public static final float ITEM_IMAGE_SIZE = 0.6f; //it's a scaling factor
 	public static enum ItemType {
-		FasterItem("/images/faster.png", 1, 0, FasterItemAction.class),
-		SlowerItem("/images/slower.png", 1, 0, SlowerItemAction.class),
+		FasterItem("/images/faster-spritesheet.png", 1, 0, FasterItemAction.class),
+		SlowerItem("/images/slower-spritesheet.png", 1, 0, SlowerItemAction.class),
 		BiggerItem("/images/bigger-spritesheet.png", 1, 0, BiggerItemAction.class),
 		SmallerItem("/images/smaller-spritesheet.png", 1, 0, SmallerItemAction.class),
-		SmashBallItem("/images/ball.png", 1, 3, SmashBallItemAction.class),
-		SloMoItem("/images/block_1.png", 1, 1.5f, SloMoItemAction.class),
+		SmashBallItem("/images/faster.png", 1, 3, SmashBallItemAction.class),
+		SloMoItem("/images/slower.png", 1, 1.5f, SloMoItemAction.class),
 		HealthPointItem("/images/health-point-spritesheet.png", 1, 0, HealthPointItemAction.class),
 		AdditionalBallItem("/images/additional-ball-spritesheet.png", 1, 0, AdditionalBallItemAction.class);
 

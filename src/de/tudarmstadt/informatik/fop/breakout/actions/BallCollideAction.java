@@ -8,6 +8,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
+import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
@@ -126,19 +127,15 @@ public class BallCollideAction implements Action {
         // Do the fancy stuff.
         switch (collisionDirection) {
             case UP:
-                if (isStick)
-                    velocity.set(getStickBumpVelocity((StickModel) collidedEntity, velocity));
-                else
-                    velocity.set(velocity.getX(), -velocity.getY());
+            	velocity.set(velocity.getX(), -velocity.getY());
+                if (isStick) velocity.set(getStickBumpVelocity((StickModel) collidedEntity, velocity));                    
                 if (checkCollision(collidedShape))
                     position.set(position.getX(), collidedShape.getMinY() - ballModel.getShape().getHeight() / 2 - 1); //it's checked whether the objects are still colliding (due to non ball movement)
                 break;
             case DOWN:
                 // NOTICE: Downside stick check collision check is only relevant for multiplayer
-                if (isStick)
-                    velocity.set(getStickBumpVelocity((StickModel) collidedEntity, velocity));
-                else
-                    velocity.set(velocity.getX(), -velocity.getY());
+            	velocity.set(velocity.getX(), -velocity.getY());
+                if (isStick) velocity.set(getStickBumpVelocity((StickModel) collidedEntity, velocity));                    
                 if (checkCollision(collidedShape))
                     position.set(position.getX(), collidedShape.getMaxY() + ballModel.getShape().getHeight() / 2 + 1);
                 break;
@@ -179,19 +176,23 @@ public class BallCollideAction implements Action {
      * @return the direction the has been hit
      */
     private Direction getCollisionDirection(Shape ballShape, Shape collidedShape) {
-        // Define block borders
-        float lBorder = collidedShape.getMinX() - ballShape.getWidth() / 2;
+    	//the borders of the block as an X or Y coordinate (dependent of the border being horizontal or vertical)
+        float lBorder = collidedShape.getMinX() - ballShape.getWidth() / 2; 
         float tBorder = collidedShape.getMinY() - ballShape.getHeight() / 2;
         float rBorder = collidedShape.getMaxX() + ballShape.getWidth() / 2;
         float bBorder = collidedShape.getMaxY() + ballShape.getHeight() / 2;
 
-        // Re-calculate ball attributes
+        //get some necessary information about the whereabouts of the ball
         Vector2f position = ballModel.getPosition().copy();
         Vector2f velocity = ballModel.getVelocity().copy();
         // Adding the velocity is necessary because the ball was set back a few lines above
         Vector2f oldPosition = position.copy().add(velocity.copy().scale(-1));
         Vector2f direction = velocity.copy().normalise();
 
+        /*	soooo this now is the complicated part, the goal of these calculations is to to find position vectors on the borders,
+         *	where the extended velocity vector added to the the previous position vector intersects the borders.
+         *	The scalingDistances are scalers by which the direction vector has to be scaled in order to land on the border
+         */
         float lScalingDistance = (lBorder - oldPosition.getX()) / direction.getX();
         Vector2f positionOnLeftBorder = oldPosition.copy().add(direction.copy().scale(lScalingDistance));
 
@@ -300,15 +301,35 @@ public class BallCollideAction implements Action {
         // Invert position on stick for the opposite (player2)
         if (stick.getOwner().isSecondPlayer())
             positionOnStick *= -1;
+        
+        //added angle is the angle shift, caused by hitting the stick not in the center (it is added to the usual rebound angle later)        
+        float addedAngle = Utility.map(positionOnStick, -1, 1, GameParameters.STICK_MAX_BALL_THETA, -GameParameters.STICK_MAX_BALL_THETA);
+       
+        //conversion from rect to polar
+        float length = previousVelocity.length();
+        Vector2f direction = previousVelocity.copy().normalise();
+        
+        //calculate angle and convert to degrees
+        float angle = Utility.map((float) (Math.acos(direction.getX())),0,(float)Math.PI*2,0,360);
+        
+        //add the angleshift caused by hitting the stick on one of its edges
+        if (!stick.getOwner().isSecondPlayer()) angle += addedAngle; 
+        else angle -= addedAngle; 
+        
+        //the rebound angle has a max and a min to prevent retarded ball movement...
+        if(angle > GameParameters.STICK_MAX_REBOUND_ANGLE) angle = GameParameters.STICK_MAX_REBOUND_ANGLE;
+        if(angle < GameParameters.STICK_MIN_REBOUND_ANGLE) angle = GameParameters.STICK_MIN_REBOUND_ANGLE;
+        
+        logger.debug("Stick rebound Angle: " +angle);
 
-        // Theta is the anti-clockwise vector-movement in this example
-        // NOTICE: Clockwise tilt: theta=(360-tilt); anti-clockwise tilt: theta=tilt
-        double theta = (positionOnStick < 0) ? (positionOnStick * -GameParameters.STICK_MAX_BALL_THETA) : (360 - (positionOnStick * GameParameters.STICK_MAX_BALL_THETA));
-        logger.debug("Ball hit stick of player {} at relative position {} (calculated theta: {})", stick.getOwner().getDisplayName(), positionOnStick, theta);
-
-        // Calculate the new ball velocity with theta
-        Vector2f newVelocity = new Vector2f(previousVelocity.getX(), -previousVelocity.getY()).sub(theta);
-
+        // convert back to radians
+        angle = Utility.map(angle, 0, 360, 0, (float)Math.PI*2);
+                
+        //mathmathmathmath....(polar to rect conversion for creation of the final vector)
+        Vector2f newVelocity;
+        if (!stick.getOwner().isSecondPlayer()) newVelocity = new Vector2f((float)Math.cos(angle),(float)Math.sin(-angle)).scale(length);
+        else newVelocity = new Vector2f((float)Math.cos(angle),(float)Math.sin(angle)).scale(length);
+        
         logger.debug("Changed new ball velocity to {}", newVelocity);
         return newVelocity;
     }

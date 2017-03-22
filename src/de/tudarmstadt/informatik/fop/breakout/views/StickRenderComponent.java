@@ -137,14 +137,15 @@ public class StickRenderComponent extends RenderComponent {
 
             int x, y;
 
+            if(isSecondPlayer) 	y = (int) (stickShape.getMaxY() - GameParameters.EMITTER_Y_OFFSET);
+            else				y = (int) (stickShape.getMinY() + GameParameters.EMITTER_Y_OFFSET);
+            
             x = (int) stickShape.getMinX();
-            y = (int) (stickShape.getMinY() + GameParameters.EMITTER_Y_OFFSET);
             flameLeftEmitter.setPosition(x, y, false);
             flameLeftParticleSystem.update(delta);
 
 
             x = (int) stickShape.getMaxX();
-            y = (int) (stickShape.getMinY() + GameParameters.EMITTER_Y_OFFSET);
             flameRightEmitter.setPosition(x, y, false);
             flameRightParticleSystem.update(delta);
         }

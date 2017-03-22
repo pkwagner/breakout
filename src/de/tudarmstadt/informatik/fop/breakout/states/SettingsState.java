@@ -79,7 +79,7 @@ public class SettingsState extends AbstractMenuState {
         //pause key and right move key
         Entity pauseTitle = createKeyMapField(previousY, RIGHT_START_X, KeyBinding.PAUSE, "Pause");
         Entity rightMove = createKeyMapField(pauseTitle.getPosition().getY(), RIGHT_START_X, KeyBinding.RIGHT_MOVE, "Move right");
-        createKeyMapField(rightMove.getPosition().getY()+Y_GAP, RIGHT_START_X, KeyBinding.RIGHT_MOVE_PLAYER2, "Move right)"); //p2
+        createKeyMapField(rightMove.getPosition().getY()+Y_GAP, RIGHT_START_X, KeyBinding.RIGHT_MOVE_PLAYER2, "Move right"); //p2
     }
 
     /**
