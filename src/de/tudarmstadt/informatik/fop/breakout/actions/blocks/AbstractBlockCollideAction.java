@@ -68,7 +68,7 @@ public abstract class AbstractBlockCollideAction {
 
         // Check if this was the last block, then call 'nextLevel' in GameplayState
         MapController mapController = gameplayState.getMapController();
-        gameplayState.getMapController().removeBlock(blockModel);
+        mapController.removeBlock(blockModel);
         if (mapController.isEmpty())
             gameplayState.nextLevel();
     }

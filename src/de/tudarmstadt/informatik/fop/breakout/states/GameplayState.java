@@ -79,9 +79,9 @@ public class GameplayState extends AbstractGameState {
         if (players.length <= 2) {
             boolean multiplayer = (players.length == 2);
 
-            // TODO Move some parts to 'init(...)' to avoid double calculations
-            // Pause game
+            // Initially pause game and reset toggle
             gameContainer.setPaused(true);
+            manuallyPaused = false;
 
             // Reset speed
             gameSpeedFactorGoal = 1;
@@ -105,11 +105,14 @@ public class GameplayState extends AbstractGameState {
             mapController.loadMap(mapId);
 
             addBorders(multiplayer);
-
             addEntity(clock);
 
             for (PlayerModel player : players)
                 addEntity(player);
+
+            // Initialize start game entity
+            addStartGameEntity(gameContainer.getWidth() / 2);
+            addPauseEntities(gameContainer);
         } else {
             logger.error("Some error occurred while initializing a new game: Player count is " + players.length);
         }
@@ -140,9 +143,6 @@ public class GameplayState extends AbstractGameState {
             players = new PlayerModel[]{player1};
         }
 
-        // Reset manually paused toggle
-        manuallyPaused = false;
-
         // Initialize clock
         clock = new ClockModel(GameParameters.STOP_WATCH_ID);
         clockController = new ClockController(GameParameters.STOP_WATCH_ID + GameParameters.EXT_CONTROLLER);
@@ -153,10 +153,6 @@ public class GameplayState extends AbstractGameState {
 
         // Load initial map
         loadLevel(GameParameters.MAP_INITIAL_ID);
-
-        // Initialize start game entity
-        addStartGameEntity(gameContainer.getWidth() / 2);
-        addPauseEntities(gameContainer);
     }
 
     /**
