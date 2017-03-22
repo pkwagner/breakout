@@ -11,6 +11,7 @@ import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.ItemRenderComponent;
+import eea.engine.entity.StateBasedEntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.SlickException;
@@ -52,6 +53,10 @@ public abstract class AbstractBlockCollideAction {
     private void destroy() {
         // Call the state to remove this block
         blockModel.destroy();
+
+        // Remove block model in smash mode instantly to avoid border collision glitches
+        if (ballModel.isSmashMode())
+            gameplayState.removeEntity(blockModel);
 
         // Drop an item if wanted (check total possibility) [possibly not in smash mode to avoid too much items]
         if (!ballModel.isSmashMode() || GameParameters.ITEM_DROP_IN_SMASH_MODE)
