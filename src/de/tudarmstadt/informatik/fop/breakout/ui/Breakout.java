@@ -29,14 +29,28 @@ public class Breakout extends StateBasedGame implements GameParameters {
     private final SoundController soundController = new SoundController();
     private final HighScoreController highScoreController = new HighScoreController();
 
+    private final int initialLevelId;
+
+    /**
+     * Creates a new Breakout instance with a preset map id
+     *
+     * @param debug if true, runs in debug mode
+     * @param initialLevelId the map that should been load initially
+     */
+    public Breakout(boolean debug, int initialLevelId) {
+        super("Breakout");
+        Breakout.debug = debug;
+
+        this.initialLevelId = initialLevelId;
+    }
+
     /**
      * Creates a new Breakout instance
      *
      * @param debug if true, runs in debug mode
      */
     public Breakout(boolean debug) {
-        super("Breakout");
-        Breakout.debug = debug;
+        this(debug, GameParameters.MAP_INITIAL_ID);
     }
 
     public static void main(String[] args) throws SlickException {
@@ -60,8 +74,20 @@ public class Breakout extends StateBasedGame implements GameParameters {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, Paths.get("./fonts/ufonts.com_poplar.ttf").toFile()));
 
+            // Is a specific level set as run parameter?
+            int initialLevelId = GameParameters.MAP_INITIAL_ID;
+            for (String arg : args) {
+                if (arg.startsWith("--level=")) {
+                    try {
+                        initialLevelId = Integer.valueOf(arg.split("=")[1]);
+                    } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                        logger.error("Can't parse given level id to int");
+                    }
+                }
+            }
+
 	        // Add this StateBasedGame to an AppGameContainer
-            Breakout game = new Breakout(false);
+            Breakout game = new Breakout(false, initialLevelId);
             AppGameContainer app = new AppGameContainer(game);
 
 	        // Set the display mode and frame rate
@@ -71,6 +97,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
 	        app.setShowFPS(false);
 
 	        app.setIcons(GameParameters.ICON);
+
 	        // now start the game!
 	        app.start();
     	}catch(Exception e){
@@ -94,7 +121,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
         // Add the game states (the first added state will be started initially)
         // This may look as follows, assuming you use the associated class names and constants:
         addState(new MainMenuState(MAINMENU_STATE));
-        addState(new GameplayState(GAMEPLAY_STATE));
+        addState(new GameplayState(GAMEPLAY_STATE, initialLevelId));
         addState(new HighscoreState(HIGHSCORE_STATE));
         addState(new CreditsState(CREDITS_STATE));
         addState(new GameoverState(GAMEOVER_STATE));

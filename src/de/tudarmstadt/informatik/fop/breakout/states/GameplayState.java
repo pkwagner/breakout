@@ -45,13 +45,16 @@ public class GameplayState extends AbstractGameState {
     private float gameSpeedFactorGoal = 1;
     private int ballIdCounter = 0;
     private boolean startAsMultiplayer = false, manuallyPaused;
+    private final int initialLevelId;
 
     private boolean particleEffects = true;
 
-    public GameplayState(int id) throws SlickException {
+    public GameplayState(int id, int initialLevelId) throws SlickException {
         // Load dynamic background
         super(id, new Animation(new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET
                 , GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT), 70));
+
+        this.initialLevelId = initialLevelId;
     }
 
     @Override
@@ -152,7 +155,7 @@ public class GameplayState extends AbstractGameState {
         clockController.init(stateBasedGame);
 
         // Load initial map
-        loadLevel(GameParameters.MAP_INITIAL_ID);
+        loadLevel(initialLevelId);
     }
 
     /**
