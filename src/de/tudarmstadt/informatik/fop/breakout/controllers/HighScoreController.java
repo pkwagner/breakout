@@ -4,6 +4,7 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.exceptions.IllegalHighscoreFormat;
 import de.tudarmstadt.informatik.fop.breakout.interfaces.IHighscoreEntry;
 import de.tudarmstadt.informatik.fop.breakout.models.HighScoreEntry;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

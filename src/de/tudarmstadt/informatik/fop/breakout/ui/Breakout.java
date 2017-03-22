@@ -6,15 +6,15 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.SoundController;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.states.*;
 import eea.engine.entity.StateBasedEntityManager;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.awt.*;
+import java.nio.file.Paths;
 
 public class Breakout extends StateBasedGame implements GameParameters {
 
@@ -56,10 +56,10 @@ public class Breakout extends StateBasedGame implements GameParameters {
 	                    System.getProperty("user.dir") + "/native/"
 	                            + System.getProperty("os.name").toLowerCase());
 	        }
-	        
+
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File( System.getProperty("user.dir")+"/fonts/ufonts.com_poplar.ttf")));
-	        
+	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, Paths.get("./fonts/ufonts.com_poplar.ttf").toFile()));
+
 	        // Add this StateBasedGame to an AppGameContainer
             Breakout game = new Breakout(false);
             AppGameContainer app = new AppGameContainer(game);

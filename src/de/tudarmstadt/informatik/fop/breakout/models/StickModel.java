@@ -1,7 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.models;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.views.StickRenderComponent;
+
 import eea.engine.entity.Entity;
 
 import org.lwjgl.util.vector.Vector;
@@ -11,7 +11,8 @@ public class StickModel extends Entity {
 
     private Vector velocity;
     private final PlayerModel owner;
-    private StickRenderComponent view;
+
+    private boolean thrust;
 
     public StickModel(String stickId, PlayerModel owner) {
         super(stickId);
@@ -37,12 +38,16 @@ public class StickModel extends Entity {
         return owner;
     }
 
-	public StickRenderComponent getView() {
-		return view;
-	}
+    public boolean isThrust() {
+        return thrust;
+    }
 
-	public void setView(StickRenderComponent view) {
-		addComponent(view);
-		this.view = view;
-	}
+    /**
+     * Push more particles out of the particle system if true
+     *
+     * @param thrust
+     */
+    public void setThrust(boolean thrust) {
+        this.thrust = thrust;
+    }
 }

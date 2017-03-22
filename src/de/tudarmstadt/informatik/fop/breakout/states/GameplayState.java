@@ -46,6 +46,8 @@ public class GameplayState extends AbstractGameState {
     private int ballIdCounter = 0;
     private boolean startAsMultiplayer = false;
 
+    private boolean particleEffects = true;
+
     public GameplayState(int id) throws SlickException {
         // Load dynamic background
         super(id, new Animation(new SpriteSheet(GameParameters.BACKGROUND_SPRITESHEET
@@ -74,7 +76,7 @@ public class GameplayState extends AbstractGameState {
      * @throws SlickException happens if images cannot be loaded
      */
     private void loadLevel(int mapId) throws SlickException {
-        if (players.length == 1 || players.length == 2) {
+        if (players.length <= 2) {
             boolean multiplayer = (players.length == 2);
 
             // TODO Move some parts to 'init(...)' to avoid double calculations
@@ -321,7 +323,7 @@ public class GameplayState extends AbstractGameState {
             StickController stickController = new StickController(stickId + GameParameters.EXT_CONTROLLER);
             stickModel.addComponent(stickController);
             StickRenderComponent stickRenderComponent = new StickRenderComponent();
-            stickModel.setView(stickRenderComponent);
+            stickModel.addComponent(stickRenderComponent);
 
             owner.setStickController(stickController);
 
@@ -397,5 +399,23 @@ public class GameplayState extends AbstractGameState {
 
     public boolean isMultiplayer() {
         return (this.players.length == 2);
+    }
+
+    /**
+     * Check if particle effects should be displayed
+     *
+     * @return true if it's enabled
+     */
+    public boolean isParticleEffectsEnabled() {
+        return particleEffects;
+    }
+
+    /**
+     * Enable or disable particle effects
+     *
+     * @param particleEffects true if it should be enabled
+     */
+    public void setParticleEffectsEnabled(boolean particleEffects) {
+        this.particleEffects = particleEffects;
     }
 }

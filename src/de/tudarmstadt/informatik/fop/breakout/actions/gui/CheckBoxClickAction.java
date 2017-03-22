@@ -3,6 +3,7 @@ package de.tudarmstadt.informatik.fop.breakout.actions.gui;
 import de.tudarmstadt.informatik.fop.breakout.actions.MouseInsideAction;
 import de.tudarmstadt.informatik.fop.breakout.models.gui.Checkbox;
 
+import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import eea.engine.component.Component;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,13 +28,14 @@ public abstract class CheckBoxClickAction extends MouseInsideAction {
         ownerEntity.setEnabled(newVal);
 
         logger.debug("Clicked checkbox to {} on {}", newVal, ownerEntity.getID());
-        onToggle(newVal);
+        onToggle((Breakout) stateBasedGame, newVal);
     }
 
     /**
      * Called if the user toggles the checkbox and either enables or disables it.
      *
      * @param newVal the value that was set due this event
+     * @param game game instance
      */
-    public abstract void onToggle(boolean newVal);
+    public abstract void onToggle(Breakout game, boolean newVal);
 }
