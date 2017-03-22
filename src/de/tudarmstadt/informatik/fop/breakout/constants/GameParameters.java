@@ -259,4 +259,10 @@ public interface GameParameters {
 	
 	// BackButton
 	public static final Vector2f BACK_BUTTON_POSITION = new Vector2f(60,70);
+	
+	// icon
+	public static final String[] ICON ={ 	"images/icon_16.png",
+											"images/icon_32.png",
+											"images/icon_48.png",
+											"images/icon_256.png",};
 }
