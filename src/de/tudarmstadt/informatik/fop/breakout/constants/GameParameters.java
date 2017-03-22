@@ -144,7 +144,7 @@ public interface GameParameters {
 	public static final String HIGHSCORE_FILE_ENTRY_SCHEME = "[\\w]+:[\\d]{1,9}:[\\d]{1,9}\\.\\d{1,3}";
 	public static final String HIGHSCORE_BACKGROUND_IMAGE = "images/menu_highscore.png";
 	public static final int HIGHSCORE_TITLE_START_Y = 50;
-	public static final int HIGHSCORE_ENTRY_START_Y = 110;
+	public static final int HIGHSCORE_ENTRY_START_Y = 200;
 	public static final int HIGHSCORE_ENTRY_GAP = 4;
 	public static final String HIGHSCORE_TITLE_TEXT = "Highscores";
 	public static final String HIGHSCORE_RESET_IMAGE = "images/reset-button.png";
@@ -172,6 +172,7 @@ public interface GameParameters {
 	public static final String 	ENTRY_IMAGE = "/images/entry.png";
 	public static final String 	ENTRY_OVER_IMAGE = "/images/entry_over.png";
 	public static final String 	ENTRY_DOWN_IMAGE = "/images/entry_down.png";
+	public static final String ENTRY_IMAGE_SMALL = "/images/entry_small.png";
 	public static final String 	MENU_BACKGROUND_IMAGE = "images/menu_main.png";
 	public static final int 	ENTRY_Y_OFFSET = -7;
 	public static final float	ENTRY_SCALE_FACTOR = 0.8F;

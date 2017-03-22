@@ -45,18 +45,14 @@ public class HighscoreState extends AbstractMenuState {
         Breakout breakout = (Breakout) game;
         HighScoreController highScoreController = breakout.getHighScoreController();
 
-        // Load highscore from file
-        try {
-            highScoreController.loadFromFile();
-        } catch (IOException | IllegalHighscoreFormat e) {
-            logger.error("Some error occurred while loading highscore: {}", e);
-        }
+        // Add column identifiers
+        addFirstEntry(container);
 
         //add all score entries
         List<IHighscoreEntry> highscores = highScoreController.getHighscores();
         for (int index = 0; index < highscores.size(); index++) {
             IHighscoreEntry entry = highscores.get(index);
-            addScoreEntries(container.getWidth() / 2, index, entry);
+            addScoreEntries(index, entry,container);
         }
 
         Image buttonImage = new Image(GameParameters.HIGHSCORE_RESET_IMAGE).getScaledCopy(GameParameters.HIGHSCORE_RESET_SIZE);
@@ -64,15 +60,37 @@ public class HighscoreState extends AbstractMenuState {
 
         buttonResetHighscore = new ButtonView(container,buttonImage,40,520,"");
         buttonResetHighscore.setMouseOverImage(buttonOverImage);
+
         buttonResetHighscore.addListener(source -> {
             // Reset highscore and save changes to disk
             highScoreController.reset();
+            removeEntryEntities();
             try {
                 highScoreController.saveToFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+
+    }
+
+    private void removeEntryEntities(){
+        entityManager.getEntitiesByState(stateId).stream().filter(entity -> entity.getID().contains("entry"))
+                .forEach(entity -> removeEntity(entity));
+    }
+
+    @Override
+    public void enter(GameContainer gameContainer,StateBasedGame stateBasedGame) throws SlickException{
+        Breakout breakout = (Breakout) stateBasedGame;
+        HighScoreController highScoreController = breakout.getHighScoreController();
+
+        //add all score entries
+        removeEntryEntities();
+        List<IHighscoreEntry> highscores = highScoreController.getHighscores();
+        for (int index = 0; index < highscores.size(); index++) {
+            IHighscoreEntry entry = highscores.get(index);
+            addScoreEntries(index, entry,gameContainer);
+        }
     }
 
     @Override
@@ -85,30 +103,42 @@ public class HighscoreState extends AbstractMenuState {
     /**
      * Adds another highscore entry
      *
-     * @param midX the middle x position of this screen
      * @param rank the rank of this entry (starting with 1)
      * @param entry the actual entry that should be added
+     * @param gameContainer the gamecontainer instance
      *
      * @throws SlickException on missing entry image
      */
-    private void addScoreEntries(float midX, int rank, IHighscoreEntry entry) throws SlickException {
+    private void addScoreEntries(int rank, IHighscoreEntry entry,GameContainer gameContainer) throws SlickException {
+        float midX = gameContainer.getWidth()/2;
+
         Entity entryEntity = new Entity("entry_" + rank);
         //resize the entity to vertically fit inside the background part
         entryEntity.setScale(0.45F);
 
-        HighScoreEntryRenderComponent renderComponent = new HighScoreEntryRenderComponent(rank, entry);
+        HighScoreEntryRenderComponent renderComponent = new HighScoreEntryRenderComponent(rank, entry,gameContainer);
         entryEntity.addComponent(renderComponent);
 
         int imageHeight = (int) renderComponent.getSize().getY();
         int posY = GameParameters.HIGHSCORE_ENTRY_START_Y
                 //the gap before and after the entry
-                + GameParameters.HIGHSCORE_ENTRY_GAP * rank
+                + GameParameters.HIGHSCORE_ENTRY_GAP * (rank + 1)
                 //all previous entries
-                + imageHeight * (rank - 1)
+                + imageHeight * rank
                 //the position is always the center - so divide the to-draw-content
                 + imageHeight / 2;
 
         entryEntity.setPosition(new Vector2f(midX, posY));
+        addEntity(entryEntity);
+    }
+
+    private void addFirstEntry(GameContainer gameContainer){
+        Entity entryEntity = new Entity("table_title");
+        HighScoreEntryRenderComponent renderComponent = new HighScoreEntryRenderComponent(-1,"NAME","BLOCKS","TIME","SCORE",gameContainer);
+        entryEntity.addComponent(renderComponent);
+        int imageHeight = (int) renderComponent.getSize().getY();
+        int posY = GameParameters.HIGHSCORE_ENTRY_START_Y - imageHeight / 2;
+        entryEntity.setPosition(new Vector2f(gameContainer.getWidth()/2, posY));
         addEntity(entryEntity);
     }
 }

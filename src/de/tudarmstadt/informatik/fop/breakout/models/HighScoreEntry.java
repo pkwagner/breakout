@@ -53,7 +53,7 @@ public class HighScoreEntry implements IHighscoreEntry, Comparable<IHighscoreEnt
 
     @Override
     public double getPoints() {
-        float points = blocksDestroyed * (100 / elapsedTime);
+        float points = (float) (Math.pow(blocksDestroyed, 2) * (4 * blocksDestroyed / elapsedTime));
         //round it with only decimal places
         return Math.round(points * 100) / 100D;
     }

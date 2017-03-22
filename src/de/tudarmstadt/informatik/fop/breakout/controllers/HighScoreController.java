@@ -155,4 +155,14 @@ public class HighScoreController {
 
         return Optional.of(entries.get(position));
     }
+
+    public int getRank(float points) {
+        for (int i = 0; i < entries.size(); i++) {
+            IHighscoreEntry entry = entries.get(i);
+            if (entry.getPoints() < points)
+                return i;
+        }
+
+        return entries.size();
+    }
 }

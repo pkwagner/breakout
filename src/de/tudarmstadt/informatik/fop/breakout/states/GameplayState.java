@@ -131,13 +131,13 @@ public class GameplayState extends AbstractGameState {
         // Reset all given players
         // Basic player implementation
         PlayerModel player1 = new PlayerModel(GameParameters.PLAYER_ID, false, GameParameters.PLAYER_DEFAULT_HEALTHPOINTS);
-        PlayerStatsRenderComponent player1View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID + GameParameters.EXT_VIEW, multiplayer);
+        PlayerStatsRenderComponent player1View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID + GameParameters.EXT_VIEW, false);
         player1.addComponent(player1View);
         player1View.init();
 
         if (multiplayer) {
             PlayerModel player2 = new PlayerModel(GameParameters.PLAYER_ID_PLAYER2, true, GameParameters.PLAYER_DEFAULT_HEALTHPOINTS);
-            PlayerStatsRenderComponent player2View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID_PLAYER2 + GameParameters.EXT_VIEW, true);
+            PlayerStatsRenderComponent player2View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID_PLAYER2 + GameParameters.EXT_VIEW, false);
             player2.addComponent(player2View);
             player2View.init();
 

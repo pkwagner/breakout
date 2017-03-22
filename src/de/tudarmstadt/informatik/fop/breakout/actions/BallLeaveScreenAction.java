@@ -16,6 +16,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BallLeaveScreenAction implements Action {
@@ -88,15 +89,17 @@ public class BallLeaveScreenAction implements Action {
             }
         }
 
-        // Check for game end
-        for (PlayerModel player : allPlayers) {
-            if (player.isDead()) {
-                float time = ((ClockModel) entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STOP_WATCH_ID)).getSeconds();
+        // Check if all players are dead (game end)
+        if(Arrays.stream(allPlayers).allMatch(playerModel -> playerModel.isDead())){
+            float time = ((ClockModel) entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STOP_WATCH_ID)).getSeconds();
 
-                GameoverState gameoverState = (GameoverState) stateBasedGame.getState(GameParameters.GAMEOVER_STATE);
-                gameoverState.load(player, time);
-                stateBasedGame.enterState(GameParameters.GAMEOVER_STATE);
-            }
+            GameoverState gameoverState = (GameoverState) stateBasedGame.getState(GameParameters.GAMEOVER_STATE);
+            if(allPlayers.length==1)
+                gameoverState.load(allPlayers[0],time);
+            else
+                gameoverState.load(allPlayers,time);
+
+            stateBasedGame.enterState(GameParameters.GAMEOVER_STATE);
         }
     }
 

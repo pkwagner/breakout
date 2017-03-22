@@ -3,6 +3,7 @@ package de.tudarmstadt.informatik.fop.breakout.ui;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.SoundController;
+import de.tudarmstadt.informatik.fop.breakout.exceptions.IllegalHighscoreFormat;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.states.*;
 import eea.engine.entity.StateBasedEntityManager;
@@ -14,6 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
+import java.io.IOException;
 import java.nio.file.Paths;
 
 public class Breakout extends StateBasedGame implements GameParameters {
@@ -110,6 +112,12 @@ public class Breakout extends StateBasedGame implements GameParameters {
         //release resources to gracefully free the native data
         soundController.close();
 
+        try{
+            highScoreController.saveToFile();
+        } catch (Exception e) {
+            logger.error("E");
+        }
+
         return super.closeRequested();
     }
 
@@ -117,6 +125,9 @@ public class Breakout extends StateBasedGame implements GameParameters {
     public void initStatesList(GameContainer container) throws SlickException {
         //load the sounds here in order to override the default sound volume from slick
         initMusic(container);
+
+        //load highscores from file
+        loadHighscores();
 
         // Add the game states (the first added state will be started initially)
         // This may look as follows, assuming you use the associated class names and constants:
@@ -132,8 +143,18 @@ public class Breakout extends StateBasedGame implements GameParameters {
         StateBasedEntityManager.getInstance().addState(GAMEPLAY_STATE);
         StateBasedEntityManager.getInstance().addState(HIGHSCORE_STATE);
         StateBasedEntityManager.getInstance().addState(CREDITS_STATE);
-        StateBasedEntityManager.getInstance().addState(GAMEOVER_STATE);
         StateBasedEntityManager.getInstance().addState(SETTINGS_STATE);
+        StateBasedEntityManager.getInstance().addState(GAMEOVER_STATE);
+    }
+
+    private void loadHighscores() {
+        try {
+            highScoreController.loadFromFile();
+        } catch (IOException e) {
+            logger.error("Error loading highscores from file");
+        } catch (IllegalHighscoreFormat illegalHighscoreFormat) {
+            logger.error("Error loading highscores, invalid file format");
+        }
     }
 
     /**

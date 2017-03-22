@@ -17,9 +17,9 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class AbstractGameState extends BasicGameState {
 
-    private final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
+    protected final StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
 
-    private final int stateId;
+    protected final int stateId;
     private final Renderable background;
 
     public AbstractGameState(int stateId, Renderable background) {
@@ -66,6 +66,10 @@ public abstract class AbstractGameState extends BasicGameState {
      */
     public void removeEntity(Entity entity) {
         entityManager.removeEntity(stateId, entity);
+    }
+
+    protected void getEntity(String id){
+        entityManager.getEntity(stateId,id);
     }
 
     /**
