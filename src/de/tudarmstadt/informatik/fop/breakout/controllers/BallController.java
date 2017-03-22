@@ -51,6 +51,14 @@ public class BallController extends Component {
         GameplayState gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
         BallModel ball = getOwnerEntity();
 
+        // Add gravity to ball velocity (only singleplayer)
+        if (!gameplayState.isMultiplayer()) {
+            double pixelPerMeter = gameContainer.getHeight() / GameParameters.MAP_REAL_HEIGHT;
+            double gravityVelocity = GameParameters.MAP_GRAVITY * pixelPerMeter * (delta / 1000D);
+            ball.getVelocity().add(new Vector2f(0, (float) gravityVelocity));
+        }
+
+        // Update ball position
         Vector2f oldPosition = ball.getPosition();
         Vector2f newPosition = oldPosition.add(ball.getVelocity().copy().scale(gameplayState.getGameSpeedFactor()).scale(delta));
         ball.setPosition(newPosition);

@@ -159,6 +159,8 @@ public interface GameParameters {
 	public static final String MAP_FILE_PREFIX = "level";
 	//public static final String MAP_FILE_PREFIX_MULTIPLAYER = "level";
 	public static final String MAP_FILE_EXT 	= ".map";
+	public static final double MAP_REAL_HEIGHT = 50000;
+	public static final double MAP_GRAVITY = 9.81F;
 
 	// Menu
 	public static final String 	ENTRY_IMAGE = "/images/entry.png";

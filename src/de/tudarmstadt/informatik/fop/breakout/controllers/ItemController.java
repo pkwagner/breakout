@@ -4,6 +4,7 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.ItemModel;
 
 import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
+import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.StateBasedEntityManager;
@@ -58,6 +59,13 @@ public class ItemController extends Component {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         ItemModel item = (ItemModel) getOwnerEntity();
+
+        // Add gravity to item velocity (only singleplayer)
+        if (!((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).isMultiplayer()) {
+            double pixelPerMeter = gameContainer.getHeight() / GameParameters.MAP_REAL_HEIGHT;
+            double gravityVelocity = GameParameters.MAP_GRAVITY * pixelPerMeter * (delta / 1000D);
+            item.getVelocity().add(new Vector2f(0, (float) gravityVelocity));
+        }
 
         // Update position
         Vector2f oldPosition = item.getPosition();
