@@ -1,52 +1,48 @@
 package de.tudarmstadt.informatik.fop.breakout.views;
 
-import java.math.BigDecimal;
+import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
+import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 
+import eea.engine.component.RenderComponent;
+
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import de.tudarmstadt.informatik.fop.breakout.models.ClockModel;
-import de.tudarmstadt.informatik.fop.breakout.util.Utility;
-import eea.engine.component.RenderComponent;
-
 public class ClockRenderComponent extends RenderComponent {
 
-	ClockModel clock;
-	
-	public ClockRenderComponent(String id) {
-		super(id);
-	}
+    public ClockRenderComponent(String id) {
+        super(id);
+    }
 
     @Override
     public ClockModel getOwnerEntity() {
         return (ClockModel) super.getOwnerEntity();
     }
-    
-    public void setOwnerEntity(ClockModel owningEntity) {
-        super.setOwnerEntity(owningEntity);
-    }
-    
-    public void init(){
-    	clock = getOwnerEntity();
-    }
-	
-	@Override
-	public Vector2f getSize() {
-		return clock.getSize();
-	}
 
-	@Override
-	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) {
-		g.drawString(Float.toString(Utility.round(clock.getSeconds(),2)), clock.getPosition().getX(),clock.getPosition().getY());
-		
-	}
+    @Override
+    public Vector2f getSize() {
+        return getOwnerEntity().getSize();
+    }
 
-	@Override
-	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+    @Override
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+        ClockModel clock = getOwnerEntity();
+        Shape shape = clock.getShape();
+
+        Font font = graphics.getFont();
+
+        String time = Float.toString(Utility.round(clock.getSeconds(), 2));
+        int textWidth = font.getWidth(time);
+        graphics.drawString(time, shape.getMaxX() - textWidth, clock.getPosition().getY());
+
+    }
+
+    @Override
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+        //ignore
+    }
 }

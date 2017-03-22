@@ -149,7 +149,6 @@ public class GameplayState extends AbstractGameState {
         clock.addComponent(clockController);
         ClockRenderComponent clockView = new ClockRenderComponent(GameParameters.STOP_WATCH_ID + GameParameters.EXT_VIEW);
         clock.addComponent(clockView);
-        clockView.init();
         clockController.init(stateBasedGame);
 
         // Load initial map

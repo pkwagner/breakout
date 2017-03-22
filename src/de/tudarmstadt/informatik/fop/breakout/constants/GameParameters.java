@@ -72,6 +72,8 @@ public interface GameParameters {
 	public static final String 	STOP_WATCH_ID		= "stopWatch";
 	public static final int		STOP_WATCH_WIDTH	= 40;
 	public static final int		STOP_WATCH_HEIGHT	= 50;
+	public static final int		STOP_WATCH_OFFSET	= 50;
+
 
 	public static final double	GAME_SLOMO_ANIMATION_SPEED =  0.0005;
 
@@ -256,10 +258,10 @@ public interface GameParameters {
 	public static final int CREDITS_DEVS_START_X = 280;
 	public static final int CREDITS_DEVS_START_Y = 220;
 	public static final int CREDITS_DEVS_SPACE_Y = 70;
-	
+
 	// BackButton
 	public static final Vector2f BACK_BUTTON_POSITION = new Vector2f(60,70);
-	
+
 	// icon
 	public static final String[] ICON ={ 	"images/icon_16.png",
 											"images/icon_32.png",
