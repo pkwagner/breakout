@@ -5,6 +5,9 @@ import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Slow down the whole game. Even the music pitches down slowly. It's insane.
+ */
 public class SloMoItemAction extends AbstractItemAction {
 
     private GameplayState gameplayState;

@@ -25,6 +25,11 @@ public class PauseToggleAction implements Action {
 
     private Set<Entity> entities = new HashSet<>();
 
+    /**
+     * Constructor for the event listener on toggling the pause state
+     *
+     * @param entities the entities the pause screen considers of
+     */
     public PauseToggleAction(Entity... entities) {
         this.entities.addAll(Arrays.asList(entities));
     }

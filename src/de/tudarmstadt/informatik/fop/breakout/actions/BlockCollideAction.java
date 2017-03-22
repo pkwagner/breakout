@@ -1,4 +1,4 @@
-package de.tudarmstadt.informatik.fop.breakout.actions.blocks;
+package de.tudarmstadt.informatik.fop.breakout.actions;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.ItemController;
@@ -11,50 +11,64 @@ import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.ItemRenderComponent;
-import eea.engine.entity.StateBasedEntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.SlickException;
 
 import java.util.stream.Stream;
 
-public abstract class AbstractBlockCollideAction {
+/**
+ * Will be called if a ball collides with a block
+ */
+public class BlockCollideAction {
 
     private final Logger logger = LogManager.getLogger();
 
-    private AbstractBlockModel blockModel;
-    private BallModel ballModel;
-    private GameplayState gameplayState;
-
+    private final AbstractBlockModel blockModel;
+    private final BallModel ballModel;
     private final Breakout breakout;
 
-    public AbstractBlockCollideAction(AbstractBlockModel blockModel, BallModel ballModel, Breakout breakout) {
+    /**
+     * Will be called if a ball collides with a block
+     *
+     * @param blockModel the block the ball collided with
+     * @param ballModel the ball that collided with the block
+     * @param breakout the game instance
+     */
+    BlockCollideAction(AbstractBlockModel blockModel, BallModel ballModel, Breakout breakout) {
         this.blockModel = blockModel;
         this.ballModel = ballModel;
-        this.gameplayState = (GameplayState) breakout.getCurrentState();
-
         this.breakout = breakout;
     }
 
+    /**
+     * Will be called when the collision occurs
+     */
     public void onCollision() {
-        // Decrease remaining block hits by the balls hit points, afterwards check for remaining hit points
+        // Decrease remaining block hits by the balls hit points, afterwards check for remaining hit points (and smash mode ;)
         blockModel.decreaseRemainingHits(ballModel.getHitPoints());
-        if (!blockModel.hasHitsLeft() || ballModel.isSmashMode())
+        if (!blockModel.hasHitsLeft() || ballModel.isSmashMode()) {
             destroy();
-
-        else {
+        } else {
             // Change render component based on remaining hits
         	blockModel.getView().updateImage(blockModel.getInitialHits()-blockModel.getHitsLeft());
         }
 
+        // Play hit-stick-sound
         breakout.getSoundController().playEffect(SoundType.BLOCK_HIT);
     }
 
+    /**
+     * Will be called if the block ran out of hit points and should been destroyed
+     */
     private void destroy() {
+        // Get gameplay state
+        GameplayState gameplayState = (GameplayState) breakout.getState(GameParameters.GAMEPLAY_STATE);
+
         // Call the state to remove this block
         blockModel.destroy();
 
-        // Remove block model in smash mode instantly to avoid border collision glitches
+        // Remove block model in smash mode instantly (pass animation) to avoid border collision glitches
         if (ballModel.isSmashMode())
             gameplayState.removeEntity(blockModel);
 
@@ -73,9 +87,15 @@ public abstract class AbstractBlockCollideAction {
             gameplayState.nextLevel();
     }
 
+    /**
+     * Will be probably called while block destruction and possibly drops an item
+     */
     private void dropItem() {
         // Check if an item should be dropped
         if (Math.random() <= GameParameters.ITEM_DROP_POSSIBILITY) {
+            // Get gameplay state
+            GameplayState gameplayState = (GameplayState) breakout.getState(GameParameters.GAMEPLAY_STATE);
+
             // Get random item based on each item possibility
             GameParameters.ItemType possibleItemTypes[] = blockModel.getDroppableItems();
             GameParameters.ItemType itemType = getRandomItem(possibleItemTypes);
@@ -85,10 +105,9 @@ public abstract class AbstractBlockCollideAction {
                 return;
 
             // Generate item id based on the selected item type
-            // TODO ID may not be unique
             String itemId = "item_" + itemType.name();
 
-            // Generate item with it's controller and render component
+            // Generate item with it's controller and render component (the usual stuff)
             ItemModel item = new ItemModel(itemId, itemType.getDuration());
             ItemController itemController = new ItemController(itemId + GameParameters.EXT_CONTROLLER, itemType, ballModel.getControllingPlayer());
             item.addComponent(itemController);

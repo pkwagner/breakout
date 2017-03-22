@@ -8,6 +8,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.List;
 
+/**
+ * Triggers the smash attribute of all balls in game
+ */
 public class SmashBallItemAction extends AbstractItemAction {
 
     private List<BallModel> allBalls;

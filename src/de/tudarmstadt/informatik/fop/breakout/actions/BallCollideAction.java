@@ -1,8 +1,5 @@
 package de.tudarmstadt.informatik.fop.breakout.actions;
 
-import de.tudarmstadt.informatik.fop.breakout.actions.blocks.AbstractBlockCollideAction;
-import de.tudarmstadt.informatik.fop.breakout.actions.blocks.RamBlockCollideAction;
-import de.tudarmstadt.informatik.fop.breakout.actions.blocks.SimpleBlockCollideAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
@@ -32,23 +29,31 @@ public class BallCollideAction implements Action {
     private final Logger logger = LogManager.getLogger();
     private final BallModel ballModel;
 
+    /**
+     * Will be called if the connected ball collides with anything else. Even another ball.
+     *
+     * @param ballModel the ball that collided with another entity
+     */
     public BallCollideAction(BallModel ballModel) {
         this.ballModel = ballModel;
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
+        // Get collision event &
         CollisionEvent collisionEvent = (CollisionEvent) component;
-
         GameplayState state = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
 
+        // Gain some information about the collided entity
         Entity collidedEntity = collisionEvent.getCollidedEntity();
         String collidedId = collidedEntity.getID();
 
-        if (collidedEntity.isPassable())return;
+        // Instantly abort the collision handling if the other item is not passable! Total disaster.
+        if (collidedEntity.isPassable()) return;
 
         logger.debug("Ball collision with {}", collidedId);
 
+        // Do some magical stuff to ensure the collision was real.
         Shape collidedShape = collidedEntity.getShape();
         boolean collisionValid = checkCollision(collidedShape);
 
@@ -58,6 +63,9 @@ public class BallCollideAction implements Action {
         }
     }
 
+    /**
+     * Increases the ball speed by a given value. Should be called when a ball hits a block.
+     */
     private void increaseBallSpeed() {
         Vector2f oldSpeed = ballModel.getVelocity();
 
@@ -69,13 +77,14 @@ public class BallCollideAction implements Action {
     /**
      * Handles the collision by updating ball position and velocity
      *
-     * @param collidedEntity
-     * @param state
+     * @param collidedEntity the entity the ball collided with
+     * @param state the gameplay state
      */
     private void handleCollision(Entity collidedEntity, GameplayState state, Breakout breakout) {
         Shape ballShape = ballModel.getShape();
         Shape collidedShape = collidedEntity.getShape();
 
+        // Decide if the collided entity is a stick (multiplayer -> plural) or a block
         if (collidedEntity instanceof StickModel) {
             breakout.getSoundController().playEffect(SoundType.STICK_HIT);
 
@@ -84,31 +93,37 @@ public class BallCollideAction implements Action {
             // Set ball's controlling player
             ballModel.setControllingPlayer(((StickModel) collidedEntity).getOwner());
         } else if (collidedEntity instanceof AbstractBlockModel) {
+            // Do the fancy stuff an a dedicated function
             onBlockCollide(breakout, (AbstractBlockModel) collidedEntity);
         }
 
-        updateBallPositionAndVelocity(getCollisionDirection(ballShape, collidedShape), collidedShape, collidedEntity); //the default collision handling method
+        // The default collision handling method
+        updateBallPositionAndVelocity(getCollisionDirection(ballShape, collidedShape), collidedShape, collidedEntity);
     }
 
 
     /**
      * The default method for handling a collision by updating the balls position and velocity
      *
-     * @param collisionDirection
-     * @param collidedShape
-     * @param collidedEntity
+     * @param collisionDirection the direction the ball bumped against the entity from
+     * @param collidedShape the shape of the entity the ball collided with
+     * @param collidedEntity the collided entity itself
      */
     private void updateBallPositionAndVelocity(Direction collisionDirection, Shape collidedShape, Entity collidedEntity) {
-    	if (ballModel.isSmashMode() && (collidedEntity instanceof AbstractBlockModel))
-    		return;
+        // Abort bumping on blocks if the ball is in smash mode
+    	if (ballModel.isSmashMode() && (collidedEntity instanceof AbstractBlockModel)) return;
 
+    	// Obvious.
     	boolean isStick = (collidedEntity instanceof StickModel);
 
+    	// Get current
         Vector2f position = ballModel.getPosition();
         Vector2f velocity = ballModel.getVelocity();
 
+        // Set the ball a little bit back.
         position.add(velocity.copy().scale(-1));
 
+        // Do the fancy stuff.
         switch (collisionDirection) {
             case UP:
                 if (isStick)
@@ -128,11 +143,13 @@ public class BallCollideAction implements Action {
                     position.set(position.getX(), collidedShape.getMaxY() + ballModel.getShape().getHeight() / 2 + 1);
                 break;
             case LEFT:
+                // Stick collisions on the sides should been handled normally to avoid bugs.
                 velocity.set(-velocity.getX(), velocity.getY());
                 if (checkCollision(collidedShape))
                     position.set(collidedShape.getMinX() - ballModel.getShape().getWidth() / 2 - 1, position.getY());
                 break;
             case RIGHT:
+                // Stick collisions on the sides should been handled normally to avoid bugs.
                 velocity.set(-velocity.getX(), velocity.getY());
                 if (checkCollision(collidedShape))
                     position.set(collidedShape.getMaxX() + ballModel.getShape().getWidth() / 2 + 1, position.getY());
@@ -144,23 +161,12 @@ public class BallCollideAction implements Action {
     /**
      * Method for handling collision with blocks specifically
      *
-     * @param breakout
-     * @param collidedEntity
+     * @param breakout the game instance
+     * @param block the block the ball collided with
      */
-    private void onBlockCollide(Breakout breakout, AbstractBlockModel collidedEntity) {
-        // Decrease remaining blockModel hits, afterwards check for remaining hit points
-        AbstractBlockModel block = collidedEntity;
-        AbstractBlockCollideAction collideAction = null;
-
-        switch (block.getType()) {
-            case SIMPLE:
-                collideAction = new SimpleBlockCollideAction(block, ballModel, breakout);
-                break;
-            case RAM:
-                collideAction = new RamBlockCollideAction(block, ballModel, breakout);
-        }
-
-        if (collideAction != null) collideAction.onCollision();
+    private void onBlockCollide(Breakout breakout, AbstractBlockModel block) {
+        // Trigger the specific block action
+        new BlockCollideAction(block, ballModel, breakout).onCollision();
     }
 
 
@@ -168,19 +174,21 @@ public class BallCollideAction implements Action {
      * Calculates where the collided shape has been hit.
      * (pretty complicated, very math)
      *
-     * @param ballShape
-     * @param collidedShape
-     * @return
+     * @param ballShape the shape of the ball
+     * @param collidedShape the shape of the collided entity
+     * @return the direction the has been hit
      */
     private Direction getCollisionDirection(Shape ballShape, Shape collidedShape) {
-        float lBorder = collidedShape.getMinX() - ballShape.getWidth() / 2; //the borders of the block
+        // Define block borders
+        float lBorder = collidedShape.getMinX() - ballShape.getWidth() / 2;
         float tBorder = collidedShape.getMinY() - ballShape.getHeight() / 2;
-
         float rBorder = collidedShape.getMaxX() + ballShape.getWidth() / 2;
         float bBorder = collidedShape.getMaxY() + ballShape.getHeight() / 2;
 
+        // Re-calculate ball attributes
         Vector2f position = ballModel.getPosition().copy();
         Vector2f velocity = ballModel.getVelocity().copy();
+        // Adding the velocity is necessary because the ball was set back a few lines above
         Vector2f oldPosition = position.copy().add(velocity.copy().scale(-1));
         Vector2f direction = velocity.copy().normalise();
 
@@ -257,22 +265,32 @@ public class BallCollideAction implements Action {
      * Checks whether something has actually collided with the ball by checking
      * if any of the balls outline points are contained within the shape
      *
-     * @param collidedShape
-     * @return
+     * @param collidedShape the shape of the collided entity
+     * @return true if the collision was ok; else false
      */
     private boolean checkCollision(Shape collidedShape) {
         Vector2f[] outline = ballModel.getOutline();
         Vector2f position = ballModel.getPosition();
-        for (int i = 0; i < outline.length; i++) {
-            Vector2f absolutePosition = outline[i].copy().add(position);
+
+        for (Vector2f outlinePoint : outline) {
+            Vector2f absolutePosition = outlinePoint.copy().add(position);
             if (absolutePosition.getX() <= collidedShape.getMaxX() &&
                     absolutePosition.getX() >= collidedShape.getMinX() &&
                     absolutePosition.getY() <= collidedShape.getMaxY() &&
                     absolutePosition.getY() >= collidedShape.getMinY()) return true;
         }
+
         return false;
     }
 
+
+    /**
+     * Returns a velocity vector the ball should have after bumping against a stick entity
+     *
+     * @param stick the stick the ball collided with
+     * @param previousVelocity the velocity the ball had before bumping against the stick
+     * @return the new vector the ball should have
+     */
     private Vector2f getStickBumpVelocity(StickModel stick, Vector2f previousVelocity) {
         // Check position on stick
         float stickWidth = stick.getSize().getX();

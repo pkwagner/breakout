@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.List;
 
 /**
- * Lets the ball move slower per second on pickup
+ * Lets all balls in game move slower on pickup
  */
 public class SlowerItemAction extends AbstractItemAction {
 
@@ -19,11 +19,13 @@ public class SlowerItemAction extends AbstractItemAction {
 
     @Override
     protected void init(StateBasedGame stateBasedGame, PlayerModel catchingPlayer) {
+        // Get all balls from state
         allBalls = ((GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE)).getBalls();
     }
 
     @Override
     public void onEnable() {
+        // Slow down all balls
         allBalls.forEach(ball -> {
             Vector2f oldVelocity = ball.getVelocity();
             ball.setVelocity(oldVelocity.scale(GameParameters.ITEM_SLOWER_SPEED_VALUE));
@@ -32,6 +34,6 @@ public class SlowerItemAction extends AbstractItemAction {
 
     @Override
     public void onDisable() {
-
+        // Hey, Captain Obvious here. You don't see anything cause it's not a temporary item. Obviously.
     }
 }

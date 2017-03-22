@@ -18,6 +18,9 @@ import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Will be called when a player picks up the connected item
+ */
 public abstract class AbstractItemAction implements Action {
 
     private Logger logger = LogManager.getLogger();
@@ -57,6 +60,12 @@ public abstract class AbstractItemAction implements Action {
         }
     }
 
+    /**
+     * Will be called instantly after item generation and contains (probably) useful params!
+     *
+     * @param stateBasedGame the state based game instance
+     * @param catchingPlayer the player who caught (-> generated) the ball
+     */
     protected abstract void init(StateBasedGame stateBasedGame, PlayerModel catchingPlayer);
 
     /**
