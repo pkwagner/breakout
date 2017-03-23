@@ -1,12 +1,14 @@
 package de.tudarmstadt.informatik.fop.breakout.models;
 
+import de.tudarmstadt.informatik.fop.breakout.views.gui.KeyBindingView;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.WaitingKeybindingView;
 import org.newdawn.slick.Input;
 
 /**
  * All changeable KeyBindings to control the game.
  *
- * @see de.tudarmstadt.informatik.fop.breakout.views.gui.KeyBindingRenderComponent
- * @see de.tudarmstadt.informatik.fop.breakout.views.gui.WaitingKeybindingRenderComponent
+ * @see KeyBindingView
+ * @see WaitingKeybindingView
  * @see de.tudarmstadt.informatik.fop.breakout.actions.gui.KeyBindingClickAction
  */
 public enum KeyBinding {

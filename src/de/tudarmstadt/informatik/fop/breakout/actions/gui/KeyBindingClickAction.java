@@ -1,10 +1,9 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.gui;
 
-import de.tudarmstadt.informatik.fop.breakout.actions.MouseInsideAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.KeyBinding;
-import de.tudarmstadt.informatik.fop.breakout.views.gui.KeyBindingRenderComponent;
-import de.tudarmstadt.informatik.fop.breakout.views.gui.WaitingKeybindingRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.KeyBindingView;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.WaitingKeybindingView;
 
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
@@ -37,7 +36,7 @@ public class KeyBindingClickAction extends MouseInsideAction {
 
         //remove the old view and set a new one to inform the user that we are now waiting for the new key
         ownerEntity.removeComponent(viewId);
-        ownerEntity.addComponent(new WaitingKeybindingRenderComponent(viewId));
+        ownerEntity.addComponent(new WaitingKeybindingView(viewId));
 
         InputAdapter inputListener = new InputAdapter() {
             @Override
@@ -79,7 +78,7 @@ public class KeyBindingClickAction extends MouseInsideAction {
             private void restoreView() {
                 //restore the previous render component
                 ownerEntity.removeComponent(viewId);
-                ownerEntity.addComponent(new KeyBindingRenderComponent(viewId, keyBinding));
+                ownerEntity.addComponent(new KeyBindingView(viewId, keyBinding));
 
                 //remove this listener again to abort a keybinding change
                 gc.getInput().removeKeyListener(this);

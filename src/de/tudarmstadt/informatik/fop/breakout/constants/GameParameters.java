@@ -1,7 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.constants;
 
 import org.newdawn.slick.geom.Vector2f;
-import de.tudarmstadt.informatik.fop.breakout.actions.items.*;
+import de.tudarmstadt.informatik.fop.breakout.actions.game.items.*;
 
 /**
  * Class for holding the game parameters and constants e.g. entity IDs or image

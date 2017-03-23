@@ -1,13 +1,13 @@
 package de.tudarmstadt.informatik.fop.breakout.test.adapter;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.controllers.MapController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.game.MapController;
 import de.tudarmstadt.informatik.fop.breakout.interfaces.IHitable;
-import de.tudarmstadt.informatik.fop.breakout.models.BallModel;
-import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
-import de.tudarmstadt.informatik.fop.breakout.models.StickModel;
-import de.tudarmstadt.informatik.fop.breakout.models.blocks.AbstractBlockModel;
-import de.tudarmstadt.informatik.fop.breakout.models.blocks.SimpleBlock;
+import de.tudarmstadt.informatik.fop.breakout.models.game.BallModel;
+import de.tudarmstadt.informatik.fop.breakout.models.game.PlayerModel;
+import de.tudarmstadt.informatik.fop.breakout.models.game.StickModel;
+import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.AbstractBlockModel;
+import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.SimpleBlock;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.util.Utility;
@@ -85,7 +85,7 @@ public class Adapter implements GameParameters {
 
         ballModel.setVelocity(new Vector2f(1,1));
         ballModel.setPosition(new Vector2f(GameParameters.WINDOW_WIDTH/2,GameParameters.WINDOW_HEIGHT/2));
-        
+
         try {
             app = new TestAppGameContainer(breakout, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT, false);
             app.start(0);

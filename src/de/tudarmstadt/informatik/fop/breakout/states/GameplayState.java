@@ -1,16 +1,25 @@
 package de.tudarmstadt.informatik.fop.breakout.states;
 
-import de.tudarmstadt.informatik.fop.breakout.actions.PauseToggleAction;
-import de.tudarmstadt.informatik.fop.breakout.actions.StartGameAction;
+import de.tudarmstadt.informatik.fop.breakout.actions.game.PauseToggleAction;
+import de.tudarmstadt.informatik.fop.breakout.actions.game.StartGameAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.*;
+import de.tudarmstadt.informatik.fop.breakout.controllers.game.BallController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.game.ClockController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.game.MapController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.game.StickController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.RamBlockMovementController;
 import de.tudarmstadt.informatik.fop.breakout.events.KeyPressedEvent;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
 import de.tudarmstadt.informatik.fop.breakout.models.*;
+import de.tudarmstadt.informatik.fop.breakout.models.game.BallModel;
+import de.tudarmstadt.informatik.fop.breakout.models.game.ClockModel;
+import de.tudarmstadt.informatik.fop.breakout.models.game.PlayerModel;
+import de.tudarmstadt.informatik.fop.breakout.models.game.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.models.gui.BackButton;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
-import de.tudarmstadt.informatik.fop.breakout.views.*;
 
+import de.tudarmstadt.informatik.fop.breakout.views.game.*;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 
@@ -130,13 +139,13 @@ public class GameplayState extends AbstractGameState {
         // Reset all given players
         // Basic player implementation
         PlayerModel player1 = new PlayerModel(GameParameters.PLAYER_ID, false);
-        PlayerStatsRenderComponent player1View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID + GameParameters.EXT_VIEW, false);
+        PlayerStatsView player1View = new PlayerStatsView(GameParameters.PLAYER_ID + GameParameters.EXT_VIEW, false);
         player1.addComponent(player1View);
         player1View.init();
 
         if (multiplayer) {
             PlayerModel player2 = new PlayerModel(GameParameters.PLAYER_ID_PLAYER2, true);
-            PlayerStatsRenderComponent player2View = new PlayerStatsRenderComponent(GameParameters.PLAYER_ID_PLAYER2 + GameParameters.EXT_VIEW, false);
+            PlayerStatsView player2View = new PlayerStatsView(GameParameters.PLAYER_ID_PLAYER2 + GameParameters.EXT_VIEW, false);
             player2.addComponent(player2View);
             player2View.init();
 
@@ -149,7 +158,7 @@ public class GameplayState extends AbstractGameState {
         clock = new ClockModel(GameParameters.STOP_WATCH_ID);
         clockController = new ClockController(GameParameters.STOP_WATCH_ID + GameParameters.EXT_CONTROLLER);
         clock.addComponent(clockController);
-        ClockRenderComponent clockView = new ClockRenderComponent(GameParameters.STOP_WATCH_ID + GameParameters.EXT_VIEW);
+        ClockView clockView = new ClockView(GameParameters.STOP_WATCH_ID + GameParameters.EXT_VIEW);
         clock.addComponent(clockView);
         clockController.init(stateBasedGame);
 
@@ -213,7 +222,7 @@ public class GameplayState extends AbstractGameState {
         //center text
         startGameEntity.setPosition(new Vector2f(midX, gameContainer.getHeight() / 2));
         startGameEntity.setSize(new Vector2f(100, 100));
-        startGameEntity.addComponent(new StartGameRenderComponent());
+        startGameEntity.addComponent(new StartGameView());
 
         KeyPressedEvent startGameEvent = new KeyPressedEvent(KeyBinding.START_GAME);
         startGameEvent.addAction(new StartGameAction());
@@ -250,7 +259,7 @@ public class GameplayState extends AbstractGameState {
      * @throws SlickException if the pause cannot be found
      */
     private void addPauseEntities(GameContainer gameContainer) throws SlickException {
-        //show the back to main menu too on pausing the game
+        //show the back to main submenu too on pausing the game
         BackButton backButton = new BackButton();
         backButton.setVisible(false);
 
@@ -297,7 +306,7 @@ public class GameplayState extends AbstractGameState {
         ballModel.addComponent(ballController);
 
         if (!isTesting()) {
-            BallRenderComponent ballView = new BallRenderComponent(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_VIEW);
+            BallView ballView = new BallView(GameParameters.BALL_ID + "_" + ballIdCounter + GameParameters.EXT_VIEW);
             ballModel.addComponent(ballView);
             ballView.init();
         }
@@ -329,10 +338,10 @@ public class GameplayState extends AbstractGameState {
             stickModel.addComponent(stickController);
 
             if (!isTesting()) {
-                StickRenderComponent stickRenderComponent = new StickRenderComponent();
-                stickModel.addComponent(stickRenderComponent);
+                StickView stickView = new StickView();
+                stickModel.addComponent(stickView);
 
-                stickRenderComponent.init();
+                stickView.init();
             }
 
             owner.setStickController(stickController);

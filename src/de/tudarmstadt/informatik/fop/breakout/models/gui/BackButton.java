@@ -13,7 +13,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 /**
- * ButtonView for switching to the main menu
+ * ButtonView for switching to the main submenu
  */
 public class BackButton extends Entity {
 

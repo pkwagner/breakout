@@ -2,7 +2,6 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.views.gui.ButtonView;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -14,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Showing the main menu where can switch to sub menus or starting a new game.
+ * Showing the main submenu where can switch to sub menus or starting a new game.
  */
 public class MainMenuState extends AbstractGameState {
 

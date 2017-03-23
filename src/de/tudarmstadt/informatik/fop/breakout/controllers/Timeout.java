@@ -13,15 +13,15 @@ public class Timeout {
         this.callback = callback;
     }
 
-    Consumer<Integer> getCallback() {
+    public Consumer<Integer> getCallback() {
         return callback;
     }
 
-    float getWakeupTime() {
+    public float getWakeupTime() {
         return wakeupTime;
     }
 
-    void setStartedAt(float startedAt) {
+    public void setStartedAt(float startedAt) {
         wakeupTime = startedAt + timeoutTime;
     }
 }

@@ -1,6 +1,5 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.gui;
 
-import de.tudarmstadt.informatik.fop.breakout.actions.MouseInsideAction;
 import de.tudarmstadt.informatik.fop.breakout.models.gui.Checkbox;
 
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;

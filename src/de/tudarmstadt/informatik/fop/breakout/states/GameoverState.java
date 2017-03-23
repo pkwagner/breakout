@@ -1,14 +1,14 @@
 package de.tudarmstadt.informatik.fop.breakout.states;
 
-import de.tudarmstadt.informatik.fop.breakout.actions.gui.NewGameAction;
+import de.tudarmstadt.informatik.fop.breakout.actions.game.NewGameAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.HighScoreController;
 import de.tudarmstadt.informatik.fop.breakout.models.HighScoreEntry;
-import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
+import de.tudarmstadt.informatik.fop.breakout.models.game.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.gui.ButtonView;
-import de.tudarmstadt.informatik.fop.breakout.views.gui.TextField;
-import de.tudarmstadt.informatik.fop.breakout.views.gui.TextRenderComponent;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.TextFieldView;
+import de.tudarmstadt.informatik.fop.breakout.views.gui.TextView;
 import eea.engine.entity.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,8 +25,8 @@ public class GameoverState extends AbstractGameState {
 
     private ButtonView menuButton, newGameButton, highscoreButton;
 
-    private TextRenderComponent[] scoreText, blocksText,nameText,timeText;
-    private TextField nameField;
+    private TextView[] scoreText, blocksText,nameText,timeText;
+    private TextFieldView nameField;
 
     private int numPlayers;
 
@@ -141,7 +141,7 @@ public class GameoverState extends AbstractGameState {
         int upperBorder =  frameHeight * 2 / 4 + 25;
 
 
-        nameField = new TextField(gameContainer, font, leftBorder, upperBorder, frameWidth - leftBorder - (frameWidth - rightBorder), font.getHeight());
+        nameField = new TextFieldView(gameContainer, font, leftBorder, upperBorder, frameWidth - leftBorder - (frameWidth - rightBorder), font.getHeight());
         nameField.setVisible(false);
 
         //------------
@@ -179,10 +179,10 @@ public class GameoverState extends AbstractGameState {
 
         TrueTypeFont font = new TrueTypeFont(new Font("Poplar", Font.PLAIN, 35), true);
 
-        scoreText = new TextRenderComponent[numPlayers];
-        blocksText = new TextRenderComponent[numPlayers];
-        timeText = new TextRenderComponent[numPlayers];
-        nameText = new TextRenderComponent[numPlayers];
+        scoreText = new TextView[numPlayers];
+        blocksText = new TextView[numPlayers];
+        timeText = new TextView[numPlayers];
+        nameText = new TextView[numPlayers];
 
         int leftBorder;
         int upperBorder =  GameParameters.WINDOW_HEIGHT * 1 / 4 + 10;
@@ -210,9 +210,9 @@ public class GameoverState extends AbstractGameState {
         stateBasedGame.enterState(GameParameters.HIGHSCORE_STATE);
     }
 
-    private TextRenderComponent addTextEntity(String id, TrueTypeFont font, int x, int y) {
+    private TextView addTextEntity(String id, TrueTypeFont font, int x, int y) {
         Entity entity = new Entity(id + "_entity");
-        TextRenderComponent renderComponent = new TextRenderComponent(id + "_view", font);
+        TextView renderComponent = new TextView(id + "_view", font);
         entity.addComponent(renderComponent);
         entity.setPosition(new Vector2f(x, y));
         addEntity(entity);

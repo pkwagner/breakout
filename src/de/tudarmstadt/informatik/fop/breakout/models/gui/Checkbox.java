@@ -1,11 +1,12 @@
 package de.tudarmstadt.informatik.fop.breakout.models.gui;
 
+import de.tudarmstadt.informatik.fop.breakout.views.gui.CheckboxView;
 import eea.engine.entity.Entity;
 
 /**
  * A checkbox model that could be turned off and on.
  *
- * @see de.tudarmstadt.informatik.fop.breakout.views.gui.CheckboxRenderComponent
+ * @see CheckboxView
  * @see de.tudarmstadt.informatik.fop.breakout.actions.gui.CheckBoxClickAction
  */
 public class Checkbox extends Entity {
