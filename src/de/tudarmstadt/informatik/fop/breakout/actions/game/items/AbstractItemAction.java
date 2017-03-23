@@ -77,5 +77,7 @@ public abstract class AbstractItemAction implements Action {
      * Will be triggered if the booster runs out of time (only for temporarily items / duration != 0)
      * NOTICE: In most cases this function should undo the changes made in onEnable()
      */
-    public abstract void onDisable();
+    public void onDisable() {
+        //provide an empty method for permanent items
+    }
 }

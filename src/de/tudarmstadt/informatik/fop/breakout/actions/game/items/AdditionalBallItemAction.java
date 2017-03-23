@@ -39,9 +39,4 @@ public class AdditionalBallItemAction extends AbstractItemAction {
             logger.error("Some error occurred while adding an additional ball to game: " + e);
         }
     }
-
-    @Override
-    public void onDisable() {
-        // Hey, Captain Obvious here. You don't see anything cause it's not a temporary item. Obviously.
-    }
 }

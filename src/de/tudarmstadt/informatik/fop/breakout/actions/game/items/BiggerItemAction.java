@@ -28,9 +28,4 @@ public class BiggerItemAction extends AbstractItemAction {
         if(newWidth > GameParameters.WINDOW_WIDTH) newWidth = GameParameters.WINDOW_WIDTH;
         stickModel.setWidth(newWidth);
     }
-
-    @Override
-    public void onDisable() {
-
-    }
 }

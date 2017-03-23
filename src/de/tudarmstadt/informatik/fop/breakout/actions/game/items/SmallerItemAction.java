@@ -29,9 +29,4 @@ public class SmallerItemAction extends AbstractItemAction {
 
         stickModel.setSize(new Vector2f(newWidth, oldSize.getY()));
     }
-
-    @Override
-    public void onDisable() {
-
-    }
 }

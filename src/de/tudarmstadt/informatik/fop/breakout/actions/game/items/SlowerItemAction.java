@@ -31,9 +31,4 @@ public class SlowerItemAction extends AbstractItemAction {
             ball.setVelocity(oldVelocity.scale(GameParameters.ITEM_SLOWER_SPEED_VALUE));
         });
     }
-
-    @Override
-    public void onDisable() {
-        // Hey, Captain Obvious here. You don't see anything cause it's not a temporary item. Obviously.
-    }
 }
