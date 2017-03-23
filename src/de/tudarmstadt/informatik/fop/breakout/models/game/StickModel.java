@@ -45,21 +45,21 @@ public class StickModel extends Entity {
     /**
      * Push more particles out of the particle system if true
      *
-     * @param thrust
+     * @param thrust Thrust value
      */
     public void setThrust(boolean thrust) {
         this.thrust = thrust;
     }
 
     @Override
-    public void addComponent(Component component){
-    	if(component instanceof StickView){
-    		view = (StickView) component;
-    	}
-    	super.addComponent(component);
+    public void addComponent(Component component) {
+        if (component instanceof StickView) {
+            view = (StickView) component;
+        }
+        super.addComponent(component);
     }
 
-    public StickView getView(){
-    	return view;
+    public StickView getView() {
+        return view;
     }
 }

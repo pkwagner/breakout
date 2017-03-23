@@ -137,8 +137,8 @@ public class StickView extends RenderComponent {
 
             int x, y;
 
-            if(isSecondPlayer) 	y = (int) (stickShape.getMaxY() - GameParameters.EMITTER_Y_OFFSET);
-            else				y = (int) (stickShape.getMinY() + GameParameters.EMITTER_Y_OFFSET);
+            if (isSecondPlayer) y = (int) (stickShape.getMaxY() - GameParameters.EMITTER_Y_OFFSET);
+            else y = (int) (stickShape.getMinY() + GameParameters.EMITTER_Y_OFFSET);
 
             x = (int) stickShape.getMinX();
             flameLeftEmitter.setPosition(x, y, false);
@@ -151,23 +151,23 @@ public class StickView extends RenderComponent {
         }
     }
 
-    public void resetParticleSystems(){
-    	Shape stickShape = owner.getShape();
-    	stickShape = owner.getShape();
-    	int x,y;
+    public void resetParticleSystems() {
+        Shape stickShape = owner.getShape();
+        stickShape = owner.getShape();
+        int x, y;
 
-    	if(isSecondPlayer)
-    	y = (int) (stickShape.getMaxY()-GameParameters.EMITTER_Y_OFFSET);
-    	else
-    	y = (int) (stickShape.getMinY()+GameParameters.EMITTER_Y_OFFSET);
+        if (isSecondPlayer)
+            y = (int) (stickShape.getMaxY() - GameParameters.EMITTER_Y_OFFSET);
+        else
+            y = (int) (stickShape.getMinY() + GameParameters.EMITTER_Y_OFFSET);
 
-    	x = (int) stickShape.getMinX();
-    	flameLeftEmitter.setPosition(x,y,false);
+        x = (int) stickShape.getMinX();
+        flameLeftEmitter.setPosition(x, y, false);
         flameLeftParticleSystem.update(1000);
 
 
-    	x = (int) stickShape.getMaxX();
-    	flameRightEmitter.setPosition(x,y,false);
+        x = (int) stickShape.getMaxX();
+        flameRightEmitter.setPosition(x, y, false);
         flameRightParticleSystem.update(1000);
     }
 }

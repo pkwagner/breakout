@@ -25,7 +25,7 @@ public class GameoverState extends AbstractGameState {
 
     private ButtonView menuButton, newGameButton, highscoreButton;
 
-    private TextView[] scoreText, blocksText,nameText,timeText;
+    private TextView[] scoreText, blocksText, nameText, timeText;
     private TextFieldView nameField;
 
     private int numPlayers;
@@ -55,12 +55,12 @@ public class GameoverState extends AbstractGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         super.update(gameContainer, stateBasedGame, delta);
 
-        for(int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < numPlayers; i++) {
             score[i] = animateNumbers(score[i], totalScore[i], delta);
             blocks[i] = animateNumbers(blocks[i], totalBlocks[i], delta);
         }
 
-        for(int i = 0;i < numPlayers ; i++) {
+        for (int i = 0; i < numPlayers; i++) {
             scoreText[i].setText("Score: " + (int) score[i]);
             blocksText[i].setText("Blocks: " + (int) blocks[i]);
         }
@@ -79,7 +79,7 @@ public class GameoverState extends AbstractGameState {
     }
 
     public void load(PlayerModel player, float time) {
-        load(new PlayerModel[]{player},time);
+        load(new PlayerModel[]{player}, time);
         nameText[0].getOwnerEntity().setVisible(false);
 
         int rank = highScoreController.getRank((float) totalScore[0]);
@@ -98,7 +98,7 @@ public class GameoverState extends AbstractGameState {
         score = new double[numPlayers];
         blocks = new double[numPlayers];
 
-        for(int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < numPlayers; i++) {
             this.totalScore[i] = new HighScoreEntry("", players[i].getBlockCounter(), time).getPoints();
             this.totalBlocks[i] = players[i].getBlockCounter();
         }
@@ -108,7 +108,7 @@ public class GameoverState extends AbstractGameState {
 
         addStatsGUI(numPlayers);
 
-        for(int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < numPlayers; i++) {
             // reset scrolling animation
             score[i] = 0;
             blocks[i] = 0;
@@ -138,7 +138,7 @@ public class GameoverState extends AbstractGameState {
 
         int leftBorder = frameWidth * 1 / 3;
         int rightBorder = frameWidth * 5 / 8;
-        int upperBorder =  frameHeight * 2 / 4 + 25;
+        int upperBorder = frameHeight * 2 / 4 + 25;
 
 
         nameField = new TextFieldView(gameContainer, font, leftBorder, upperBorder, frameWidth - leftBorder - (frameWidth - rightBorder), font.getHeight());
@@ -154,7 +154,7 @@ public class GameoverState extends AbstractGameState {
 
             menuButton = new ButtonView(gameContainer, buttonTex, 0, 0, "Main Menu");
             menuButton.addListener(component -> stateBasedGame.enterState(GameParameters.MAINMENU_STATE));
-            menuButton.setLocation(frameWidth / 2 - menuButton.getWidth() / 2, upperBorder + nameField.getHeight()+20);
+            menuButton.setLocation(frameWidth / 2 - menuButton.getWidth() / 2, upperBorder + nameField.getHeight() + 20);
 
             newGameButton = new ButtonView(gameContainer, buttonTex, 0, 0, "New Game");
             newGameButton.addListener(new NewGameAction(gameContainer, stateBasedGame));
@@ -175,7 +175,7 @@ public class GameoverState extends AbstractGameState {
         }
     }
 
-    private void addStatsGUI(int numPlayers){
+    private void addStatsGUI(int numPlayers) {
 
         TrueTypeFont font = new TrueTypeFont(new Font("Poplar", Font.PLAIN, 35), true);
 
@@ -185,17 +185,17 @@ public class GameoverState extends AbstractGameState {
         nameText = new TextView[numPlayers];
 
         int leftBorder;
-        int upperBorder =  GameParameters.WINDOW_HEIGHT * 1 / 4 + 10;
+        int upperBorder = GameParameters.WINDOW_HEIGHT * 1 / 4 + 10;
         int columnHeight = font.getHeight();
         int columnWidth = font.getWidth("Player1");
 
 
-        for(int i = 0; i < numPlayers; i++) {
-            leftBorder = (int) (GameParameters.WINDOW_WIDTH * (i*2+1)/(numPlayers*2F)-columnWidth/2F) - 20;
+        for (int i = 0; i < numPlayers; i++) {
+            leftBorder = (int) (GameParameters.WINDOW_WIDTH * (i * 2 + 1) / (numPlayers * 2F) - columnWidth / 2F) - 20;
             nameText[i] = addTextEntity("player", font, leftBorder, upperBorder);
             scoreText[i] = addTextEntity("score", font, leftBorder, upperBorder + columnHeight);
-            blocksText[i] = addTextEntity("blocks", font, leftBorder, (int) (columnHeight+scoreText[i].getOwnerEntity().getPosition().getY()));
-            timeText[i] = addTextEntity("time",font,leftBorder, (int) (columnHeight+blocksText[i].getOwnerEntity().getPosition().getY()));
+            blocksText[i] = addTextEntity("blocks", font, leftBorder, (int) (columnHeight + scoreText[i].getOwnerEntity().getPosition().getY()));
+            timeText[i] = addTextEntity("time", font, leftBorder, (int) (columnHeight + blocksText[i].getOwnerEntity().getPosition().getY()));
         }
     }
 

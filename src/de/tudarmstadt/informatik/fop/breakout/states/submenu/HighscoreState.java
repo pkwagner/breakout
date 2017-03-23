@@ -7,8 +7,6 @@ import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
 import de.tudarmstadt.informatik.fop.breakout.views.HighScoreEntryView;
 import de.tudarmstadt.informatik.fop.breakout.views.gui.ButtonView;
 import eea.engine.entity.Entity;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,8 +21,6 @@ import java.util.List;
  * State showing the top ten high scores
  */
 public class HighscoreState extends AbstractMenuState {
-
-    private final Logger logger = LogManager.getLogger();
 
     private ButtonView buttonResetHighscore;
 
@@ -49,13 +45,13 @@ public class HighscoreState extends AbstractMenuState {
         List<IHighscoreEntry> highscores = highScoreController.getHighscores();
         for (int index = 0; index < highscores.size(); index++) {
             IHighscoreEntry entry = highscores.get(index);
-            addScoreEntries(index, entry,container);
+            addScoreEntries(index, entry, container);
         }
 
         Image buttonImage = new Image(GameParameters.HIGHSCORE_RESET_IMAGE).getScaledCopy(GameParameters.HIGHSCORE_RESET_SIZE);
         Image buttonOverImage = new Image(GameParameters.HIGHSCORE_RESET_OVER_IMAGE).getScaledCopy(GameParameters.HIGHSCORE_RESET_SIZE);
 
-        buttonResetHighscore = new ButtonView(container,buttonImage,40,520,"");
+        buttonResetHighscore = new ButtonView(container, buttonImage, 40, 520, "");
         buttonResetHighscore.setMouseOverImage(buttonOverImage);
 
         buttonResetHighscore.addListener(source -> {
@@ -71,13 +67,13 @@ public class HighscoreState extends AbstractMenuState {
 
     }
 
-    private void removeEntryEntities(){
+    private void removeEntryEntities() {
         entityManager.getEntitiesByState(stateId).stream().filter(entity -> entity.getID().contains("entry"))
-                .forEach(entity -> removeEntity(entity));
+                .forEach(this::removeEntity);
     }
 
     @Override
-    public void enter(GameContainer gameContainer,StateBasedGame stateBasedGame) throws SlickException{
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         Breakout breakout = (Breakout) stateBasedGame;
         HighScoreController highScoreController = breakout.getHighScoreController();
 
@@ -86,7 +82,7 @@ public class HighscoreState extends AbstractMenuState {
         List<IHighscoreEntry> highscores = highScoreController.getHighscores();
         for (int index = 0; index < highscores.size(); index++) {
             IHighscoreEntry entry = highscores.get(index);
-            addScoreEntries(index, entry,gameContainer);
+            addScoreEntries(index, entry, gameContainer);
         }
     }
 
@@ -100,20 +96,19 @@ public class HighscoreState extends AbstractMenuState {
     /**
      * Adds another highscore entry
      *
-     * @param rank the rank of this entry (starting with 1)
-     * @param entry the actual entry that should be added
+     * @param rank          the rank of this entry (starting with 1)
+     * @param entry         the actual entry that should be added
      * @param gameContainer the gamecontainer instance
-     *
      * @throws SlickException on missing entry image
      */
-    private void addScoreEntries(int rank, IHighscoreEntry entry,GameContainer gameContainer) throws SlickException {
-        float midX = gameContainer.getWidth()/2;
+    private void addScoreEntries(int rank, IHighscoreEntry entry, GameContainer gameContainer) throws SlickException {
+        float midX = gameContainer.getWidth() / 2;
 
         Entity entryEntity = new Entity("entry_" + rank);
         //resize the entity to vertically fit inside the background part
         entryEntity.setScale(0.45F);
 
-        HighScoreEntryView renderComponent = new HighScoreEntryView(rank, entry,gameContainer);
+        HighScoreEntryView renderComponent = new HighScoreEntryView(rank, entry, gameContainer);
         entryEntity.addComponent(renderComponent);
 
         int imageHeight = (int) renderComponent.getSize().getY();
@@ -129,13 +124,13 @@ public class HighscoreState extends AbstractMenuState {
         addEntity(entryEntity);
     }
 
-    private void addFirstEntry(GameContainer gameContainer){
+    private void addFirstEntry(GameContainer gameContainer) {
         Entity entryEntity = new Entity("table_title");
-        HighScoreEntryView renderComponent = new HighScoreEntryView(-1,"NAME","BLOCKS","TIME","SCORE",gameContainer);
+        HighScoreEntryView renderComponent = new HighScoreEntryView(-1, "NAME", "BLOCKS", "TIME", "SCORE", gameContainer);
         entryEntity.addComponent(renderComponent);
         int imageHeight = (int) renderComponent.getSize().getY();
         int posY = GameParameters.HIGHSCORE_ENTRY_START_Y - imageHeight / 2;
-        entryEntity.setPosition(new Vector2f(gameContainer.getWidth()/2, posY));
+        entryEntity.setPosition(new Vector2f(gameContainer.getWidth() / 2, posY));
         addEntity(entryEntity);
     }
 }

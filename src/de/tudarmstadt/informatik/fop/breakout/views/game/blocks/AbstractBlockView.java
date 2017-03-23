@@ -13,13 +13,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class AbstractBlockView extends RenderComponent {
 
-    protected SpriteSheet spritesheet;
-    protected SpriteSheet deathSpritesheet;
+    SpriteSheet spritesheet;
+    SpriteSheet deathSpritesheet;
     private int hitsTaken = 0;
     private boolean deathAnimationPlays = false;
     private int currentDeathAnimationTime = 0;
 
-    public AbstractBlockView(String id) throws SlickException {
+    AbstractBlockView(String id) throws SlickException {
         super(id);
         spritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_1_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);
         deathSpritesheet = new SpriteSheet(GameParameters.SIMPLE_BLOCK_1_DEATH_SPRITESHEET, GameParameters.BLOCK_WIDTH, GameParameters.BLOCK_HEIGHT);

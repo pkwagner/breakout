@@ -37,13 +37,13 @@ public abstract class SliderChangeAction extends MouseInsideAction {
      * It calculates where the mouse is located in relation to the width of the slider component.
      * <p/>
      * Examples:
-     *
+     * <p>
      * <ul>
-     *     <li>Right end of the slider => 100% (full width of the component)</li>
-     *     <li>Left start of the slider => 0% (min x coordinate of the component)</li>
+     * <li>Right end of the slider => 100% (full width of the component)</li>
+     * <li>Left start of the slider => 0% (min x coordinate of the component)</li>
      * </ul>
      *
-     * @param mouseX mouse x position
+     * @param mouseX     mouse x position
      * @param ownerShape the bounding box of the owning slider entity
      * @return the percent of the mouse x position in relation to the width
      */

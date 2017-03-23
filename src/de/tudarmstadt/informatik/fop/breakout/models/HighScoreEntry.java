@@ -19,7 +19,6 @@ public class HighScoreEntry implements IHighscoreEntry, Comparable<IHighscoreEnt
      * @param playerName      the player name that should be displayed
      * @param blocksDestroyed amount of blocks destroyed
      * @param elapsedTime     amount of elapsed time since the starting of the level
-     *
      * @throws IllegalArgumentException if blocksDestroyed or elapsed time is negative
      * @throws NullPointerException     if playername is negative
      */

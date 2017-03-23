@@ -26,7 +26,7 @@ public abstract class MouseInsideAction implements Action {
 
     /**
      * This method only trigger if the mouse clicked inside the boundingbox of this component.
-     *
+     * <p>
      * The method arguments are the same as {@link #update(GameContainer, StateBasedGame, int, Component)}. So please
      * use that method for documentation.
      *

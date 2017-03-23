@@ -13,12 +13,12 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
     private int remainingHits = initialHits;
     private boolean isDestroyed = false;
 
-    private int scorePoints = GameParameters.BLOCK_DEFAULT_SCOREPOINTS;
-    protected ItemType droppableItems[] = {};
+    private int scorePoints = GameParameters.BLOCK_SCOREPOINTS;
+    ItemType droppableItems[] = {};
 
     private AbstractBlockView view;
 
-    public AbstractBlockModel(String entityID) {
+    AbstractBlockModel(String entityID) {
         super(entityID);
         setPassable(false);
     }
@@ -27,7 +27,7 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
         return initialHits;
     }
 
-    public void setInitialHits(int initialHits) {
+    void setInitialHits(int initialHits) {
         this.initialHits = initialHits;
         this.remainingHits = initialHits;
     }
@@ -56,12 +56,12 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
         return (remainingHits > 0);
     }
 
-    public void addView(AbstractBlockView view){
-    	this.view = view;
+    public void addView(AbstractBlockView view) {
+        this.view = view;
     }
 
-    public AbstractBlockView getView(){
-    	return view;
+    public AbstractBlockView getView() {
+        return view;
     }
 
     public void decreaseRemainingHits(int hits) {
@@ -74,15 +74,11 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
         return scorePoints;
     }
 
-    public void destroy(){
-    	isDestroyed = true;
+    public void destroy() {
+        isDestroyed = true;
     }
 
-	public boolean isDestroyed() {
-		return isDestroyed;
-	}
-
-	public void setDestroyed(boolean isDestroyed) {
-		this.isDestroyed = isDestroyed;
-	}
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
 }

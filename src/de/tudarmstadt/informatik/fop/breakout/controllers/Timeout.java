@@ -7,7 +7,6 @@ public class Timeout {
     private final float timeoutTime;
     private final Consumer<Integer> callback;
 
-    // TODO Change Consumer to Void
     public Timeout(float timeoutTime, Consumer<Integer> callback) {
         this.timeoutTime = timeoutTime;
         this.callback = callback;

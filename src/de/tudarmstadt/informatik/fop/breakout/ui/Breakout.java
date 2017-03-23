@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 
 public class Breakout extends StateBasedGame implements GameParameters {
 
-	private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     // Remember if the game runs in debug mode
     private static boolean debug = false;
 
@@ -40,7 +40,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
     /**
      * Creates a new Breakout instance with a preset map id
      *
-     * @param debug if true, runs in debug mode
+     * @param debug          if true, runs in debug mode
      * @param initialLevelId the map that should been load initially
      */
     public Breakout(boolean debug, int initialLevelId) {
@@ -60,25 +60,25 @@ public class Breakout extends StateBasedGame implements GameParameters {
     }
 
     public static void main(String[] args) throws SlickException {
-    	try{
-	        // Set the library path depending on the operating system
-	        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-	            logger.info("Using windows");
-	        	System.setProperty("org.lwjgl.librarypath",
-	        			 System.getProperty("user.dir") + "/native/windows");
-	        } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-	        	logger.info("Using mac");
-	            System.setProperty("org.lwjgl.librarypath",
-	                    System.getProperty("user.dir") + "/native/macosx");
-	        } else {
-	        	logger.info("Using linux/bsd");
-	            System.setProperty("org.lwjgl.librarypath",
-	                    System.getProperty("user.dir") + "/native/"
-	                            + System.getProperty("os.name").toLowerCase());
-	        }
+        try {
+            // Set the library path depending on the operating system
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                logger.info("Using windows");
+                System.setProperty("org.lwjgl.librarypath",
+                        System.getProperty("user.dir") + "/native/windows");
+            } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                logger.info("Using mac");
+                System.setProperty("org.lwjgl.librarypath",
+                        System.getProperty("user.dir") + "/native/macosx");
+            } else {
+                logger.info("Using linux/bsd");
+                System.setProperty("org.lwjgl.librarypath",
+                        System.getProperty("user.dir") + "/native/"
+                                + System.getProperty("os.name").toLowerCase());
+            }
 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, Paths.get("./fonts/ufonts.com_poplar.ttf").toFile()));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, Paths.get("./fonts/ufonts.com_poplar.ttf").toFile()));
 
             // Is a specific level set as run parameter?
             int initialLevelId = GameParameters.MAP_INITIAL_ID;
@@ -92,23 +92,23 @@ public class Breakout extends StateBasedGame implements GameParameters {
                 }
             }
 
-	        // Add this StateBasedGame to an AppGameContainer
+            // Add this StateBasedGame to an AppGameContainer
             Breakout game = new Breakout(false, initialLevelId);
             AppGameContainer app = new AppGameContainer(game);
 
-	        // Set the display mode and frame rate
-	        app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
-	        app.setTargetFrameRate(FRAME_RATE);
+            // Set the display mode and frame rate
+            app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
+            app.setTargetFrameRate(FRAME_RATE);
 
-	        app.setShowFPS(false);
+            app.setShowFPS(false);
 
-	        app.setIcons(GameParameters.ICON);
+            app.setIcons(GameParameters.ICON);
 
-	        // now start the game!
-	        app.start();
-    	}catch(Exception e){
-    		logger.error(e);
-    	}
+            // now start the game!
+            app.start();
+        } catch (Exception e) {
+            logger.error(e);
+        }
     }
 
     @Override
@@ -116,7 +116,7 @@ public class Breakout extends StateBasedGame implements GameParameters {
         //release resources to gracefully free the native data
         soundController.close();
 
-        try{
+        try {
             highScoreController.saveToFile();
         } catch (Exception e) {
             logger.error("E");

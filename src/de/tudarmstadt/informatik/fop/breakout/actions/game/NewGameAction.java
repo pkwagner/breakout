@@ -24,7 +24,7 @@ public class NewGameAction implements ComponentListener {
 
     private GameContainer gameContainer;
 
-    public NewGameAction(GameContainer gameContainer, StateBasedGame stateBasedGame){
+    public NewGameAction(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         this.gameplayState = (GameplayState) stateBasedGame.getState(GameParameters.GAMEPLAY_STATE);
         this.stateBasedGame = stateBasedGame;
         this.gameContainer = gameContainer;
@@ -35,7 +35,7 @@ public class NewGameAction implements ComponentListener {
         try {
             gameplayState.enter(gameContainer, stateBasedGame);
             stateBasedGame.enterState(GameParameters.GAMEPLAY_STATE);
-        } catch (SlickException e){
+        } catch (SlickException e) {
             logger.error("Unable to start game");
         }
     }

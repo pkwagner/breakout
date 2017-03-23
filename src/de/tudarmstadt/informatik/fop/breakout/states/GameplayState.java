@@ -3,7 +3,7 @@ package de.tudarmstadt.informatik.fop.breakout.states;
 import de.tudarmstadt.informatik.fop.breakout.actions.game.PauseToggleAction;
 import de.tudarmstadt.informatik.fop.breakout.actions.game.StartGameAction;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.controllers.*;
+import de.tudarmstadt.informatik.fop.breakout.controllers.SoundController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.game.BallController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.game.ClockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.game.MapController;
@@ -11,21 +11,22 @@ import de.tudarmstadt.informatik.fop.breakout.controllers.game.StickController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.RamBlockMovementController;
 import de.tudarmstadt.informatik.fop.breakout.events.KeyPressedEvent;
 import de.tudarmstadt.informatik.fop.breakout.factories.BorderFactory;
-import de.tudarmstadt.informatik.fop.breakout.models.*;
+import de.tudarmstadt.informatik.fop.breakout.models.KeyBinding;
+import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.models.game.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.ClockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.models.gui.BackButton;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
-
 import de.tudarmstadt.informatik.fop.breakout.views.game.*;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.newdawn.slick.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -178,8 +179,6 @@ public class GameplayState extends AbstractGameState {
             } catch (SlickException e) {
                 logger.error("Some error occurred while loading map" + currentMapId + ": " + e);
             }
-        } else {
-            // TODO Victory screen?!
         }
     }
 
@@ -188,7 +187,7 @@ public class GameplayState extends AbstractGameState {
             throws SlickException {
         super.update(gameContainer, stateBasedGame, delta);
 
-        if(!gameContainer.isPaused())ramBlockMovementController.update(this, delta);
+        if (!gameContainer.isPaused()) ramBlockMovementController.update(this, delta);
 
         // Check if game speed fade is needed
         if (gameSpeedFactorGoal != gameSpeedFactor) {
@@ -292,7 +291,7 @@ public class GameplayState extends AbstractGameState {
     /**
      * Creates and adds a new ball to the game
      *
-     * @param stateBasedGame this game instance
+     * @param stateBasedGame           this game instance
      * @param initialControllingPlayer the player who initially controls the ball and should gain the points for destroyed blocks
      * @return the created ball
      * @throws SlickException if the image cannot be loaded
@@ -324,7 +323,7 @@ public class GameplayState extends AbstractGameState {
      * Adds a player stick to the game
      *
      * @param stateBasedGame game instance
-     * @param position start position
+     * @param position       start position
      * @return the created stick
      * @throws SlickException if the stick image cannot be loaded
      */
@@ -359,7 +358,7 @@ public class GameplayState extends AbstractGameState {
     /**
      * @return the shared ram block movement controller
      */
-    public RamBlockMovementController getRBMC(){
+    public RamBlockMovementController getRBMC() {
         return ramBlockMovementController;
     }
 

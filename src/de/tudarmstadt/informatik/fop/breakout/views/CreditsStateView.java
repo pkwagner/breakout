@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
+
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 
 import static de.tudarmstadt.informatik.fop.breakout.constants.GameParameters.*;
@@ -26,7 +27,7 @@ public class CreditsStateView extends RenderComponent {
 
     @Override
     public Vector2f getSize() {
-        return new Vector2f(GameParameters.WINDOW_WIDTH,GameParameters.WINDOW_HEIGHT);
+        return new Vector2f(GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class SimpleBlockController extends Component {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
     }
 
-    public void init(StateBasedGame game){
+    public void init(StateBasedGame game) {
 
     }
 }

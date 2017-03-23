@@ -74,11 +74,10 @@ public class MainMenuState extends AbstractGameState {
     /**
      * Creates a new button and adds it to this state.
      *
-     * @param container screen container
+     * @param container   screen container
      * @param buttonImage background image of this button
-     * @param posY start y position
-     * @param text button label
-     *
+     * @param posY        start y position
+     * @param text        button label
      * @return the created button
      */
     private ButtonView addMenuEntry(GameContainer container, Image buttonImage, int posY, String text) {
@@ -91,8 +90,8 @@ public class MainMenuState extends AbstractGameState {
     /**
      * Add the change state, mouse over and mouse down listeners.
      *
-     * @param button where to add the listeners
-     * @param game the game instance
+     * @param button    where to add the listeners
+     * @param game      the game instance
      * @param mouseDown which image should be displayed if the user pressed on the button but didn't released it
      * @param mouseOver which image should be displayed if the user hovers over the button
      * @param nextState to which state should we switch if the player clicked on the button

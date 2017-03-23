@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class BallModel extends Entity {
 
-	private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     private Vector2f velocity;
     private float radius = 12.5F;
@@ -28,11 +28,11 @@ public class BallModel extends Entity {
 
         outline = new Vector2f[numberOfVertices];
 
-        for(int i = 0; i < numberOfVertices; i++){
-        	double phase =  Utility.map((float)i, 0.0F,(float) numberOfVertices, 0.0F,(float) Math.PI * 2);
-        	float x = (float) Math.sin(phase);
-        	float y = (float) Math.cos(phase);
-        	outline[i] = (new Vector2f(x,y)).normalise().scale(radius);
+        for (int i = 0; i < numberOfVertices; i++) {
+            double phase = Utility.map((float) i, 0.0F, (float) numberOfVertices, 0.0F, (float) Math.PI * 2);
+            float x = (float) Math.sin(phase);
+            float y = (float) Math.cos(phase);
+            outline[i] = (new Vector2f(x, y)).normalise().scale(radius);
         }
     }
 
@@ -49,22 +49,22 @@ public class BallModel extends Entity {
         return new Circle(getPosition().getX(), getPosition().getY(), radius);
     }
 
-    public void setVelocityRotation(float angle){
-    	float angleRad = Utility.map(angle,0,360,0,(float) Math.PI*2);
+    public void setVelocityRotation(float angle) {
+        float angleRad = Utility.map(angle, 0, 360, 0, (float) Math.PI * 2);
 
-    	float x = (float)Math.sin(angleRad);
-    	float y = (float)-Math.cos(angleRad);
-    	velocity = new Vector2f(x,y).scale(0.5F);
-    	logger.debug("angle" + angle);
-    	logger.debug( "x" + Utility.round(x,2) + "y: " + Utility.round(y,2));
+        float x = (float) Math.sin(angleRad);
+        float y = (float) -Math.cos(angleRad);
+        velocity = new Vector2f(x, y).scale(0.5F);
+        logger.debug("angle" + angle);
+        logger.debug("x" + Utility.round(x, 2) + "y: " + Utility.round(y, 2));
     }
 
-    public void step(){
-    	getPosition().add(velocity);
+    public void step() {
+        getPosition().add(velocity);
     }
 
-    public void stepBackwards(){
-    	getPosition().add(velocity.copy().scale(-1));
+    public void stepBackwards() {
+        getPosition().add(velocity.copy().scale(-1));
     }
 
     public void setRadius(float radius) {

@@ -17,8 +17,8 @@ import org.newdawn.slick.state.StateBasedGame;
  * @see Checkbox
  */
 public class CheckboxView extends RenderComponent {
-	private final static int CHECKBOX_STROKE_THICKNESS = 4;
-	private final static int CHECKBOX_ENABLED_WIDTH = 8;
+    private final static int CHECKBOX_STROKE_THICKNESS = 4;
+    private final static int CHECKBOX_ENABLED_WIDTH = 8;
 
     public CheckboxView(String id) {
         super(id);
@@ -40,13 +40,13 @@ public class CheckboxView extends RenderComponent {
         g.setColor(Color.black);
         g.fillRect(shape.getMinX(), shape.getMinY(), shape.getWidth(), shape.getHeight());
 
-        g.setColor(new Color(255,250,211));
-        g.fillRect(shape.getMinX()+CHECKBOX_STROKE_THICKNESS, shape.getMinY()+CHECKBOX_STROKE_THICKNESS, shape.getWidth()-CHECKBOX_STROKE_THICKNESS*2, shape.getHeight()-CHECKBOX_STROKE_THICKNESS*2);
+        g.setColor(new Color(255, 250, 211));
+        g.fillRect(shape.getMinX() + CHECKBOX_STROKE_THICKNESS, shape.getMinY() + CHECKBOX_STROKE_THICKNESS, shape.getWidth() - CHECKBOX_STROKE_THICKNESS * 2, shape.getHeight() - CHECKBOX_STROKE_THICKNESS * 2);
 
         //draw the X
         if (checkbox.isEnabled()) {
-        	g.setColor(Color.black);
-        	g.fillRect((int)(shape.getCenterX()-CHECKBOX_ENABLED_WIDTH/2.0),(int)(shape.getCenterY()-CHECKBOX_ENABLED_WIDTH/2.0), CHECKBOX_ENABLED_WIDTH,CHECKBOX_ENABLED_WIDTH);
+            g.setColor(Color.black);
+            g.fillRect((int) (shape.getCenterX() - CHECKBOX_ENABLED_WIDTH / 2.0), (int) (shape.getCenterY() - CHECKBOX_ENABLED_WIDTH / 2.0), CHECKBOX_ENABLED_WIDTH, CHECKBOX_ENABLED_WIDTH);
         }
 
         //restore the default settings

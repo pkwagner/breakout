@@ -33,8 +33,8 @@ public class BlockCollideAction {
      * Will be called if a ball collides with a block
      *
      * @param blockModel the block the ball collided with
-     * @param ballModel the ball that collided with the block
-     * @param breakout the game instance
+     * @param ballModel  the ball that collided with the block
+     * @param breakout   the game instance
      */
     BlockCollideAction(AbstractBlockModel blockModel, BallModel ballModel, Breakout breakout) {
         this.blockModel = blockModel;
@@ -52,7 +52,7 @@ public class BlockCollideAction {
             destroy();
         } else {
             // Change render component based on remaining hits
-        	blockModel.getView().updateImage(blockModel.getInitialHits()-blockModel.getHitsLeft());
+            blockModel.getView().updateImage(blockModel.getInitialHits() - blockModel.getHitsLeft());
         }
 
         // Play hit-stick-sound
@@ -114,7 +114,7 @@ public class BlockCollideAction {
             item.addComponent(itemController);
             itemController.init();
             try {
-                item.addComponent(new ItemView(itemId+GameParameters.EXT_VIEW,item,itemType));
+                item.addComponent(new ItemView(itemId + GameParameters.EXT_VIEW, item, itemType));
                 item.setPosition(blockModel.getPosition().copy());
                 gameplayState.addEntity(item);
             } catch (SlickException e) {

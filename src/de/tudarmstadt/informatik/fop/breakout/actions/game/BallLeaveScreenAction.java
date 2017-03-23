@@ -90,14 +90,14 @@ public class BallLeaveScreenAction implements Action {
         }
 
         // Check if all players are dead (game end)
-        if(Arrays.stream(allPlayers).allMatch(playerModel -> playerModel.isDead())){
+        if (Arrays.stream(allPlayers).allMatch(playerModel -> playerModel.isDead())) {
             float time = ((ClockModel) entityManager.getEntity(GameParameters.GAMEPLAY_STATE, GameParameters.STOP_WATCH_ID)).getSeconds();
 
             GameoverState gameoverState = (GameoverState) stateBasedGame.getState(GameParameters.GAMEOVER_STATE);
-            if(allPlayers.length==1)
-                gameoverState.load(allPlayers[0],time);
+            if (allPlayers.length == 1)
+                gameoverState.load(allPlayers[0], time);
             else
-                gameoverState.load(allPlayers,time);
+                gameoverState.load(allPlayers, time);
 
             stateBasedGame.enterState(GameParameters.GAMEOVER_STATE);
         }

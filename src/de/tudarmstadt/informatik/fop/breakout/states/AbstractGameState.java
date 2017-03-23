@@ -23,7 +23,7 @@ public abstract class AbstractGameState extends BasicGameState {
     /**
      * Creates a new basic game state that holds the common implementation for background image and state id.
      *
-     * @param stateId unique state id
+     * @param stateId   unique state id
      * @param imagePath relative path to the background image
      * @throws SlickException if the image cannot be loaded
      */
@@ -34,7 +34,7 @@ public abstract class AbstractGameState extends BasicGameState {
     /**
      * Creates a new basic game state that holds the common implementation for background image and state id.
      *
-     * @param stateId unique state id
+     * @param stateId   unique state id
      * @param imagePath relative path to the background image or spritesheet
      * @param animation if the background image should be animated
      * @throws SlickException if the image cannot be loaded
@@ -43,7 +43,8 @@ public abstract class AbstractGameState extends BasicGameState {
         this.stateId = stateId;
 
         if (isTesting()) {
-            background = (x, y) -> {};
+            background = (x, y) -> {
+            };
         } else if (animation) {
             this.background = new Image(imagePath);
         } else {
@@ -94,8 +95,8 @@ public abstract class AbstractGameState extends BasicGameState {
         entityManager.removeEntity(stateId, entity);
     }
 
-    protected void getEntity(String id){
-        entityManager.getEntity(stateId,id);
+    protected void getEntity(String id) {
+        entityManager.getEntity(stateId, id);
     }
 
     /**

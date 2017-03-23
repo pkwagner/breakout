@@ -50,7 +50,7 @@ public class SliderView extends RenderComponent {
      * Draw a thick line
      *
      * @param graphicsContext where to draw to
-     * @param shape the boundingbox of the owning entity
+     * @param shape           the boundingbox of the owning entity
      */
     private void drawLine(Graphics graphicsContext, Shape shape) {
         graphicsContext.setColor(Color.gray);
@@ -63,28 +63,28 @@ public class SliderView extends RenderComponent {
     /**
      * Draw a filled circle at the correct percent position
      *
-     * @param g where to draw to
-     * @param percent the percentual value of the slider
+     * @param g          where to draw to
+     * @param percent    the percentual value of the slider
      * @param ownerShape the boundingbox of the owning entity
      */
     private void drawCircle(Graphics g, float percent, Shape ownerShape) {
-    	float percentPosition = ownerShape.getWidth() * percent;
+        float percentPosition = ownerShape.getWidth() * percent;
         float startX = ownerShape.getMinX() + percentPosition;
         g.setAntiAlias(true);
-        int x,y;
+        int x, y;
         //draw outer circle
         g.setColor(Color.black);
-        x = (int) (startX-SLIDER_CIRCLE_RADIUS);
-        y = (int) (ownerShape.getCenterY()-SLIDER_CIRCLE_RADIUS);
+        x = (int) (startX - SLIDER_CIRCLE_RADIUS);
+        y = (int) (ownerShape.getCenterY() - SLIDER_CIRCLE_RADIUS);
 
-        g.fillOval(x,y, SLIDER_CIRCLE_RADIUS*2, SLIDER_CIRCLE_RADIUS*2);
+        g.fillOval(x, y, SLIDER_CIRCLE_RADIUS * 2, SLIDER_CIRCLE_RADIUS * 2);
 
         //draw inner circle
-        g.setColor(new Color(255,250,211));
-        x = (int) (startX-(SLIDER_CIRCLE_RADIUS-SLIDER_CIRCLE_STROKE_THICKNESS));
-        y = (int) (ownerShape.getCenterY()-(SLIDER_CIRCLE_RADIUS-SLIDER_CIRCLE_STROKE_THICKNESS));
+        g.setColor(new Color(255, 250, 211));
+        x = (int) (startX - (SLIDER_CIRCLE_RADIUS - SLIDER_CIRCLE_STROKE_THICKNESS));
+        y = (int) (ownerShape.getCenterY() - (SLIDER_CIRCLE_RADIUS - SLIDER_CIRCLE_STROKE_THICKNESS));
 
-        g.fillOval(x, y, (SLIDER_CIRCLE_RADIUS-SLIDER_CIRCLE_STROKE_THICKNESS)*2, (SLIDER_CIRCLE_RADIUS-SLIDER_CIRCLE_STROKE_THICKNESS)*2);
+        g.fillOval(x, y, (SLIDER_CIRCLE_RADIUS - SLIDER_CIRCLE_STROKE_THICKNESS) * 2, (SLIDER_CIRCLE_RADIUS - SLIDER_CIRCLE_STROKE_THICKNESS) * 2);
         g.setAntiAlias(false);
     }
 

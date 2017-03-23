@@ -33,15 +33,15 @@ public class ButtonView extends MouseOverArea {
         int xOffset = (image.getWidth() - font.getWidth(label)) / 2;
         int yOffset = (image.getHeight() - font.getHeight(label)) / 2;
 
-        if (xOffset<0)xOffset=0;
-        if (yOffset<0)yOffset=0;
+        if (xOffset < 0) xOffset = 0;
+        if (yOffset < 0) yOffset = 0;
 
         fontOffset = new Vector2f(xOffset, yOffset + GameParameters.ENTRY_Y_OFFSET);
     }
 
     @Override
     public void render(GUIContext guiContext, Graphics g) {
-        if(visible) {
+        if (visible) {
             super.render(guiContext, g);
 
             g.setFont(font);
@@ -52,7 +52,7 @@ public class ButtonView extends MouseOverArea {
         }
     }
 
-    public void setVisible(boolean visible){
+    public void setVisible(boolean visible) {
         this.visible = visible;
     }
 }

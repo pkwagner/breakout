@@ -28,10 +28,6 @@ public class PlayerModel extends Entity {
         return blockCounter;
     }
 
-    public int getScore() {
-        return score;
-    }
-
     public int getRemainingHealthpoints() {
         return remainingHealthpoints;
     }
@@ -46,10 +42,6 @@ public class PlayerModel extends Entity {
 
     public void setStickController(StickController stickController) {
         this.stickController = stickController;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public boolean isDead() {

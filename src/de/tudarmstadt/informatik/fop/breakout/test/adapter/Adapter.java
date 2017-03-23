@@ -35,7 +35,6 @@ public class Adapter implements GameParameters {
      */
     private TestAppGameContainer app;
 
-    //TODO you should declare the additional attributes you may require here.
     private StickModel stickModel;
     private PlayerModel playerModel = new PlayerModel(GameParameters.PLAYER_ID, false);
     private BallModel ballModel = new BallModel(GameParameters.BALL_ID, playerModel);
@@ -83,8 +82,8 @@ public class Adapter implements GameParameters {
         // Initialize the game in debug mode (no GUI output)
         breakout = new Breakout(true, 0);
 
-        ballModel.setVelocity(new Vector2f(1,1));
-        ballModel.setPosition(new Vector2f(GameParameters.WINDOW_WIDTH/2,GameParameters.WINDOW_HEIGHT/2));
+        ballModel.setVelocity(new Vector2f(1, 1));
+        ballModel.setPosition(new Vector2f(GameParameters.WINDOW_WIDTH / 2, GameParameters.WINDOW_HEIGHT / 2));
 
         try {
             app = new TestAppGameContainer(breakout, GameParameters.WINDOW_WIDTH, GameParameters.WINDOW_HEIGHT, false);
@@ -141,7 +140,7 @@ public class Adapter implements GameParameters {
     }
 
 	/* ***************************************************
-	 * ********************** Ball **********************
+     * ********************** Ball **********************
 	 * ***************************************************
 	 */
 
@@ -154,9 +153,9 @@ public class Adapter implements GameParameters {
      * @return an entity representing a ball with the ID passed in as ballID
      */
     public Entity createBallInstance(String ballID) {
-    	BallModel ballModel = new BallModel(ballID, new PlayerModel("DUMMY", false));
-    	ballModel.setVelocity(new Vector2f(1,1));
-    	return ballModel;
+        BallModel ballModel = new BallModel(ballID, new PlayerModel("DUMMY", false));
+        ballModel.setVelocity(new Vector2f(1, 1));
+        return ballModel;
     }
 
     /**
@@ -223,7 +222,7 @@ public class Adapter implements GameParameters {
      */
     public float getSpeed() {
         // Round 0.001
-        return Utility.round(ballModel.getVelocity().length(),3);
+        return Utility.round(ballModel.getVelocity().length(), 3);
     }
 
     /**
@@ -249,16 +248,16 @@ public class Adapter implements GameParameters {
      * only collide with the top border if the orientation is fitting).
      */
     public boolean collides(Entity otherEntity) {
-    	logger.debug("x before: "+ ballModel.getShape().getMinX());
-    	ballModel.step();
-    	logger.debug("x after: "+ ballModel.getShape().getMinX());
-    	boolean collides = ballModel.collides(otherEntity);
-    	ballModel.stepBackwards();
-    	return collides;
+        logger.debug("x before: " + ballModel.getShape().getMinX());
+        ballModel.step();
+        logger.debug("x after: " + ballModel.getShape().getMinX());
+        boolean collides = ballModel.collides(otherEntity);
+        ballModel.stepBackwards();
+        return collides;
     }
 
 	/* ***************************************************
-	 * ********************** Player *********************
+     * ********************** Player *********************
 	 * ***************************************************
 	 */
 
@@ -310,7 +309,7 @@ public class Adapter implements GameParameters {
      * @param blockID  blockID ID of the chosen block
      */
     public void setHitsLeft(int hitsLeft, String blockID) {
-    	logger.info("testing block: " + blockID);
+        logger.info("testing block: " + blockID);
         mapController.getBlock(blockID).setHitsLeft(hitsLeft);
     }
 
@@ -321,7 +320,7 @@ public class Adapter implements GameParameters {
      * @return number of hits
      */
     public int getHitsLeft(String blockID) {
-    	logger.info("testing block (getHitsLeft): " + blockID);
+        logger.info("testing block (getHitsLeft): " + blockID);
         AbstractBlockModel block = mapController.getBlock(blockID);
 
         return block.getHitsLeft();
@@ -344,7 +343,7 @@ public class Adapter implements GameParameters {
      * @return true, if block has hits left, else false
      */
     public boolean hasHitsLeft(String blockID) {
-    	logger.info("testing block (hasHitsLeft): " + blockID);
+        logger.info("testing block (hasHitsLeft): " + blockID);
         return mapController.getBlock(blockID) != null;
     }
 
