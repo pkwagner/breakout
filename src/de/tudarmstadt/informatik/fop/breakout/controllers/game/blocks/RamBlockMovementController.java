@@ -16,7 +16,6 @@ public class RamBlockMovementController {
     private float velocity;
     private float reboundVelocity;
     private final float acceleration = GameParameters.RAM_BLOCK_ACCELERATION;
-    ;
 
     private boolean rebounded;
 

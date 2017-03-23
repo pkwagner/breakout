@@ -236,9 +236,7 @@ public class MapController {
      * @return
      */
     private boolean isRamBlock(String s) {
-        if (!(s.startsWith("l") | s.startsWith("r") | s.startsWith("u") | s.startsWith("d"))) return false;
-        if (!Utility.isInteger(s.substring(1))) return false;
-        else return true;
+        return s.startsWith("l") | s.startsWith("r") | s.startsWith("u") | s.startsWith("d") && Utility.isInteger(s.substring(1));
     }
 
     /**

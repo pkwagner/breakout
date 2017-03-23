@@ -8,7 +8,6 @@ import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.states.*;
 import de.tudarmstadt.informatik.fop.breakout.states.submenu.CreditsState;
 import de.tudarmstadt.informatik.fop.breakout.states.submenu.HighscoreState;
-import de.tudarmstadt.informatik.fop.breakout.states.MainMenuState;
 import de.tudarmstadt.informatik.fop.breakout.states.submenu.SettingsState;
 import eea.engine.entity.StateBasedEntityManager;
 import org.apache.logging.log4j.LogManager;

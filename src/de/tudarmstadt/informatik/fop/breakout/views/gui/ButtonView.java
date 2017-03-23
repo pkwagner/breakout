@@ -3,8 +3,6 @@ package de.tudarmstadt.informatik.fop.breakout.views.gui;
 import org.lwjgl.util.vector.Vector2f;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.gui.*;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
@@ -12,9 +10,6 @@ import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import java.awt.Font;
 
 
-/**
- *
- */
 public class ButtonView extends MouseOverArea {
 
     private String label;

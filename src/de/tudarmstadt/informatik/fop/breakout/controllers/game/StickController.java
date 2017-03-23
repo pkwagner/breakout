@@ -1,7 +1,6 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers.game;
 
 import de.tudarmstadt.informatik.fop.breakout.actions.game.StickMoveAction;
-import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.events.KeyDownEvent;
 import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.KeyBinding;
