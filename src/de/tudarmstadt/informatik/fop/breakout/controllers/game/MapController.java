@@ -1,9 +1,8 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers.game;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.AbstractBlockController;
-import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.RamBlockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.SimpleBlockController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.RamBlockController;
 import de.tudarmstadt.informatik.fop.breakout.exceptions.InvalidMapFileException;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.RamBlock;
@@ -73,7 +72,7 @@ public class MapController {
 
         //assign controller to blocks
         map.values().forEach(block -> {
-            AbstractBlockController c = createController(block);
+            SimpleBlockController c = createController(block);
             block.addComponent(c);
             c.init(stateBasedGame);
         });
@@ -210,7 +209,7 @@ public class MapController {
      * @param block the block for which a controller shall be created
      * @return
      */
-    private AbstractBlockController createController(AbstractBlockModel block){
+    private SimpleBlockController createController(AbstractBlockModel block){
 
     	switch(block.getType()){
     		case SIMPLE:	return new SimpleBlockController(block.getID() + "Controller");

@@ -1,14 +1,14 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.state.StateBasedGame;
-
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.RamBlock;
 import de.tudarmstadt.informatik.fop.breakout.util.Utility;
 
-public class RamBlockController extends AbstractBlockController {
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
+
+public class RamBlockController extends SimpleBlockController {
 
 	private RamBlock blockModel;
 	Vector2f positionA,positionB; //the positions between which the block oscillates
@@ -21,37 +21,9 @@ public class RamBlockController extends AbstractBlockController {
 		this.length = length;
 	}
 
-	@Override
-	public void setHitsLeft(int value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getHitsLeft() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void addHitsLeft(int value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean hasHitsLeft() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
     @Override
     public RamBlock getOwnerEntity() {
         return (RamBlock) super.getOwnerEntity();
-    }
-
-    public void setOwnerEntity(RamBlock owningEntity) {
-        super.setOwnerEntity(owningEntity);
     }
 
     @Override
