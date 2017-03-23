@@ -1,7 +1,9 @@
 package de.tudarmstadt.informatik.fop.breakout.views;
 
 import de.tudarmstadt.informatik.fop.breakout.models.PlayerModel;
+
 import eea.engine.component.RenderComponent;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
@@ -20,14 +22,13 @@ public class PlayerStatsRenderComponent extends RenderComponent {
 
     @Override
     public Vector2f getSize() {
-        // TODO
-        return new Vector2f(0, 0);
+        return new Vector2f(200, 20);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         String scoreStats = (showPlayerName ? player.getDisplayName() + " | " : "") + "Blocks: " + player.getBlockCounter();
-        String healthStats = "Leben: " + player.getRemainingHitPoints();
+        String healthStats = "Lives: " + player.getRemainingHitPoints();
         String stats = scoreStats + " // " + healthStats;
         graphics.drawString(stats, player.getPosition().getX(), player.getPosition().getY());
     }

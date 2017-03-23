@@ -13,7 +13,7 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 * Ball collides with other entities (i.e. Border and Stick)
 * Pause game on shortcut
 * Koop-Multiplayer
-* Custom graphics
+* Custom graphics (including game icon)
 * Moveable blocks
 * Ball speed increases over time
 * Particle effects (flames for the stick)

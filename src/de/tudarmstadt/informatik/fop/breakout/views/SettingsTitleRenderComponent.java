@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.awt.*;
 
 /**
- * Shows the settings titles example: "Volume"
+ * Shows the settings section titles example: "Volume", "Player 1"
  */
 public class SettingsTitleRenderComponent extends RenderComponent {
 

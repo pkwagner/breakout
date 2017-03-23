@@ -15,6 +15,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class StartGameRenderComponent extends RenderComponent {
 
+    private static final String FORMAT = "Press %s to start the game";
+
     public StartGameRenderComponent() {
         super(GameParameters.GAMESTART_ENTITY_ID + GameParameters.EXT_VIEW);
     }
@@ -26,7 +28,7 @@ public class StartGameRenderComponent extends RenderComponent {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        String text = "Press " + KeyBinding.START_GAME.getKeyName() +  " to start the game";
+        String text = String.format(FORMAT, KeyBinding.START_GAME.getKeyName());
 
         int textWidth = graphics.getFont().getWidth(text);
 
