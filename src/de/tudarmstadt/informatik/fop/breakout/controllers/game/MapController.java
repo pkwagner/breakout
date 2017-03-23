@@ -1,9 +1,10 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers.game;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.SimpleBlockController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.RamBlockController;
+import de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks.SimpleBlockController;
 import de.tudarmstadt.informatik.fop.breakout.exceptions.InvalidMapFileException;
+import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.RamBlock;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.SimpleBlock;
@@ -176,17 +177,17 @@ public class MapController {
     			logger.debug("created simpleblock " + Integer.parseInt(blockRep) + " at row " + row + " and column " + column + "::"+ block.getID());
     		}else if(isRamBlock(blockRep)){
 
-    			GameParameters.Direction d;
+    			Direction d;
     			switch(blockRep.charAt(0)){
-	    			case 'u': d = GameParameters.Direction.UP;
+	    			case 'u': d = Direction.UP;
 	    				break;
-	    			case 'd': d = GameParameters.Direction.DOWN;
+	    			case 'd': d = Direction.DOWN;
 						break;
-	    			case 'l': d = GameParameters.Direction.LEFT;
+	    			case 'l': d = Direction.LEFT;
 						break;
-	    			case 'r': d = GameParameters.Direction.RIGHT;
+	    			case 'r': d = Direction.RIGHT;
 						break;
-					default: d = GameParameters.Direction.RIGHT;
+					default: d = Direction.RIGHT;
 						logger.error("Something went wrong during creation of RamBlock " + blockRep + " at row " + row + " and column " + column);
     			}
 

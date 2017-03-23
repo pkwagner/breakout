@@ -1,6 +1,7 @@
 package de.tudarmstadt.informatik.fop.breakout.models.game.blocks;
 
-import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.BlockType;
+import de.tudarmstadt.informatik.fop.breakout.models.ItemType;
 
 import java.util.Arrays;
 
@@ -11,11 +12,11 @@ public class SimpleBlock extends AbstractBlockModel {
         this.setInitialHits(initialHits);
 
         // Set all items as default
-        droppableItems = Arrays.copyOf(GameParameters.ItemType.values(), GameParameters.ItemType.values().length);
+        droppableItems = Arrays.copyOf(ItemType.values(), ItemType.values().length);
     }
 
     @Override
-    public GameParameters.BlockType getType() {
-        return GameParameters.BlockType.SIMPLE;
+    public BlockType getType() {
+        return BlockType.SIMPLE;
     }
 }

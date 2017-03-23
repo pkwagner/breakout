@@ -1,9 +1,9 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.game;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
-import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters.Direction;
-import de.tudarmstadt.informatik.fop.breakout.models.game.BallModel;
+import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
+import de.tudarmstadt.informatik.fop.breakout.models.game.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.StickModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;

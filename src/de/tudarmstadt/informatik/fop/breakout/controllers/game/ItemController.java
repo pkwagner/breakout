@@ -1,8 +1,8 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers.game;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.ItemType;
 import de.tudarmstadt.informatik.fop.breakout.models.game.ItemModel;
-
 import de.tudarmstadt.informatik.fop.breakout.models.game.PlayerModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import eea.engine.action.Action;
@@ -10,7 +10,6 @@ import eea.engine.component.Component;
 import eea.engine.entity.StateBasedEntityManager;
 import eea.engine.event.basicevents.CollisionEvent;
 import eea.engine.event.basicevents.LeavingScreenEvent;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.newdawn.slick.GameContainer;
@@ -21,10 +20,10 @@ public class ItemController extends Component {
 
     private final Logger logger = LogManager.getLogger();
 
-    private final GameParameters.ItemType itemType;
+    private final ItemType itemType;
     private final PlayerModel owner;
 
-    public ItemController(String componentID, GameParameters.ItemType itemType, PlayerModel owner) {
+    public ItemController(String componentID, ItemType itemType, PlayerModel owner) {
         super(componentID);
 
         this.itemType = itemType;

@@ -1,11 +1,9 @@
 package de.tudarmstadt.informatik.fop.breakout.actions.game;
 
-import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.game.StickModel;
-
 import eea.engine.action.Action;
 import eea.engine.component.Component;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,10 +13,10 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class StickMoveAction implements Action {
 
-    private final GameParameters.Direction moveDirection;
+    private final Direction moveDirection;
     private final StickModel stickModel;
 
-    public StickMoveAction(GameParameters.Direction moveDirection, StickModel stickModel) {
+    public StickMoveAction(Direction moveDirection, StickModel stickModel) {
         this.moveDirection = moveDirection;
         this.stickModel = stickModel;
     }
@@ -26,7 +24,7 @@ public class StickMoveAction implements Action {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta, Component component) {
         Vector2f frameVelocity = stickModel.getVelocity().copy().scale(delta);
-        if (moveDirection == GameParameters.Direction.LEFT)
+        if (moveDirection == Direction.LEFT)
             frameVelocity.scale(-1);
 
         Vector2f oldPosition = stickModel.getPosition();

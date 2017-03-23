@@ -3,10 +3,11 @@ package de.tudarmstadt.informatik.fop.breakout.actions.game;
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.controllers.game.ItemController;
 import de.tudarmstadt.informatik.fop.breakout.controllers.game.MapController;
+import de.tudarmstadt.informatik.fop.breakout.models.ItemType;
+import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.models.game.BallModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.ItemModel;
 import de.tudarmstadt.informatik.fop.breakout.models.game.PlayerModel;
-import de.tudarmstadt.informatik.fop.breakout.models.SoundType;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.AbstractBlockModel;
 import de.tudarmstadt.informatik.fop.breakout.states.GameplayState;
 import de.tudarmstadt.informatik.fop.breakout.ui.Breakout;
@@ -97,8 +98,8 @@ public class BlockCollideAction {
             GameplayState gameplayState = (GameplayState) breakout.getState(GameParameters.GAMEPLAY_STATE);
 
             // Get random item based on each item possibility
-            GameParameters.ItemType possibleItemTypes[] = blockModel.getDroppableItems();
-            GameParameters.ItemType itemType = getRandomItem(possibleItemTypes);
+            ItemType possibleItemTypes[] = blockModel.getDroppableItems();
+            ItemType itemType = getRandomItem(possibleItemTypes);
 
             // Determinate null pointer exceptions
             if (itemType == null)
@@ -128,16 +129,16 @@ public class BlockCollideAction {
      * @param items a list of ItemTypes
      * @return an item out of the given list
      */
-    private GameParameters.ItemType getRandomItem(GameParameters.ItemType items[]) {
+    private ItemType getRandomItem(ItemType items[]) {
         // Calculate sum of all given droppable items to norm probability
         double totalPossibility = Stream.of(items)
-                .mapToDouble(GameParameters.ItemType::getPossibility)
+                .mapToDouble(ItemType::getPossibility)
                 .sum();
 
         // Some fancy stuff to calculate a random item based on each items probability
         double random = Math.random() * totalPossibility;
         double cumulativeProbability = 0.0;
-        for (GameParameters.ItemType item : items) {
+        for (ItemType item : items) {
             cumulativeProbability += item.getPossibility();
             if (random <= cumulativeProbability)
                 return item;

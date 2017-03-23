@@ -2,6 +2,8 @@ package de.tudarmstadt.informatik.fop.breakout.models.game.blocks;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
 import de.tudarmstadt.informatik.fop.breakout.interfaces.IHitable;
+import de.tudarmstadt.informatik.fop.breakout.models.BlockType;
+import de.tudarmstadt.informatik.fop.breakout.models.ItemType;
 import de.tudarmstadt.informatik.fop.breakout.views.game.blocks.AbstractBlockView;
 import eea.engine.entity.Entity;
 
@@ -12,7 +14,7 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
     private boolean isDestroyed = false;
 
     private int scorePoints = GameParameters.BLOCK_DEFAULT_SCOREPOINTS;
-    protected GameParameters.ItemType droppableItems[] = {};
+    protected ItemType droppableItems[] = {};
 
     private AbstractBlockView view;
 
@@ -30,7 +32,7 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
         this.remainingHits = initialHits;
     }
 
-    public GameParameters.ItemType[] getDroppableItems() {
+    public ItemType[] getDroppableItems() {
         return droppableItems;
     }
 
@@ -66,7 +68,7 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
         remainingHits -= (remainingHits > hits) ? hits : remainingHits;
     }
 
-    public abstract GameParameters.BlockType getType();
+    public abstract BlockType getType();
 
     public int getScorePoints() {
         return scorePoints;

@@ -1,10 +1,9 @@
 package de.tudarmstadt.informatik.fop.breakout.views.game;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.ItemType;
 import de.tudarmstadt.informatik.fop.breakout.models.game.ItemModel;
-
 import eea.engine.component.RenderComponent;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,7 +15,7 @@ public class ItemView extends RenderComponent {
 	private ItemModel itemModel;
 	private boolean isPaused = false;
 
-    public ItemView(String id, ItemModel itemModel, GameParameters.ItemType itemType) throws SlickException {
+    public ItemView(String id, ItemModel itemModel, ItemType itemType) throws SlickException {
         super(id);
         this.itemModel = itemModel;
 

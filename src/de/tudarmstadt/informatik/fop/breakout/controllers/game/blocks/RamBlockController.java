@@ -1,9 +1,9 @@
 package de.tudarmstadt.informatik.fop.breakout.controllers.game.blocks;
 
 import de.tudarmstadt.informatik.fop.breakout.constants.GameParameters;
+import de.tudarmstadt.informatik.fop.breakout.models.Direction;
 import de.tudarmstadt.informatik.fop.breakout.models.game.blocks.RamBlock;
 import de.tudarmstadt.informatik.fop.breakout.util.Utility;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -12,10 +12,10 @@ public class RamBlockController extends SimpleBlockController {
 
 	private RamBlock blockModel;
 	private Vector2f positionA,positionB; //the positions between which the block oscillates
-	private GameParameters.Direction direction;
+	private Direction direction;
 	private int length;
 
-	public RamBlockController(String componentID,GameParameters.Direction direction,int length) {
+	public RamBlockController(String componentID, Direction direction, int length) {
 		super(componentID);
 		this.direction = direction;
 		this.length = length;
