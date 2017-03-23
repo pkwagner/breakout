@@ -187,7 +187,7 @@ public class GameoverState extends AbstractGameState {
 
 
         for(int i = 0; i < numPlayers; i++) {
-            leftBorder = (int) (GameParameters.WINDOW_WIDTH * (i*2+1)/(numPlayers*2F)-columnWidth/2F);
+            leftBorder = (int) (GameParameters.WINDOW_WIDTH * (i*2+1)/(numPlayers*2F)-columnWidth/2F) - 20;
             nameText[i] = addTextEntity("player", font, leftBorder, upperBorder);
             scoreText[i] = addTextEntity("score", font, leftBorder, upperBorder + columnHeight);
             blocksText[i] = addTextEntity("blocks", font, leftBorder, (int) (columnHeight+scoreText[i].getOwnerEntity().getPosition().getY()));
