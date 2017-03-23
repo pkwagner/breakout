@@ -11,8 +11,8 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
     private int remainingHits = initialHits;
     private boolean isDestroyed = false;
 
-    int scorePoints = GameParameters.BLOCK_DEFAULT_SCOREPOINTS;
-    GameParameters.ItemType droppableItems[] = {};
+    private int scorePoints = GameParameters.BLOCK_DEFAULT_SCOREPOINTS;
+    protected GameParameters.ItemType droppableItems[] = {};
 
     private AbstractBlockView view;
 
@@ -25,7 +25,7 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
         return initialHits;
     }
 
-    void setInitialHits(int initialHits) {
+    public void setInitialHits(int initialHits) {
         this.initialHits = initialHits;
         this.remainingHits = initialHits;
     }
@@ -75,8 +75,6 @@ public abstract class AbstractBlockModel extends Entity implements IHitable {
     public void destroy(){
     	isDestroyed = true;
     }
-
-    public abstract GameParameters.BlockType transformToBlockType();
 
 	public boolean isDestroyed() {
 		return isDestroyed;

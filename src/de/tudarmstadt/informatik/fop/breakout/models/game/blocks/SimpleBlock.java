@@ -18,10 +18,4 @@ public class SimpleBlock extends AbstractBlockModel {
     public GameParameters.BlockType getType() {
         return GameParameters.BlockType.SIMPLE;
     }
-
-    @Override
-    public GameParameters.BlockType transformToBlockType() {
-        return null;
-    }
-
 }

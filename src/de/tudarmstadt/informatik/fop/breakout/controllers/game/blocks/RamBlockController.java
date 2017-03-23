@@ -11,9 +11,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class RamBlockController extends SimpleBlockController {
 
 	private RamBlock blockModel;
-	Vector2f positionA,positionB; //the positions between which the block oscillates
-	GameParameters.Direction direction;
-	int length;
+	private Vector2f positionA,positionB; //the positions between which the block oscillates
+	private GameParameters.Direction direction;
+	private int length;
 
 	public RamBlockController(String componentID,GameParameters.Direction direction,int length) {
 		super(componentID);

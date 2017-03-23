@@ -22,11 +22,6 @@ public class RamBlock extends AbstractBlockModel {
 		return GameParameters.BlockType.RAM;
 	}
 
-	@Override
-	public GameParameters.BlockType transformToBlockType() {
-		return null;
-	}
-
 	public float getRamPosition(){
 		return rbmc.getPosition();
 	}
