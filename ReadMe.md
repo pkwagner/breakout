@@ -59,7 +59,15 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 | Gameplay | A | Moves left for Player 2 (Multiplayer) |
 | Gameplay | D | Moves right for Player 2 (Multiplayer) |
 
+## Command arguments
+
+* (Optional) --level=[0-3] Overrides the initial map when you start a new game
+
 ## Credits
+
+### Fonts
+
+* [Poplar](https://ufonts.com/fonts/poplar.html)
 
 ### Sounds
 
