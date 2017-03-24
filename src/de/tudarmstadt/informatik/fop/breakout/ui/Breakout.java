@@ -117,8 +117,8 @@ public class Breakout extends StateBasedGame implements GameParameters {
 
         try {
             highScoreController.saveToFile();
-        } catch (Exception e) {
-            logger.error("E");
+        } catch (IOException ex) {
+            logger.error("Error saving highscores to file {}", ex);
         }
 
         return super.closeRequested();
