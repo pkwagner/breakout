@@ -173,12 +173,13 @@ public class GameplayState extends AbstractGameState {
     public void nextLevel() {
         int currentMapId = mapController.getMapId();
 
-        if (currentMapId < GameParameters.MAP_COUNT) {
-            try {
+        try {
+            if (currentMapId < GameParameters.MAP_COUNT)
                 loadLevel(++currentMapId);
-            } catch (SlickException e) {
-                logger.error("Some error occurred while loading map" + currentMapId + ": " + e);
-            }
+            else
+                loadLevel(initialLevelId);
+        } catch (SlickException e) {
+            logger.error("Some error occurred while loading map" + currentMapId + ": " + e);
         }
     }
 
