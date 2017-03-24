@@ -149,7 +149,7 @@ public interface GameParameters {
     String MAP_FILE_PREFIX = "level";
     String MAP_FILE_EXT = ".map";
     double MAP_REAL_HEIGHT = 50000;
-    double MAP_GRAVITY = 9.81F;
+    double MAP_GRAVITY = 0; // Default value: 9.81F
 
     // Menu
     String ENTRY_IMAGE = "src/main/resources/images/entry.png";
