@@ -26,10 +26,10 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 
 ### Items
 
-* Slower/Faster bal
+* Slower/Faster ball
 * Bigger/Smaller stick
 * Smash-Ball (ball destroys everything on it's way instantly without bouncing back)
-* SlowMo (makes temporarily everything slower including music)
+* SloMo (makes temporarily everything slower including music)
 * Additional ball (Adds a new ball to the game)
 * Health point (Adds a new health point)
 
@@ -43,10 +43,9 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 
 ## Setup
 
-1. Import the project
-2. Include the eea.jar, slick.jar and all jars in log4j/ and lwjgl/jar
-3. Set the Breakout class as the main class
-4. Add a "-Djava.library.path=ABSOLUTE_PATH_TO_LWGL_NATIVE" as vm startup argument
+1. Import as maven project
+2. Set 'Breakout.java' as main class
+3. Add '-Djava.library.path=PATH_TO_LWGL_NATIVE' (example: '-Djava.library.path=native/windows') as vm startup argument
 
 ## Available keyboard shortcuts
 
@@ -73,3 +72,32 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 
 * [Background music](https://www.looperman.com/loops/detail/93477/drums-and-rust-by-flsouto-free-170bpm-industrial-drum-loop)
 royalty-free
+
+## Licenses
+
+### Slick2D
+
+> Copyright (c) 2013, Slick2D
+> 
+> All rights reserved.
+> 
+> Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+> 
+> * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+> * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+> * Neither the name of the Slick2D nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+> 
+> THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+### LWJGL
+
+> Copyright © 2012-present Lightweight Java Game Library
+> All rights reserved.
+> 
+> Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+> 
+> Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+> Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+> Neither the name Lightweight Java Game Library nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+> 
+> THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
