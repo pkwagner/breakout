@@ -60,6 +60,22 @@ public class Breakout extends StateBasedGame implements GameParameters {
 
     public static void main(String[] args) throws SlickException {
         try {
+            // Set the library path depending on the operating system
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                logger.info("Using windows");
+                System.setProperty("org.lwjgl.librarypath",
+                        System.getProperty("user.dir") + "/native/windows");
+            } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                logger.info("Using mac");
+                System.setProperty("org.lwjgl.librarypath",
+                        System.getProperty("user.dir") + "/native/macosx");
+            } else {
+                logger.info("Using linux/bsd");
+                System.setProperty("org.lwjgl.librarypath",
+                        System.getProperty("user.dir") + "/native/"
+                                + System.getProperty("os.name").toLowerCase());
+            }
+
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, Paths.get("src/main/resources/fonts/ufonts.com_poplar.ttf").toFile()));
 

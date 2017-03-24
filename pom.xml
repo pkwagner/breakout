@@ -11,7 +11,6 @@
     <groupId>com.github.konstantinwagner.breakout</groupId>
     <artifactId>breakout</artifactId>
     <version>1.0.0</version>
-
     <build>
         <plugins>
             <plugin>
@@ -22,22 +21,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.googlecode.mavennatives</groupId>
-                <artifactId>maven-nativedependencies-plugin</artifactId>
-                <version>0.0.6</version>
-                <executions>
-                    <execution>
-                        <id>unpacknatives</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <!--suppress MavenModelInspection (this line is for IDEA)-->
-                            <goal>copy</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
