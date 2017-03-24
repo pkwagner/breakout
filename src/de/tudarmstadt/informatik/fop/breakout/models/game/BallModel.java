@@ -50,13 +50,9 @@ public class BallModel extends Entity {
     }
 
     public void setVelocityRotation(float angle) {
-        float angleRad = Utility.map(angle, 0, 360, 0, (float) Math.PI * 2);
 
-        float x = (float) Math.sin(angleRad);
-        float y = (float) -Math.cos(angleRad);
-        velocity = new Vector2f(x, y).scale(0.5F);
-        logger.debug("angle" + angle);
-        logger.debug("x" + Utility.round(x, 2) + "y: " + Utility.round(y, 2));
+        velocity = new Vector2f(0, -1).sub(360 - angle);
+        logger.debug("Angle: {} // New velocity: {}", angle, velocity);
     }
 
     public void step() {
@@ -65,10 +61,6 @@ public class BallModel extends Entity {
 
     public void stepBackwards() {
         getPosition().add(velocity.copy().scale(-1));
-    }
-
-    public void setRadius(float radius) {
-        this.radius = radius;
     }
 
     public Vector2f getVelocity() {
