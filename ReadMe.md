@@ -6,6 +6,8 @@ A project as part of the course FOP (functional object-oriented programming) at 
 
 This is a reimplementation of the game Breakout using LWJGL and a given template.
 
+![Main menu](screenshots/MainMenuState.png)
+
 ## Features
 
 * Stick movement
@@ -46,6 +48,10 @@ This is a reimplementation of the game Breakout using LWJGL and a given template
 1. Import as maven project
 2. Set 'Breakout.java' as main class
 3. Add '-Djava.library.path=PATH_TO_LWGL_NATIVE' (example: '-Djava.library.path=native/windows') as vm startup argument
+
+## Screenshots
+
+Take a look at the [screenshots folder](screenshots)
 
 ## Available keyboard shortcuts
 
