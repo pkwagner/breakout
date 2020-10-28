@@ -6,7 +6,7 @@ A project as part of the course FOP (functional object-oriented programming) at 
 
 This is a reimplementation of the game Breakout using LWJGL and a given template.
 
-![Main menu](screenshots/MainMenuState.png)
+![Main menu](screenshots/GameplayState.png)
 
 ## Features
 
